@@ -22,12 +22,15 @@ public class Application extends Controller {
     	System.out.println(lst);
     	try {
 			Statement st = c.createStatement();
+			st.close();
+			
+			c.close();
 		} 
     	catch (SQLException e) {
 			e.printStackTrace();
 		}
     	
-        return ok(index.render("Your new application is ready."));
+        return ok(index.render("Proyecto escarabajo"));
     }
 
 }
