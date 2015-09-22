@@ -16,6 +16,9 @@ public class Application extends Controller {
     	
     	try {
 			Statement st = c.createStatement();
+			st.close();
+			
+			c.close();
 		} 
     	catch (SQLException e) {
 			e.printStackTrace();
