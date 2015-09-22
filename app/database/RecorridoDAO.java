@@ -35,8 +35,8 @@ public class RecorridoDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			Connector.cerrarStatement(ps);
-			Connector.cerrarResultSet(rs);
+			Connector.closeStatement(ps);
+			Connector.closeResultSet(rs);
 		}
 		return lsRecorrido;
 	}

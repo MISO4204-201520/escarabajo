@@ -19,7 +19,7 @@ public class Application extends Controller {
     	RecorridoDAO rec = new RecorridoDAO();
     	List<Recorrido> lst = rec.consultarRecorridos(c);
     	
-    	System.out.println(lst);
+    	System.out.println(lst.get(0).getNombre());
     	try {
 			Statement st = c.createStatement();
 			st.close();

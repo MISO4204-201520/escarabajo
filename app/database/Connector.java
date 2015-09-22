@@ -23,7 +23,7 @@ public class Connector {
 		return conn;
 	}
 
-	public static void cerrarConexion(Connection con) {
+	public static void closeConnection(Connection con) {
 		try {
 			if(con != null)
 				con.close();
@@ -31,7 +31,7 @@ public class Connector {
 		}
 	}
 
-	public static void cerrarResultSet(ResultSet res) {
+	public static void closeResultSet(ResultSet res) {
 		try {
 			if(res != null)
 				res.close();
@@ -39,7 +39,7 @@ public class Connector {
 		}
 	}
 	
-	public static void cerrarStatement(PreparedStatement pre) {
+	public static void closeStatement(PreparedStatement pre) {
 		try {
 			if(pre != null)
 				pre.close();
