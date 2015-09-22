@@ -19,16 +19,20 @@ public class Connector {
     	catch(Exception e){
     		e.printStackTrace();
     	}
-    	finally{
-    		try {
-				conn.close();
-			} 
-    		catch (SQLException e) {
-				e.printStackTrace();
-			}
-    	}
     	
     	return conn;
+	}
+	
+	public static void closeConnection(){
+		try {
+			if(conn != null){
+				conn.close();
+			}
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+    	
 	}
 
 }
