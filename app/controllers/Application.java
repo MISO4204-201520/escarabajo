@@ -21,7 +21,7 @@ public class Application extends Controller {
 			e.printStackTrace();
 		}
     	
-        return ok(index.render("Your new application is ready."));
+        return ok(index.render("Proyecto escarabajo"));
     }
 
 }
