@@ -32,3 +32,24 @@ ALTER TABLE recorrido
 COMMENT ON TABLE recorrido
   IS 'Tabla para almacenar los recorridos programados por los usuarios';
 //------------------------------------------------------------------//
+
+
+//------------------------tabla metrica-----------------------------//
+-- Table: metrica
+
+-- DROP TABLE metrica;
+
+CREATE TABLE metrica
+(
+  id_metrica integer NOT NULL,
+  nombre_metrica character(250) NOT NULL,
+  unidad_medida numeric(18,2) NOT NULL
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE metrica
+  OWNER TO postgres;
+COMMENT ON TABLE metrica
+  IS 'Tabla para almacenar los tipos de métricas que se miden en los recorridos';
+  //------------------------------------------------------------------//
