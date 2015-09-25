@@ -1,4 +1,4 @@
-package controllers;
+package controllers.mapas;
 
 import java.sql.Connection;
 import java.sql.SQLException;

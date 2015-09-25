@@ -5,8 +5,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
+import model.Metrica;
 import model.Recorrido;
 import database.Connector;
+import database.MetricaDAO;
 import database.RecorridoDAO;
 import play.mvc.*;
 import views.html.*;
@@ -30,6 +32,8 @@ public class Application extends Controller {
 			e.printStackTrace();
 		}
     	*/
+    	
+    	
         return ok(index.render("Proyecto escarabajo prueba github"));
     }
 

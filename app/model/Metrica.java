@@ -1,27 +1,49 @@
 package model;
 
-public class Metrica {
+import java.util.List;
+
+import javax.persistence.*;
+
+import com.avaje.ebean.Model;
+
+@Entity
+@Table(name="metrica")
+public class Metrica extends Model{
 	
-	private int idMetrica;
+	@Id
+	@Column(name="id_metrica", nullable=false)
+	@GeneratedValue
+	private Long idMetrica;
+	
+	@Column(name="nombre_metrica", nullable=false)
 	private String nombreMetrica;
-	private double unidadMedida;
+	
+	@Column(name="unidad_medida", nullable=false)
+	private String unidadMedida;
+	
+	@OneToMany(mappedBy = "metrica")
+	private List<MetricasXRecorrido> metricasXRecorrido;
+	
+	public static Finder<Long, Metrica> find;
 	
 	public Metrica(){
-		
+		super();
+		find = new Finder<Long, Metrica>(Metrica.class);
 	}
 
-	public Metrica(int idMetrica, String nombreMetrica, double unidadMedida) {
+	public Metrica(Long idMetrica, String nombreMetrica, String unidadMedida) {
 		super();
+		find = new Finder<Long, Metrica>(Metrica.class);
 		this.idMetrica = idMetrica;
 		this.nombreMetrica = nombreMetrica;
 		this.unidadMedida = unidadMedida;
 	}
 
-	public int getIdMetrica() {
+	public Long getIdMetrica() {
 		return idMetrica;
 	}
 
-	public void setIdMetrica(int idMetrica) {
+	public void setIdMetrica(Long idMetrica) {
 		this.idMetrica = idMetrica;
 	}
 
@@ -33,14 +55,13 @@ public class Metrica {
 		this.nombreMetrica = nombreMetrica;
 	}
 
-	public double getUnidadMedida() {
+	public String getUnidadMedida() {
 		return unidadMedida;
 	}
 
-	public void setUnidadMedida(double unidadMedida) {
+	public void setUnidadMedida(String unidadMedida) {
 		this.unidadMedida = unidadMedida;
 	}
-	
-	
 
+	
 }
