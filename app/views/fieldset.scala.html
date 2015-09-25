@@ -1,0 +1,49 @@
+@(entidadRecorrido: Form[model.Recorrido], 
+	tipoRecorrido:List[String],  
+	diasRecorrido:Map[String,Boolean], 
+	horaSalida:Map[String,Boolean])
+
+@import views.html.bootstrap3._
+
+
+  <!-- Header -->
+  <div id="legend">
+    <legend>Student Data</legend>
+  </div>
+
+   @text(entidadRecorrido("nombre"),
+		label = "Nombre",
+        placeholder = "nombre")
+	</br>	
+	@radiobuttons(entidadRecorrido("tipoRecorrido"),
+		label = "Tipo Recorrido",
+		buttonNameList = tipoRecorrido)
+	</br>
+	@checkboxes(entidadRecorrido("diasRecorrido"),
+    	label = "Días Recorrido",
+      	checkboxMap = diasRecorrido)
+	</br>
+
+	
+	
+	
+  </br>
+  	@helper.inputText(entidadRecorrido("lugarSalida"), 'id -> "address", 'size -> 30)
+  	</br>
+  	@helper.inputText(entidadRecorrido("lugarSalida"), 'id -> "addressEnd", 'size -> 30)
+  	<div class="search">
+        
+		
+        <input id="search" type="button" value ="Search" />
+        <div class="clear"></div>
+    </div>
+    </div>
+     <div class="box">
+        <div id="map_canvas"></div>
+    </div>
+  
+  <div>
+      <button id="submit" type="submit" value="Submit" class="btn btn-primary">Submit</button>
+      <button id="cancel" class="btn cancel">Cancel</button>
+  </div>
+
