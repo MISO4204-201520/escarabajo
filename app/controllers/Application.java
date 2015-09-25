@@ -15,7 +15,7 @@ public class Application extends Controller {
 	
     public Result index() {
     
-    	Connection c = Connector.getConnection();
+    	/*Connection c = Connector.getConnection();
     	RecorridoDAO rec = new RecorridoDAO();
     	List<Recorrido> lst = rec.consultarRecorridos(c);
     	
@@ -29,7 +29,7 @@ public class Application extends Controller {
     	catch (SQLException e) {
 			e.printStackTrace();
 		}
-    	
+    	*/
         return ok(index.render("Proyecto escarabajo prueba github"));
     }
 
