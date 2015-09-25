@@ -30,7 +30,7 @@ public class Application extends Controller {
 			e.printStackTrace();
 		}
     	
-        return ok(index.render("Proyecto escarabajo"));
+        return ok(index.render("Proyecto escarabajo prueba github"));
     }
 
 }
