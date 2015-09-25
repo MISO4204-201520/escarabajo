@@ -1,4 +1,4 @@
-package controllers.mapas;
+package controllers;
 
 import model.Metrica;
 import database.MetricaDAO;

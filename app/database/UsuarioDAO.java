@@ -2,7 +2,6 @@ package database;
 
 import java.util.List;
 
-import model.Metrica;
 import model.Usuario;
 import model.UsuarioPK;
 
