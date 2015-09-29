@@ -25,7 +25,7 @@ import views.html.*;
 
 public class ControllerRecorrido extends Controller{
 	
-	public Result postFormRecorridos() {
+	public static Result postFormRecorridos() {
     	
 		
 		Form<Recorrido> form = Form.form(Recorrido.class).bindFromRequest();
@@ -44,7 +44,7 @@ public class ControllerRecorrido extends Controller{
 	}
 	
 	public String cadDias = "";
-	public Result getFormRecorridos()
+	public static Result getFormRecorridos()
 	{
         List<String> tipoRecorrido = new ArrayList<String>();
         tipoRecorrido.add("Frecuente");
@@ -67,7 +67,7 @@ public class ControllerRecorrido extends Controller{
         return ok(views.html.recorridos.render(Form.form(Recorrido.class), tipoRecorrido, diasRecorrido, horaSalida));
 	}
 	
-	private void insertarRecorrido(Recorrido recorrido)
+	private static void insertarRecorrido(Recorrido recorrido)
 	{
 		recorrido.setIdRecorrido(67);
 		recorrido.setTipo(100);

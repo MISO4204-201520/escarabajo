@@ -2,7 +2,7 @@ package security;
 
 import java.util.Optional;
 
-import model.User;
+import models.User;
 import play.libs.F;
 import play.libs.F.Promise;
 import play.mvc.Http;

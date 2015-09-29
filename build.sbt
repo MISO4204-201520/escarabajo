@@ -10,6 +10,7 @@ version := "1.0-SNAPSHOT"
 
 
 // add resolver for deadbolt and easymail snapshots
+
 resolvers += Resolver.sonatypeRepo("snapshots")
 
 resolvers += Resolver.url("play-easymail (release)", url("http://joscha.github.io/play-easymail/repo/releases/"))(Resolver.ivyStylePatterns)
@@ -42,11 +43,11 @@ EclipseKeys.preTasks := Seq(compile in Compile)                  // Compile the 
 
 libraryDependencies += "org.postgresql" % "postgresql" % "9.3-1100-jdbc4"
 
-fork in run := true
-
 
 lazy val root = project.in(file("."))
   .enablePlugins(PlayJava, PlayEbean)
   .settings(
     libraryDependencies ++= appDependencies
   )
+
+fork in run := true
