@@ -4,7 +4,7 @@
 @implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapBasic.f) }
 @import com.feth.play.module.pa.views.html._
 
-@main("playauthenticate.login.title") {
+@main(Messages("playauthenticate.login.title"),"login") {
 
   <div class="row">
     <div class="col-xs-6 col-sm-4">
@@ -46,7 +46,7 @@
       @providerAvailable("basic") { available: Boolean =>
           @if(available) {
               <br>
-              <a href="@com.feth.play.module.pa.controllers.routes.AuthenticateDI.authenticate("basic")">@Messages("playauthenticate.login.basic")</a>
+              <a href="@com.feth.play.module.pa.controllers.routes.Authenticate.authenticate("basic")">@Messages("playauthenticate.login.basic")</a>
           }
       }
     </div>

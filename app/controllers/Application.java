@@ -1,55 +1,56 @@
 package controllers;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.sql.Connection;
 import java.sql.SQLException;
-
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
-import model.Metrica;
-
-import model.Recorrido;
-import database.Connector;
-import database.MetricaDAO;
-import database.RecorridoDAO;
-
-
-import model.User;
-import play.Routes;
-import play.data.Form;
-import play.mvc.*;
-import play.mvc.Http.Response;
-import play.mvc.Http.Session;
-import play.mvc.Result;
-import providers.MyUsernamePasswordAuthProvider;
-import providers.MyUsernamePasswordAuthProvider.MyLogin;
-import providers.MyUsernamePasswordAuthProvider.MySignup;
-
-import views.html.*;
-import be.objectify.deadbolt.java.actions.Group;
-import be.objectify.deadbolt.java.actions.Restrict;
 
 import com.feth.play.module.pa.PlayAuthenticate;
 import com.feth.play.module.pa.providers.password.UsernamePasswordAuthProvider;
 import com.feth.play.module.pa.user.AuthUser;
 
-public class Application extends Controller {
+import be.objectify.deadbolt.java.actions.Group;
+import be.objectify.deadbolt.java.actions.Restrict;
+import model.Recorrido;
+import models.User;
+import database.Connector;
+import database.RecorridoDAO;
+import play.Routes;
+import play.data.Form;
+import play.mvc.*;
+import play.mvc.Http.Session;
+import providers.MyUsernamePasswordAuthProvider;
+import providers.MyUsernamePasswordAuthProvider.MyLogin;
+import providers.MyUsernamePasswordAuthProvider.MySignup;
+import views.html.*;
 
-	public static final String FLASH_MESSAGE_KEY = "message";
+public class Application extends Controller {
+	
+    public static final String FLASH_MESSAGE_KEY = "message";
 	public static final String FLASH_ERROR_KEY = "error";
 	public static final String USER_ROLE = "user";
 	
-	public Result index() {
-		try {
+    public static Result index() {
+    
+    	Connection c = Connector.getConnection();
+    	RecorridoDAO rec = new RecorridoDAO();
+    	List<Recorrido> lst = rec.consultarRecorridos(c);
+    	
+    	//System.out.println(lst.get(0).getNombre());
+    	try {
 			Statement st = c.createStatement();
+			st.close();
+			
+			c.close();
 		} 
     	catch (SQLException e) {
 			e.printStackTrace();
 		}
-    	               
-		return ok(index.render());
-	}
+    	    	
+        return ok(index.render("Proyecto escarabajo"));
+    }    
 
 	public static User getLocalUser(final Session session) {
 		final AuthUser currentAuthUser = PlayAuthenticate.getUser(session);
@@ -58,22 +59,22 @@ public class Application extends Controller {
 	}
 
 	@Restrict(@Group(Application.USER_ROLE))
-	public Result restricted() {
+	public static Result restricted() {
 		final User localUser = getLocalUser(session());
 		return ok(restricted.render(localUser));
 	}
 
 	@Restrict(@Group(Application.USER_ROLE))
-	public  Result profile() {
+	public static Result profile() {
 		final User localUser = getLocalUser(session());
 		return ok(profile.render(localUser));
 	}
 
-	public Result login() {
+	public static Result login() {
 		return ok(login.render(MyUsernamePasswordAuthProvider.LOGIN_FORM));
 	}
 
-	public  Result doLogin() {
+	public static Result doLogin() {
 		com.feth.play.module.pa.controllers.Authenticate.noCache(response());
 		final Form<MyLogin> filledForm = MyUsernamePasswordAuthProvider.LOGIN_FORM
 				.bindFromRequest();
@@ -86,18 +87,18 @@ public class Application extends Controller {
 		}
 	}
 
-	public  Result signup() {
+	public static Result signup() {
 		return ok(signup.render(MyUsernamePasswordAuthProvider.SIGNUP_FORM));
 	}
 
-	public  Result jsRoutes() {
+	public static Result jsRoutes() {
 		return ok(
 				Routes.javascriptRouter("jsRoutes",
 						controllers.routes.javascript.Signup.forgotPassword()))
 				.as("text/javascript");
 	}
 
-	public Result doSignup() {
+	public static Result doSignup() {
 		com.feth.play.module.pa.controllers.Authenticate.noCache(response());
 		final Form<MySignup> filledForm = MyUsernamePasswordAuthProvider.SIGNUP_FORM
 				.bindFromRequest();
@@ -115,9 +116,5 @@ public class Application extends Controller {
 	public static String formatTimestamp(final long t) {
 		return new SimpleDateFormat("yyyy-dd-MM HH:mm:ss").format(new Date(t));
 	}
-	
-	
-	
-	
 
 }

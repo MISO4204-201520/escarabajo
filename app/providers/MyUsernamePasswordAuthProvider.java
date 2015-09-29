@@ -7,10 +7,10 @@ import com.feth.play.module.pa.providers.password.UsernamePasswordAuthUser;
 import com.google.inject.Inject;
 
 import controllers.routes;
-import model.LinkedAccount;
-import model.TokenAction;
-import model.TokenAction.Type;
-import model.User;
+import models.LinkedAccount;
+import models.TokenAction;
+import models.TokenAction.Type;
+import models.User;
 import play.Application;
 import play.Logger;
 import play.data.Form;
@@ -32,7 +32,11 @@ import static play.data.Form.form;
 
 public class MyUsernamePasswordAuthProvider
 		extends
-		UsernamePasswordAuthProvider<String, MyLoginUsernamePasswordAuthUser, MyUsernamePasswordAuthUser, MyUsernamePasswordAuthProvider.MyLogin, MyUsernamePasswordAuthProvider.MySignup> {
+		UsernamePasswordAuthProvider<String, 
+		MyLoginUsernamePasswordAuthUser, 
+		MyUsernamePasswordAuthUser, 
+		MyUsernamePasswordAuthProvider.MyLogin, 
+		MyUsernamePasswordAuthProvider.MySignup> {
 
 	private static final String SETTING_KEY_VERIFICATION_LINK_SECURE = SETTING_KEY_MAIL
 			+ "." + "verificationLink.secure";

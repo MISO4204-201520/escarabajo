@@ -1,4 +1,4 @@
-package model;
+package models;
 
 import be.objectify.deadbolt.core.models.Permission;
 import be.objectify.deadbolt.core.models.Role;
@@ -11,7 +11,7 @@ import com.feth.play.module.pa.user.AuthUserIdentity;
 import com.feth.play.module.pa.user.EmailIdentity;
 import com.feth.play.module.pa.user.NameIdentity;
 import com.feth.play.module.pa.user.FirstLastNameIdentity;
-import model.TokenAction.Type;
+import models.TokenAction.Type;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 

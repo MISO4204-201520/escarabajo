@@ -1,8 +1,8 @@
 package controllers;
 
-import model.TokenAction;
-import model.TokenAction.Type;
-import model.User;
+import models.TokenAction;
+import models.TokenAction.Type;
+import models.User;
 import play.data.Form;
 import play.i18n.Messages;
 import play.mvc.Controller;
@@ -41,14 +41,14 @@ public class Signup extends Controller {
 
 	private static final Form<PasswordReset> PASSWORD_RESET_FORM = form(PasswordReset.class);
 
-	public  Result unverified() {
+	public static Result unverified() {
 		com.feth.play.module.pa.controllers.Authenticate.noCache(response());
 		return ok(unverified.render());
 	}
 
 	private static final Form<MyIdentity> FORGOT_PASSWORD_FORM = form(MyIdentity.class);
 
-	public Result forgotPassword(final String email) {
+	public static Result forgotPassword(final String email) {
 		com.feth.play.module.pa.controllers.Authenticate.noCache(response());
 		Form<MyIdentity> form = FORGOT_PASSWORD_FORM;
 		if (email != null && !email.trim().isEmpty()) {
@@ -57,7 +57,7 @@ public class Signup extends Controller {
 		return ok(password_forgot.render(form));
 	}
 
-	public  Result doForgotPassword() {
+	public static Result doForgotPassword() {
 		com.feth.play.module.pa.controllers.Authenticate.noCache(response());
 		final Form<MyIdentity> filledForm = FORGOT_PASSWORD_FORM
 				.bindFromRequest();
@@ -129,7 +129,7 @@ public class Signup extends Controller {
 		return ret;
 	}
 
-	public  Result resetPassword(final String token) {
+	public static Result resetPassword(final String token) {
 		com.feth.play.module.pa.controllers.Authenticate.noCache(response());
 		final TokenAction ta = tokenIsValid(token, Type.PASSWORD_RESET);
 		if (ta == null) {
@@ -140,7 +140,7 @@ public class Signup extends Controller {
 				.fill(new PasswordReset(token))));
 	}
 
-	public  Result doResetPassword() {
+	public static Result doResetPassword() {
 		com.feth.play.module.pa.controllers.Authenticate.noCache(response());
 		final Form<PasswordReset> filledForm = PASSWORD_RESET_FORM
 				.bindFromRequest();
@@ -183,17 +183,17 @@ public class Signup extends Controller {
 		}
 	}
 
-	public  Result oAuthDenied(final String getProviderKey) {
+	public static Result oAuthDenied(final String getProviderKey) {
 		com.feth.play.module.pa.controllers.Authenticate.noCache(response());
 		return ok(oAuthDenied.render(getProviderKey));
 	}
 
-	public Result exists() {
+	public static Result exists() {
 		com.feth.play.module.pa.controllers.Authenticate.noCache(response());
 		return ok(exists.render());
 	}
 
-	public Result verify(final String token) {
+	public static Result verify(final String token) {
 		com.feth.play.module.pa.controllers.Authenticate.noCache(response());
 		final TokenAction ta = tokenIsValid(token, Type.EMAIL_VERIFICATION);
 		if (ta == null) {
