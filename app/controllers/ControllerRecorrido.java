@@ -12,11 +12,11 @@ import com.typesafe.config.ConfigException.Parse;
 
 import database.Connector;
 import database.RecorridoDAO;
+import models.Recorrido;
 import play.*;
 import play.mvc.*;
 import play.data.Form;
 import play.data.validation.Constraints.*;
-import model.Recorrido;
 import play.mvc.Controller;
 import play.mvc.Result;
 import scala.Array;

@@ -1,6 +1,7 @@
-package model;
+package models;
 
 import java.io.Serializable;
+
 
 import javax.persistence.Embeddable;
 

@@ -1,7 +1,7 @@
 package controllers;
 
-import model.Metrica;
 import database.MetricaDAO;
+import models.Metrica;
 import play.mvc.Controller;
 
 public class ControllerMetrica extends Controller{

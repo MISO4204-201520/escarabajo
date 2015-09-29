@@ -2,6 +2,7 @@ package models;
 
 import javax.persistence.MappedSuperclass;
 
+
 import com.avaje.ebean.Model;
 
 @MappedSuperclass

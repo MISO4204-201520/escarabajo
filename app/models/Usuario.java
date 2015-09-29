@@ -1,6 +1,7 @@
-package model;
+package models;
 
 import javax.persistence.Column;
+
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;

@@ -2,8 +2,8 @@ package database;
 
 import java.util.List;
 
-import model.Usuario;
-import model.UsuarioPK;
+import models.Usuario;
+import models.UsuarioPK;
 
 public class UsuarioDAO {
 	

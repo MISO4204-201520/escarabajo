@@ -13,7 +13,7 @@ import com.feth.play.module.pa.user.AuthUser;
 
 import be.objectify.deadbolt.java.actions.Group;
 import be.objectify.deadbolt.java.actions.Restrict;
-import model.Recorrido;
+import models.Recorrido;
 import models.User;
 import database.Connector;
 import database.RecorridoDAO;

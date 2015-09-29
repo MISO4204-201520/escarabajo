@@ -2,7 +2,7 @@ package database;
 
 import java.util.List;
 
-import model.Metrica;
+import models.Metrica;
 
 public class MetricaDAO {
 	

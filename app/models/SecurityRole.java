@@ -18,7 +18,9 @@ package models;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-import play.db.ebean.Model;
+//import play.db.ebean.Model;
+import com.avaje.ebean.Model;
+
 import be.objectify.deadbolt.core.models.Role;
 
 /**
@@ -39,6 +41,13 @@ public class SecurityRole extends Model implements Role {
 	public static final Finder<Long, SecurityRole> find = new Finder<Long, SecurityRole>(
 			Long.class, SecurityRole.class);
 
+
+	/*public static Finder<Long, SecurityRole> find;
+	
+	public SecurityRole(){
+		super();
+		find = new Finder<Long, SecurityRole>(SecurityRole.class);
+	}*/
 	@Override
 	public String getName() {
 		return roleName;
@@ -47,4 +56,6 @@ public class SecurityRole extends Model implements Role {
 	public static SecurityRole findByRoleName(String roleName) {
 		return find.where().eq("roleName", roleName).findUnique();
 	}
+	
+	
 }
