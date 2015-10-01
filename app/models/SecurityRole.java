@@ -38,16 +38,16 @@ public class SecurityRole extends Model implements Role {
 
 	public String roleName;
 
-	public static final Finder<Long, SecurityRole> find = new Finder<Long, SecurityRole>(
-			Long.class, SecurityRole.class);
+	/*public static final Finder<Long, SecurityRole> find = new Finder<Long, SecurityRole>(
+			Long.class, SecurityRole.class);*/
 
 
-	/*public static Finder<Long, SecurityRole> find;
+	public static Finder<Long, SecurityRole> find;
 	
 	public SecurityRole(){
 		super();
 		find = new Finder<Long, SecurityRole>(SecurityRole.class);
-	}*/
+	}
 	@Override
 	public String getName() {
 		return roleName;
