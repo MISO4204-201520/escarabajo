@@ -112,15 +112,12 @@ public class ControllerRecorrido extends Controller{
 	{
 		Connection con = Connector.getConnection();
 		RecorridoDAO recorridoDao = new RecorridoDAO();
-    	RutaDAO rutaDao =  new RutaDAO();
-		try {
-			String mensaje = recorridoDao.insertarRecorrido(con, recorrido);
+    	//RutaDAO rutaDao =  new RutaDAO();
+		
+		recorridoDao.agregarRecorrido(recorrido);
 			//mensaje += rutaDao.insertarRuta();
-			Connector.closeConnection(con);
-		} 
-    	catch (SQLException e) {
-			e.printStackTrace();
-		}
+		Connector.closeConnection(con);
+		
     	
 	}
 	

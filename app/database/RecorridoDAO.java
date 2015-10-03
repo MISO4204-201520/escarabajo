@@ -8,11 +8,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import scala.Array;
+import model.Metrica;
 import model.Recorrido;
 
 public class RecorridoDAO {
 	
-	private static final String SQL_CONSULTA_RECORRIDOS = "SELECT id_recorrido, tipo, nombre FROM recorrido";
+	/**
+	 * Agregar una recorrido al repositorio 
+	 * 
+	 * @param r El recorrido que se desea agregar
+	 */
+	public void agregarRecorrido(Recorrido r){
+		r.save();
+	}
+	
+	
+	
+	/*private static final String SQL_CONSULTA_RECORRIDOS = "SELECT id_recorrido, tipo, nombre FROM recorrido";
 	private static final String SQL_INSERTAR_RECORRIDO = "INSERT INTO recorrido(tipo, nombre, descripcion, hora_frecuente, dia_frecuente) VALUES (?,?,?,?,?)";
 	
 	public List<Recorrido> consultarRecorridos(Connection con)
@@ -27,8 +39,8 @@ public class RecorridoDAO {
 			while(rs.next())
 			{
 				Recorrido recorrido = new Recorrido();
-				recorrido.setIdRecorrido(rs.getInt("id_recorrido"));
-				recorrido.setIdRecorrido(rs.getInt("tipo"));
+				recorrido.setIdRecorrido(rs.getLong("id_recorrido"));
+				recorrido.setIdRecorrido(rs.getLong("tipo"));
 				recorrido.setNombre(rs.getString("nombre"));
 				lsRecorrido.add(recorrido);
 			}
@@ -65,6 +77,6 @@ public class RecorridoDAO {
 			Connector.closeConnection(con);
 		}
 		return mensaje;
-	}
+	}*/
 	
 }
