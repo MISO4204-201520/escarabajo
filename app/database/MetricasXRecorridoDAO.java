@@ -2,9 +2,11 @@ package database;
 
 import java.util.List;
 
-import model.Metrica;
-import model.MetricasXRecorrido;
-import model.Usuario;
+
+
+import models.Metrica;
+import models.MetricasXRecorrido;
+import models.User;
 
 public class MetricasXRecorridoDAO {
 
@@ -28,9 +30,8 @@ public class MetricasXRecorridoDAO {
 		return MetricasXRecorrido.find.byId(id);
 	}
 	
-	public List<MetricasXRecorrido> consultarMetricaEnRecorridoPorMetricaYUsuario(Metrica m, Usuario u){
-		return MetricasXRecorrido.find.where().eq("id_usuario", u.getUsuarioPK().getIdUsuario())
-				.eq("username",u.getUsuarioPK().getUsername())
+	public List<MetricasXRecorrido> consultarMetricaEnRecorridoPorMetricaYUsuario(Metrica m, User u){
+		return MetricasXRecorrido.find.where().eq("id_usuario", u.id)
 				.eq("metrica_id_metrica",m.getIdMetrica()).findList();
 	}
 

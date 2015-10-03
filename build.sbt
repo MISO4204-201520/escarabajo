@@ -49,7 +49,5 @@ lazy val root = project.in(file("."))
     libraryDependencies ++= appDependencies
   )
 
-//Activar Ebean
-lazy val myProject = (project in file(".")).enablePlugins(PlayJava, PlayEbean)
 
 fork in run := true

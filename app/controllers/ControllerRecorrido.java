@@ -16,6 +16,8 @@ import java.util.Map;
 
 import com.typesafe.config.ConfigException.Parse;
 
+import be.objectify.deadbolt.java.actions.Group;
+import be.objectify.deadbolt.java.actions.Restrict;
 import database.Connector;
 import database.RecorridoDAO;
 
@@ -28,18 +30,17 @@ import play.data.format.Formats.DateTime;
 import play.data.validation.Constraints.*;
 
 import models.Recorrido;
-import model.Ruta;
-
+import models.Ruta;
 import play.mvc.Controller;
 import play.mvc.Result;
 import scala.Array;
 import views.html.*;
 
-
+@Restrict(@Group(Application.USER_ROLE))
 public class ControllerRecorrido extends Controller{
 	
 
-	public Result postFormRecorridos() {
+	public static Result postFormRecorridos() {
 
 		
 		Form<FormularioRecorrido> form = Form.form(FormularioRecorrido.class).bindFromRequest();
@@ -92,6 +93,8 @@ public class ControllerRecorrido extends Controller{
 	}
 	
 	public String cadDias = "";
+	
+	
 	public static Result getFormRecorridos()
 	{
         List<String> tipoRecorrido = new ArrayList<String>();
@@ -116,7 +119,7 @@ public class ControllerRecorrido extends Controller{
 	}
 	
 
-	private void insertarRecorrido(Recorrido recorrido, Ruta ruta)
+	private static void insertarRecorrido(Recorrido recorrido, Ruta ruta)
 
 	{
 		Connection con = Connector.getConnection();

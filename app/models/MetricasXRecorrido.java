@@ -24,7 +24,7 @@ public class MetricasXRecorrido extends Model{
 	
 	@ManyToOne
 	@Column(nullable=false)
-	private Usuario usuario;
+	private User usuario;
 	
 	@ManyToOne
 	@Column(nullable=false)
@@ -44,7 +44,7 @@ public class MetricasXRecorrido extends Model{
 	}
 
 	public MetricasXRecorrido(Long idMetricaXRecorrido, Metrica metrica,
-			Usuario usuario, Recorrido recorrido, Date fecha,
+			User usuario, Recorrido recorrido, Date fecha,
 			Double valorMetrica) {
 		super();
 		this.idMetricaXRecorrido = idMetricaXRecorrido;
@@ -71,11 +71,11 @@ public class MetricasXRecorrido extends Model{
 		this.metrica = metrica;
 	}
 
-	public Usuario getUsuario() {
+	public User getUsuario() {
 		return usuario;
 	}
 
-	public void setUsuario(Usuario usuario) {
+	public void setUsuario(User usuario) {
 		this.usuario = usuario;
 	}
 
