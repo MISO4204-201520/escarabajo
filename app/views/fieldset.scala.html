@@ -1,49 +1,132 @@
-@(entidadRecorrido: Form[model.Recorrido], 
+@(formRecorrido: Form[ControllerRecorrido.FormularioRecorrido], 
 	tipoRecorrido:List[String],  
-	diasRecorrido:Map[String,Boolean], 
-	horaSalida:Map[String,Boolean])
+	diaFrecuente:Map[String,Boolean], 
+	horaFrecuente:Map[String,Boolean])
 
 @import views.html.bootstrap3._
 
+<style>
+	#horaFrecuente{
+		width: 44%;	
+	}
+	#descripcion{
+		width: 100%;	
+	}
+</style>
+<script type="text/javascript">
+
+	$("#Frecuente").prop("checked", true);
+	
+	$(document).ready(function(){
+	
+		$('#Recreacion').change(function (){
+			if( $(this).is(":checked") ){ 
+            	$('#divDiaFrec').hide();
+				$('#divHoraFrec').hide();
+				
+				$('#divFechaInicio').show();
+				$('#divFechaFin').show();
+        	}
+        });
+		
+		$('#Frecuente').change(function (){
+			if( $(this).is(":checked") ){ 
+            	$('#divDiaFrec').show();
+				$('#DivHoraFrec').show();
+				
+				$('#divFechaInicio').hide();
+				$('#divFechaFin').hide();
+        	}
+		}); 
+	});
+	
+</script>
 
   <!-- Header -->
-  <div id="legend">
-    <legend>Student Data</legend>
-  </div>
-
-   @text(entidadRecorrido("nombre"),
-		label = "Nombre",
-        placeholder = "nombre")
-	</br>	
-	@radiobuttons(entidadRecorrido("tipoRecorrido"),
-		label = "Tipo Recorrido",
+	<div id="legend">
+		<legend>Student Data</legend>
+	</div>
+	
+	<div style ="padding: 10px 0 10px 0">
+	@radiobuttons(formRecorrido("tipoRecorrido"),
+		label = "Tipo Recorrido:",
 		buttonNameList = tipoRecorrido)
-	</br>
-	@checkboxes(entidadRecorrido("diasRecorrido"),
-    	label = "Días Recorrido",
-      	checkboxMap = diasRecorrido)
-	</br>
-
+	</div>			
 	
+	<div style ="padding: 10px 0 10px 0">
+	@text(formRecorrido("nombre"),
+		label = "Nombre:",
+        placeholder = "nombre",
+        size = "50")
+	</div>
 	
+	<div id="divDiaFrec" style ="padding: 10px 0 10px 0">	
+	@checkboxes(formRecorrido("diaFrecuente"),
+		label = "Días recorrido:",
+		checkboxMap = diaFrecuente)
+	</div>
 	
-  </br>
-  	@helper.inputText(entidadRecorrido("lugarSalida"), 'id -> "address", 'size -> 30)
-  	</br>
-  	@helper.inputText(entidadRecorrido("lugarSalida"), 'id -> "addressEnd", 'size -> 30)
-  	<div class="search">
-        
-		
-        <input id="search" type="button" value ="Search" />
-        <div class="clear"></div>
-    </div>
-    </div>
-     <div class="box">
-        <div id="map_canvas"></div>
-    </div>
-  
-  <div>
-      <button id="submit" type="submit" value="Submit" class="btn btn-primary">Submit</button>
-      <button id="cancel" class="btn cancel">Cancel</button>
-  </div>
-
+	<div id="divHoraFrec" style ="padding: 10px 0 10px 0">
+	  @select(formRecorrido("horaFrecuente"),
+	  	  label = "Hora salida",
+          optionMap = horaFrecuente,
+          isMultiple = false)
+	</div>
+	
+	<hr>
+	
+	<h2>Ruta</h2>
+	<div id="divFechaInicio" style ="padding: 10px 0 10px 0; margin-left:0">
+		@helper.inputText(formRecorrido("fechaInicioRuta"),
+	    '_label -> "Fecha salida",
+	    'type -> "datetime-local"
+		)
+	</div>
+	<div id="divFechaFin" style ="padding: 10px 0 10px 0">
+		@helper.inputText(formRecorrido("fechaFinRuta"),
+	    '_label -> "Fecha llegada",
+	    'type -> "datetime-local"
+		)
+	</div>
+	<table border="0">
+		<tr>
+			<td>
+				<div style ="padding: 10px 0 10px 0">
+				@text(formRecorrido("lugarInicio"),
+					label = "Lugar salida:",
+			        placeholder = "Salida",
+			        size = "40",
+			        id = "address")
+				</div>
+			</td>
+			<td>
+				<div style ="padding: 10px 0 10px 0;">
+				@text(formRecorrido("lugarFin"),
+					label = "Lugar llegada:",
+					placeholder = "Llegada",
+					size = "40",
+					id = "addressEnd")
+				</div>
+			</td>
+			<td>
+				<div style ="padding: 10px 0 10px 0;">
+					<input id="search" type="button" value ="Search" class="btn btn-primary"/>
+				</div>	
+			</td>
+		</tr>
+	</table>
+	<br>
+	<div>
+		<div style="margin:auto" id="map_canvas"></div>
+	</div>
+	<hr>
+	<br>
+	<div style ="padding: 10px 0 10px 0;">
+		@textarea(formRecorrido("descripcion"),
+			label = "Descripción recorrido:",
+        	placeholder = "Descripción")
+	</div>		
+	<div style="text-align:right">
+		<button id="submit" type="submit" value="Submit" class="btn btn-primary">Aceptar</button>
+		<button id="cancel" class="btn cancel">Cancelar</button>
+	</div>

@@ -1,7 +1,7 @@
-@(recorridoEntidad: Form[model.Recorrido], 
+@(formRecorrido: Form[ControllerRecorrido.FormularioRecorrido], 
 	tipoRecorrido:List[String],  
-	diasRecorrido:Map[String,Boolean], 
-	horaSalida:Map[String,Boolean])
+	diaFrecuente:Map[String,Boolean], 
+	horaFrecuente:Map[String,Boolean])
 	
 @import helper._
 
@@ -137,7 +137,7 @@
         <h2>Crea tu recorrido</h2>
    		 
    		 @form(routes.ControllerRecorrido.postFormRecorridos) {
-   			 @fieldset(recorridoEntidad, tipoRecorrido, diasRecorrido, horaSalida)
+   			 @fieldset(formRecorrido, tipoRecorrido, diaFrecuente, horaFrecuente)
 		}
 	<br>
   
