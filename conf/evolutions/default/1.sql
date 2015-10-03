@@ -47,8 +47,8 @@ alter table metricas_x_recorridos add constraint fk_metricas_x_recorridos_recor_
 create index ix_metricas_x_recorridos_recor_3 on metricas_x_recorridos (recorrido_id_recorrido);
 
 
-
 # --- !Downs
+
 
 drop table if exists metrica cascade;
 
