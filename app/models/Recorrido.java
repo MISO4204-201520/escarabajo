@@ -1,33 +1,66 @@
 package models;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class Recorrido {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
-	private int idRecorrido;
+import com.avaje.ebean.Model;
+
+
+@Entity
+@Table(name="recorrido")
+public class Recorrido extends Model {
+
+	@Id
+	@Column(name="id_recorrido", nullable=false)
+	private Long idRecorrido;
+	
+	@Column(name="tipo", nullable=false)
 	private int tipo;
+	
+	@Column(name="nombre", nullable=false)
 	private String nombre;
-	private String horaSalida;
-	public List<String> diasRecorrido = new ArrayList<>(); 
-	private String lugarSalida;
-	private String lugarLlegada;
+	
+	@Column(name="descripcion")
+	private String descripcion;
+	
+	@Column(name="hora_frecuente")
+	private String horaFrecuente;
+	
+	@Column(name="dia_frecuente")
+	private String diaFrecuente; 
+		
+	@OneToMany(mappedBy = "recorrido")
+	private List<MetricasXRecorrido> metricasXRecorrido;
+	
+	public static Finder<Long, Recorrido> find;
 	
 	public Recorrido()
 	{
-		
+		super();
+		find = new Finder<Long, Recorrido>(Recorrido.class);
 	}
 	
-	public Recorrido(int tipo,String nombre){
+	public Recorrido(Long idRecorrido, int tipo, String nombre, String descripcion, String horaFrecuente, String diaFrecuente){
+		super();
+		find = new Finder<Long, Recorrido>(Recorrido.class);
 		this.tipo = tipo;
 		this.nombre = nombre;
+		this.descripcion = descripcion;
+		this.horaFrecuente = horaFrecuente;
+		this.diaFrecuente = diaFrecuente;
 	}
 	
-	public int getIdRecorrido() {
+	public Long getIdRecorrido() {
 		return idRecorrido;
 	}
 
-	public void setIdRecorrido(int idRecorrido) {
+	public void setIdRecorrido(Long idRecorrido) {
 		this.idRecorrido = idRecorrido;
 	}
 
@@ -46,38 +79,30 @@ public class Recorrido {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-
-	public String getHoraSalida() {
-		return horaSalida;
-	}
-
-	public void setHoraSalida(String horaSalida) {
-		this.horaSalida = horaSalida;
-	}
-
-	public List<String> getDiasRecorrido() {
-		return diasRecorrido;
-	}
-
-	public void setDiasRecorrido(List<String> diasRecorrido) {
-		this.diasRecorrido = diasRecorrido;
-	}
-
-	public String getLugarSalida() {
-		return lugarSalida;
-	}
-
-	public void setLugarSalida(String lugarSalida) {
-		this.lugarSalida = lugarSalida;
-	}
-
-	public String getLugarLlegada() {
-		return lugarLlegada;
-	}
-
-	public void setLugarLlegada(String lugarLlegada) {
-		this.lugarLlegada = lugarLlegada;
-	}
 	
+	public String getDiaFrecuente() {
+		return diaFrecuente;
+	}
+
+	public void setDiaFrecuente(String diaFrecuente) {
+		this.diaFrecuente = diaFrecuente;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	public String getHoraFrecuente() {
+		return horaFrecuente;
+	}
+
+	public void setHoraFrecuente(String horaFrecuente) {
+		this.horaFrecuente = horaFrecuente;
+	}
+
 	
 }

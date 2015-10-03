@@ -1,30 +1,31 @@
 package controllers;
 
-import database.MetricaDAO;
+
+
 import models.Metrica;
+import database.MetricaDAO;
+import play.mvc.Result;
+
 import play.mvc.Controller;
 
 public class ControllerMetrica extends Controller{
 	
-	private MetricaDAO mDAO;
 	
-	public void prueba(){
+	
+	public static Result agregarMetrica(){
+		
 		Metrica m = new Metrica();
     	m.setNombreMetrica("Distancia");
     	m.setUnidadMedida("Km");
     	m.setIdMetrica(2L);
     	
+    	MetricaDAO mDAO;
     	mDAO = new MetricaDAO();
     	mDAO.agregarMetrica(m);
     	
     	System.out.println(mDAO.consultarMetricaPorId(m.getIdMetrica()).getNombreMetrica());
     	
-    	m.setNombreMetrica("Distance");
-    	mDAO.actualizarMetrica(m);
-    	
-    	System.out.println(mDAO.consultarMetricaPorId(m.getIdMetrica()).getNombreMetrica());
-    	
-    	System.out.println(mDAO.consultarMetricaPorNombre(m.getNombreMetrica()).get(0).getIdMetrica());
+    	return ok("Métrica agregada!");
 	}
 
 }

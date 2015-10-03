@@ -26,6 +26,8 @@ public class MetricasXRecorrido extends Model{
 	@Column(nullable=false)
 	private Usuario usuario;
 	
+	@ManyToOne
+	@Column(nullable=false)
 	private Recorrido recorrido;
 	
 	@Column(name="fecha", nullable=false)

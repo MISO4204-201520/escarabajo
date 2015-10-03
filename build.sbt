@@ -30,7 +30,7 @@ val appDependencies = Seq(
   "be.objectify"  %% "deadbolt-java"     % "2.4.0",
   // Comment the next line for local development of the Play Authentication core:
   "com.feth"      %% "play-authenticate" % "0.7.0-SNAPSHOT",
-  "org.postgresql"    %  "postgresql"        % "9.4-1201-jdbc41"
+  "org.postgresql" % "postgresql" % "9.3-1100-jdbc4"
 )
 
 // Play provides two styles of routers, one expects its actions to be injected, the
@@ -41,7 +41,6 @@ EclipseKeys.projectFlavor := EclipseProjectFlavor.Java           // Java project
 EclipseKeys.createSrc := EclipseCreateSrc.ValueSet(EclipseCreateSrc.ManagedClasses, EclipseCreateSrc.ManagedResources)  // Use .class files instead of generated .scala files for views and routes 
 EclipseKeys.preTasks := Seq(compile in Compile)                  // Compile the project before generating Eclipse files, so that .class files for views and routes are present
 
-libraryDependencies += "org.postgresql" % "postgresql" % "9.3-1100-jdbc4"
 
 
 lazy val root = project.in(file("."))
@@ -50,6 +49,7 @@ lazy val root = project.in(file("."))
     libraryDependencies ++= appDependencies
   )
 
-fork in run := true
+//Activar Ebean
+lazy val myProject = (project in file(".")).enablePlugins(PlayJava, PlayEbean)
 
 fork in run := true
