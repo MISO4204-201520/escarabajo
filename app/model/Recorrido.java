@@ -8,11 +8,10 @@ public class Recorrido {
 	private int idRecorrido;
 	private int tipo;
 	private String nombre;
-	private String horaSalida;
-	public List<String> diasRecorrido = new ArrayList<>(); 
-	private String lugarSalida;
-	private String lugarLlegada;
-	
+	private String descripcion;
+	private String horaFrecuente;
+	private String diaFrecuente; 
+		
 	public Recorrido()
 	{
 		
@@ -47,37 +46,30 @@ public class Recorrido {
 		this.nombre = nombre;
 	}
 
-	public String getHoraSalida() {
-		return horaSalida;
-	}
-
-	public void setHoraSalida(String horaSalida) {
-		this.horaSalida = horaSalida;
-	}
-
-	public List<String> getDiasRecorrido() {
-		return diasRecorrido;
-	}
-
-	public void setDiasRecorrido(List<String> diasRecorrido) {
-		this.diasRecorrido = diasRecorrido;
-	}
-
-	public String getLugarSalida() {
-		return lugarSalida;
-	}
-
-	public void setLugarSalida(String lugarSalida) {
-		this.lugarSalida = lugarSalida;
-	}
-
-	public String getLugarLlegada() {
-		return lugarLlegada;
-	}
-
-	public void setLugarLlegada(String lugarLlegada) {
-		this.lugarLlegada = lugarLlegada;
-	}
 	
+	public String getDiaFrecuente() {
+		return diaFrecuente;
+	}
+
+	public void setDiaFrecuente(String diaFrecuente) {
+		this.diaFrecuente = diaFrecuente;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	public String getHoraFrecuente() {
+		return horaFrecuente;
+	}
+
+	public void setHoraFrecuente(String horaFrecuente) {
+		this.horaFrecuente = horaFrecuente;
+	}
+
 	
 }

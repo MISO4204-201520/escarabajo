@@ -13,15 +13,17 @@ CREATE DATABASE escarabajo
 
 
 //------------------------tabla recorrido-----------------------------//
--- Table: recorrido
-
 -- DROP TABLE recorrido;
 
 CREATE TABLE recorrido
 (
-  id_recorrido integer NOT NULL,
+  id_recorrido serial NOT NULL,
   tipo integer NOT NULL,
   nombre character(250),
+  hora_salida character(20),
+  dias_recorrido character(20),
+  lugar_salida character(250),
+  lugar_llegada character(250),
   CONSTRAINT recorrido_pkey PRIMARY KEY (id_recorrido)
 )
 WITH (
@@ -29,8 +31,6 @@ WITH (
 );
 ALTER TABLE recorrido
   OWNER TO postgres;
-COMMENT ON TABLE recorrido
-  IS 'Tabla para almacenar los recorridos programados por los usuarios';
 //------------------------------------------------------------------//
 
 

@@ -34,7 +34,6 @@ alter table metricas_x_recorridos add constraint fk_metricas_x_recorridos_usuar_
 create index ix_metricas_x_recorridos_usuar_2 on metricas_x_recorridos (id_usuario,username);
 
 
-
 # --- !Downs
 
 drop table if exists metrica cascade;
