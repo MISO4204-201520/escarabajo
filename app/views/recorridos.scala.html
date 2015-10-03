@@ -25,7 +25,7 @@
 		directionsDisplay.setMap(map);
 		
         $('#search').bind('click',function(){
-            initialize($('#address').val(), $('#addressEnd').val());    
+            initialize($('#address').val(), $('#addressEnd').val());
         })
 	}
 
@@ -60,6 +60,10 @@
 								addressEndLat = result[0].geometry.location.lat();
 								addressEndLong = result[0].geometry.location.lng();
 								
+								var p1 = new google.maps.LatLng(addressLat, addressLong);
+								var p2 = new google.maps.LatLng(addressEndLat, addressEndLong);
+								//println('Distancia ' + calcularDistancia(p1,p2));
+								
 								//encontrar ruta
 								var directionsService = new google.maps.DirectionsService;
 								directionsService.route({
@@ -79,6 +83,11 @@
 				}
 			})
 		}
+	}
+	
+	function calcularDistancia(puntoIni, puntoFin){
+		println('Entra a calcular distancia');
+		return (google.maps.geometry.spherical.computeDistanceBetween(p1, p2) / 1000).toFixed(2);
 	}
 </script>
 

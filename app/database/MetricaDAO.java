@@ -1,42 +1,38 @@
 package database;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import model.Metrica;
 
 public class MetricaDAO {
 	
-	private static final String SQL_CONSULTA_METRICAS = "SELECT id_metrica, nombre_metrica, unidad_medida FROM metrica";
-	
-	public List<Metrica> consultarMetricas(Connection con){
-		
-		List<Metrica> lsMetrica = new ArrayList<Metrica>();
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		
-		try{
-			ps = con.prepareStatement(SQL_CONSULTA_METRICAS);
-			rs = ps.executeQuery();
-			while(rs.next()){
-				Metrica metrica = new Metrica();
-				metrica.setIdMetrica(rs.getInt("id_metrica"));
-				metrica.setNombreMetrica(rs.getString("nombre_metrica"));
-				metrica.setUnidadMedida(rs.getDouble("unidad_medida"));
-				lsMetrica.add(metrica);
-			}
-		}
-		catch(SQLException e){
-			e.printStackTrace();
-		}
-		finally{
-			Connector.closeStatement(ps);
-			Connector.closeResultSet(rs);
-		}
-		return lsMetrica;
+	/**
+	 * Agregar una métrica al repositorio 
+	 * 
+	 * @param m La métrica que se desea agregar
+	 */
+	public void agregarMetrica(Metrica m){
+		m.save();
 	}
+	
+	public void actualizarMetrica(Metrica m){
+		Metrica metricaActual = consultarMetricaPorId(m.getIdMetrica());
+		metricaActual.setNombreMetrica(m.getNombreMetrica());
+		metricaActual.setUnidadMedida(m.getUnidadMedida());
+		metricaActual.save();
+	}
+	
+	public void eliminarMetrica(Metrica m){
+		Metrica metricaActual = consultarMetricaPorId(m.getIdMetrica());
+		metricaActual.delete();
+	}
+	
+	public Metrica consultarMetricaPorId(Long id){
+		return Metrica.find.byId(id);
+	}
+	
+	public List<Metrica> consultarMetricaPorNombre(String nombre){
+		return Metrica.find.where().eq("nombre_metrica", nombre).findList();
+	}
+
 }

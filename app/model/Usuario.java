@@ -1,38 +1,45 @@
 package model;
 
-public class Usuario {
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
-	private int idUsuario;
-	private String username;
+import com.avaje.ebean.Model;
+
+@Entity
+@Table(name="usuario")
+public class Usuario extends Model{
+
+	@EmbeddedId
+	private UsuarioPK usuarioPK;
+	
+	@Column(name="nombre", nullable=false)
 	private String nombre;
+	
+	@Column(name="email", nullable=false)
 	private String email;
 	
+	public static Finder<UsuarioPK, Usuario> find;
+	
 	public Usuario(){
-		
+		super();
+		find = new Finder<UsuarioPK, Usuario>(Usuario.class);
 	}
 
-	public Usuario(int idUsuario, String username, String nombre, String email) {
+	public Usuario(UsuarioPK usuarioPK, String nombre, String email) {
 		super();
-		this.idUsuario = idUsuario;
-		this.username = username;
+		this.usuarioPK = usuarioPK;
 		this.nombre = nombre;
 		this.email = email;
 	}
 
-	public int getIdUsuario() {
-		return idUsuario;
+	public UsuarioPK getUsuarioPK() {
+		return usuarioPK;
 	}
 
-	public void setIdUsuario(int idUsuario) {
-		this.idUsuario = idUsuario;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUsuarioPK(UsuarioPK usuarioPK) {
+		this.usuarioPK = usuarioPK;
 	}
 
 	public String getNombre() {
