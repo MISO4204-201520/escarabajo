@@ -36,16 +36,20 @@
 
     <br/>
     @currentAuth() { auth =>
+       <br><img src='http://graph.facebook.com/@auth.getId()/picture?type=large'><br>
         @Messages("playauthenticate.profile.logged") @_providerIcon(auth.getProvider())<br/>
         @if(auth.expires() != -1){
-            @Messages("playauthenticate.profile.session", auth.getId(), Application.formatTimestamp(auth.expires()))
+          @Messages("playauthenticate.profile.session", auth.getId(), Application.formatTimestamp(auth.expires()))
         } else {
             @Messages("playauthenticate.profile.session_endless", auth.getId())
         }
+    
     }
+    
     <br/>
     <ul>
     	<li><a href="@routes.Account.changePassword">@Messages("playauthenticate.profile.password_change")</a></li>
     </ul>
+    
     </p>
 }
