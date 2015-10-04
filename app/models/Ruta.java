@@ -2,19 +2,52 @@ package models;
 
 import java.util.Date;
 
-public class Ruta {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.avaje.ebean.Model;
+
+@Entity
+@Table(name="ruta")
+public class Ruta extends Model {
 	
+	
+	@Id
+	@Column(name="id_ruta", nullable=false)
+	@GeneratedValue
 	private int idRuta;
-	private int idRecorrido;
-	private Date fechaInicioRuta;
-	private Date fechaFinRuta;
-	private float latitudInicio;
-	private float longitudInicio;
-	private float latitudFin;
-	private float longitudFin;
-	private String lugarInicio;
-	private String lugarFin;
 	
+	@ManyToOne
+	private Recorrido recorrido;
+	
+	@Column(name="fecha_inicio_ruta")
+	private Date fechaInicioRuta;
+	
+	@Column(name="fecha_fin_ruta")
+	private Date fechaFinRuta;
+	
+	@Column(name="latitud_inicio")
+	private float latitudInicio;
+	
+	@Column(name="longitud_incio")
+	private float longitudInicio;
+	
+	@Column(name="latitud_fin")
+	private float latitudFin;
+	
+	@Column(name="longitud_fin")
+	private float longitudFin;
+	
+	@Column(name="lugar_inicio")
+	private String lugarInicio;
+	
+	@Column(name="lugar_fin")
+	private String lugarFin;
 	
 	public int getIdRuta() {
 		return idRuta;
@@ -22,11 +55,11 @@ public class Ruta {
 	public void setIdRuta(int idRuta) {
 		this.idRuta = idRuta;
 	}
-	public int getIdRecorrido() {
-		return idRecorrido;
+	public Recorrido getIdRecorrido() {
+		return recorrido;
 	}
-	public void setIdRecorrido(int idRecorrido) {
-		this.idRecorrido = idRecorrido;
+	public void setIdRecorrido(Recorrido recorrido) {
+		this.recorrido = recorrido;
 	}
 	public Date getFechaInicioRuta() {
 		return fechaInicioRuta;
