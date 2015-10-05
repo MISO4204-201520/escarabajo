@@ -1,5 +1,7 @@
 package database;
 
+import java.util.List;
+
 import models.Recorrido;
 
 
@@ -15,7 +17,9 @@ public class RecorridoDAO {
 		r.save();
 	}
 	
-	
+	public List<Recorrido> listarRecorridos(){
+		return Recorrido.find.all();
+	}
 	
 	/*private static final String SQL_CONSULTA_RECORRIDOS = "SELECT id_recorrido, tipo, nombre FROM recorrido";
 	private static final String SQL_INSERTAR_RECORRIDO = "INSERT INTO recorrido(tipo, nombre, descripcion, hora_frecuente, dia_frecuente) VALUES (?,?,?,?,?)";
