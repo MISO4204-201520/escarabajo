@@ -6,7 +6,7 @@
 GET     /                           controllers.Application.index()
 GET     /getFormRecorridos          controllers.ControllerRecorrido.getFormRecorridos
 POST    /FormRecorridos   		    controllers.ControllerRecorrido.postFormRecorridos
-
+GET		/listRecorridos				controllers.ControllerRecorrido.listarRecorridos()
 
 
 
