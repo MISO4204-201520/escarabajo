@@ -1,7 +1,11 @@
 @(formRecorrido: Form[ControllerRecorrido.FormularioRecorrido], 
 	tipoRecorrido:List[String],  
 	diaFrecuente:Map[String,Boolean], 
-	horaFrecuente:Map[String,Boolean])
+	horaFrecuente:Map[String,Boolean],
+	addressLat:String, 
+	addressLong:String, 
+	addressEndLat: String, 
+	addressEndLong: String)
 
 @import views.html.bootstrap3._
 
@@ -15,8 +19,6 @@
 </style>
 <script type="text/javascript">
 
-	//$("#Frecuente").prop("checked", true);
-	
 	$(document).ready(function(){
 	
 		$('#Recreacion').change(function (){
@@ -43,9 +45,6 @@
 </script>
 
   <!-- Header -->
-	<div id="legend">
-		<legend>Student Data</legend>
-	</div>
 	
 	<div style ="padding: 10px 0 10px 0">
 	@radiobuttons(formRecorrido("tipoRecorrido"),
@@ -82,9 +81,10 @@
 	    'type -> "datetime-local"
 		)
 	</div>
+	
 	<div id="divFechaFin" style ="padding: 10px 0 10px 0">
 		@helper.inputText(formRecorrido("fechaFinRuta"),
-	    '_label -> "Fecha llegada",
+	    '_value -> addressLat,
 	    'type -> "datetime-local"
 		)
 	</div>

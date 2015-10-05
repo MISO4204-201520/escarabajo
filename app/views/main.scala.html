@@ -71,7 +71,7 @@
         </nav>
 
 
-        <div class="container">
+        <div>
             @if(flash.contains(Application.FLASH_ERROR_KEY)) {
                 <div class="alert alert-danger" role="alert">
                     <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">
@@ -87,24 +87,7 @@
                 </div>
             }
             @content
-
-
-
-
-
-            <hr>
-
-            <footer>
-                <p>&copy;
-                    2012-2014 Play! Authenticate. Licensed under Apache License, Version 2.0. View details <a href="https://github.com/joscha/play-authenticate/blob/master/LICENSE">
-                        here</a>.</p>
-                <p>
-                    <small>Styles by <a href="http://getbootstrap.com" target="_blank">
-                        Twitter Bootstrap</a> &middot;
-                        Provider icons by <a href="https://github.com/paulrobertlloyd/socialmediaicons/" target="_blank">
-                            Paul Robert Lloyd</a></small></p>
-            </footer>
-        </div> <!-- /container -->
+        </div>
 
     </body>
 </html>

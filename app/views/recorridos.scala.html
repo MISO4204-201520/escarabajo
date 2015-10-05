@@ -54,7 +54,7 @@
 					addressLat = result[0].geometry.location.lat();
 					addressLong = result[0].geometry.location.lng();
 					
-					///Buscar coodenadas direccion final		
+					 //Buscar coodenadas direccion final		
 					if (geoCoderEnd) {
 						geoCoderEnd.geocode(direccionFinal, function(result, status){
 							if (status == google.maps.GeocoderStatus.OK) {
@@ -147,7 +147,7 @@
         <h2>Crea tu recorrido</h2>
    		 
    		 @form(routes.ControllerRecorrido.postFormRecorridos) {
-   			 @fieldset(formRecorrido, tipoRecorrido, diaFrecuente, horaFrecuente)
+   		 	 @fieldset(formRecorrido, tipoRecorrido, diaFrecuente, horaFrecuente, "1" , "2", "3", "4")
 		}
 	<br>
   

@@ -71,17 +71,17 @@ public class ControllerRecorrido extends Controller{
         	
         	SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         	
-        	try {
-				Date fechaInicio = format.parse(formRecorrido.fechaInicioRuta);
-				Date fechaFin = format.parse(formRecorrido.fechaFinRuta);
+        	//try {
+				Date fechaInicio = new Date(); //format.parse(formRecorrido.fechaInicioRuta);
+				Date fechaFin = new Date();//format.parse(formRecorrido.fechaFinRuta);
 				
 				ruta.setFechaInicioRuta(fechaInicio);
 				ruta.setFechaFinRuta(fechaFin);
 				
-			} catch (ParseException e) {
+			/*} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			}*/
         	
         	ruta.setLugarInicio(formRecorrido.lugarInicio);
         	ruta.setLugarFin(formRecorrido.lugarFin);
@@ -124,13 +124,11 @@ public class ControllerRecorrido extends Controller{
 	{
 		Connection con = Connector.getConnection();
 		RecorridoDAO recorridoDao = new RecorridoDAO();
-    	//RutaDAO rutaDao =  new RutaDAO();
-		
+    	RutaDAO rutaDao =  new RutaDAO();
+		recorrido.getLstRuta().add(ruta);
 		recorridoDao.agregarRecorrido(recorrido);
-			//mensaje += rutaDao.insertarRuta();
-		Connector.closeConnection(con);
+			//rutaDao.agregarRuta(ruta);
 		
-    	
 	}
 	
 	public static class FormularioRecorrido {
@@ -143,6 +141,8 @@ public class ControllerRecorrido extends Controller{
 		public String fechaFinRuta;
 		public String latitudInicio;
 		public String longitudInicio;
+		public String latitudFin;
+		public String longitudFin;
 		public String lugarInicio;
 		public String lugarFin;
     } 
