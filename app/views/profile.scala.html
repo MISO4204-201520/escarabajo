@@ -33,10 +33,24 @@
         <br/>
         }
     }
-
+	<div id="im_jug1">
+	<h1>holaa</h1>
+	</div>
     <br/>
     @currentAuth() { auth =>
-       <br><img src='http://graph.facebook.com/@auth.getId()/picture?type=large'><br>
+    @localUser.getulr
+     <script>
+      $(document).ready(function () {
+    	    var jsArray = [ @localUser.getulr.mkString(",") ];
+    	    console.log(jsArray[0]);
+    	    var url ="http://graph.facebook.com/"+jsArray[0]+"/picture?type=large"
+    	    		console.log(url);
+    	      	console.log("imagen de fb");
+    	        document.getElementById("im_jug1").innerHTML="<img src='http://graph.facebook.com/"+jsArray[0]+"/picture?type=large'></img>";
+    	       })
+       </script>
+    	
+    
         @Messages("playauthenticate.profile.logged") @_providerIcon(auth.getProvider())<br/>
         @if(auth.expires() != -1){
           @Messages("playauthenticate.profile.session", auth.getId(), Application.formatTimestamp(auth.expires()))

@@ -45,6 +45,7 @@ public class User extends AppModel implements Subject {
 	
 	public String lastName;
 
+
 	@Formats.DateTime(pattern = "yyyy-MM-dd HH:mm:ss")
 	public Date lastLogin;
 
@@ -190,6 +191,26 @@ public class User extends AppModel implements Subject {
 		}
 		return providerKeys;
 	}
+	
+	
+	public Set<String> getulr() {
+		final Set<String> provideruserids = new HashSet<String>(
+				this.linkedAccounts.size());
+		for (final LinkedAccount acc : this.linkedAccounts) {
+			if (acc.providerUserId.length()== 17)
+			{ provideruserids.add(acc.providerUserId);
+					
+			}else{
+				
+
+			}
+			
+		}
+		return provideruserids;
+	}
+	
+	
+	
 
 	public static void addLinkedAccount(final AuthUser oldUser,
 			final AuthUser newUser) {
