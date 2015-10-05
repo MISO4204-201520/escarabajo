@@ -18,14 +18,15 @@
 		          @acceptForm.globalError.message
 		     	</p>
             }
-
+            
+	<label for="label-merge">@label</label>
 	   @inputRadioGroup(
             acceptForm("accept"),
             options = Seq(
             	"true"-> Messages("playauthenticate.merge.accounts.true"),
             	"false"->Messages("playauthenticate.merge.accounts.false")
             ),
-            '_label -> label,
+            'class -> "custom-radio-option",
             '_showConstraints -> false
         )
 

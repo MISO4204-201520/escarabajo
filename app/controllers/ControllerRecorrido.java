@@ -29,6 +29,8 @@ import play.data.Form;
 import play.data.format.Formats.DateTime;
 import play.data.validation.Constraints.*;
 
+import static play.libs.Json.toJson;
+
 import models.Recorrido;
 import models.Ruta;
 import play.mvc.Controller;
@@ -131,6 +133,17 @@ public class ControllerRecorrido extends Controller{
 		recorridoDao.agregarRecorrido(recorrido);
 	}
 	
+	
+	public static Result listarRecorridos(){
+		
+		RecorridoDAO recorridoDAO = new RecorridoDAO();
+		
+		List<Recorrido> lstRecorridos = recorridoDAO.listarRecorridos();
+		
+		return ok(toJson(lstRecorridos));
+		
+	}
+	
 	public static class FormularioRecorrido {
 		@Required public String tipoRecorrido;
 		@Required public String nombre;
@@ -145,7 +158,9 @@ public class ControllerRecorrido extends Controller{
 		public String longitudFin;
 		public String lugarInicio;
 		public String lugarFin;
-    } 
+    }
+	
+	
 	
 }
 
