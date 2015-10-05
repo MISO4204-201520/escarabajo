@@ -19,13 +19,15 @@
 		     	</p>
             }
 
+		<label for="label-link">@label</label>
+
 	   @inputRadioGroup(
             acceptForm("accept"),
-            options = Seq(
+            options = Seq(		
             	"true"-> Messages("playauthenticate.link.account.true"),
             	"false"->Messages("playauthenticate.link.account.false")
             ),
-            '_label -> label,
+            'class -> "custom-radio-option",
             '_showConstraints -> false
         )
 

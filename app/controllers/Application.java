@@ -1,12 +1,8 @@
 package controllers;
 
-import java.sql.Connection;
-
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.SimpleDateFormat;
+
 import java.util.Date;
-import java.util.List;
 
 import com.feth.play.module.pa.PlayAuthenticate;
 import com.feth.play.module.pa.providers.password.UsernamePasswordAuthProvider;
@@ -14,18 +10,20 @@ import com.feth.play.module.pa.user.AuthUser;
 
 import be.objectify.deadbolt.java.actions.Group;
 import be.objectify.deadbolt.java.actions.Restrict;
-import models.Recorrido;
 import models.User;
-import database.Connector;
-import database.RecorridoDAO;
 import play.Routes;
 import play.data.Form;
-import play.mvc.*;
+import play.mvc.Controller;
 import play.mvc.Http.Session;
+import play.mvc.Result;
 import providers.MyUsernamePasswordAuthProvider;
 import providers.MyUsernamePasswordAuthProvider.MyLogin;
 import providers.MyUsernamePasswordAuthProvider.MySignup;
-import views.html.*;
+import views.html.index;
+import views.html.login;
+import views.html.profile;
+import views.html.restricted;
+import views.html.signup;
 
 public class Application extends Controller {
 	
