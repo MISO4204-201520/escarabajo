@@ -30,15 +30,15 @@ public class MetricasXRecorrido extends Model{
 	@Column(nullable=false)
 	private Recorrido recorrido;
 	
-	@Column(name="fecha", nullable=false)
-	private Date fecha;
+	@Column(name="ind_confirmado", nullable=false)
+	private Boolean confirmado;
 	
-	@Column(name="valor_metrica", nullable=false)
-	private Double valorMetrica;
+	@Column(name="ind_administrador", nullable=false)
+	private Boolean administrador;
 	
 	public static Finder<Long, MetricasXRecorrido> find;
 	
-	public MetricasXRecorrido(){
+	/*public UsuarioXRecorrido(){
 		super();
 		find = new Finder<Long, MetricasXRecorrido>(MetricasXRecorrido.class);
 	}
@@ -53,7 +53,7 @@ public class MetricasXRecorrido extends Model{
 		this.recorrido = recorrido;
 		this.fecha = fecha;
 		this.valorMetrica = valorMetrica;
-	}
+	}*/
 
 	public Long getIdMetricaXRecorrido() {
 		return idMetricaXRecorrido;
@@ -87,7 +87,7 @@ public class MetricasXRecorrido extends Model{
 		this.recorrido = recorrido;
 	}
 
-	public Date getFecha() {
+	/*public Date getFecha() {
 		return fecha;
 	}
 
@@ -102,7 +102,7 @@ public class MetricasXRecorrido extends Model{
 	public void setValorMetrica(Double valorMetrica) {
 		this.valorMetrica = valorMetrica;
 	}
-	
+	*/
 	
 	
 	
