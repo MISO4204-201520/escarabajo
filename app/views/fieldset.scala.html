@@ -61,7 +61,7 @@
 	
 	<div id="divDiaFrec" style ="padding: 10px 0 10px 0">	
 	@checkboxes(formRecorrido("diaFrecuente"),
-		label = "Días recorrido:",
+		label = "D&iacute;as recorrido:",
 		checkboxMap = diaFrecuente)
 	</div>
 	
@@ -78,14 +78,15 @@
 	<div id="divFechaInicio" style ="padding: 10px 0 10px 0; margin-left:0">
 		@helper.inputText(formRecorrido("fechaInicioRuta"),
 	    '_label -> "Fecha salida",
-	    'type -> "datetime-local"
+	    'type -> "date",
+	    'format -> "dd/MM/yyyy HH:mm:ss"
 		)
 	</div>
 	
 	<div id="divFechaFin" style ="padding: 10px 0 10px 0">
 		@helper.inputText(formRecorrido("fechaFinRuta"),
-	    '_value -> addressLat,
-	    'type -> "datetime-local"
+	    '_label -> "Fecha fin",
+	    'type -> "date"
 		)
 	</div>
 	<table border="0">
@@ -130,3 +131,28 @@
 		<button id="submit" type="submit" value="Submit" class="btn btn-primary">Aceptar</button>
 		<button id="cancel" class="btn cancel">Cancelar</button>
 	</div>
+	
+		@helper.inputText(
+	    	formRecorrido("latitudInicio"),
+	    	'_label -> "",
+	    	'style -> "display: none"
+		)
+		
+		@helper.inputText(
+	    	formRecorrido("longitudInicio"),
+	    	'_label -> "",
+	    	'style -> "display: none"
+		)
+		
+		@helper.inputText(
+	    	formRecorrido("latitudFin"),
+	    	'_label -> "",
+	    	'style -> "display: none"
+		)
+		
+		@helper.inputText(
+	    	formRecorrido("longitudFin"),
+	    	'_label -> "",
+	    	'style -> "display: none"
+		)
+	
