@@ -1,13 +1,17 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import scala.Array;
 
 import com.avaje.ebean.Model;
 
@@ -38,12 +42,16 @@ public class Recorrido extends Model {
 	@OneToMany(mappedBy = "recorrido")
 	private List<MetricasXRecorrido> metricasXRecorrido;
 	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "recorrido")
+	private List<Ruta> lstRuta;
+	
 	public static Finder<Long, Recorrido> find;
 	
 	public Recorrido()
 	{
 		super();
 		find = new Finder<Long, Recorrido>(Recorrido.class);
+		lstRuta= new ArrayList<Ruta>();
 	}
 	
 	public Recorrido(Long idRecorrido, int tipo, String nombre, String descripcion, String horaFrecuente, String diaFrecuente){
@@ -56,6 +64,15 @@ public class Recorrido extends Model {
 		this.diaFrecuente = diaFrecuente;
 	}
 	
+	
+	public List<Ruta> getLstRuta() {
+		return lstRuta;
+	}
+
+	public void setLstRuta(List<Ruta> lstRuta) {
+		this.lstRuta = lstRuta;
+	}
+
 	public Long getIdRecorrido() {
 		return idRecorrido;
 	}

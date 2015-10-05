@@ -30,3 +30,10 @@ form .error .help-inline {
 h1 {
     margin-bottom: 20px !important;
 }
+
+/*Arreglo en vista de merge accounts*/
+span.form-control {
+	display: flex;
+	height: auto;
+}
+	
