@@ -7,7 +7,6 @@
 <html lang="@lang().code()">
     <head>
         <title>@title</title>
-
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="Play Authenticate - an authentication module for the Play! Framework 2.0">
@@ -23,7 +22,6 @@
     </head>
 
     <body>
-
         <nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
             <div class="container-fluid">
                     <!-- Brand and toggle get grouped for better mobile display -->
@@ -34,7 +32,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="@routes.Application.index()">Play! Authenticate</a>
+                    <a class="navbar-brand" href="@routes.Application.index()">Proyecto Escarabajo</a>
                 </div>
 
                     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -71,7 +69,7 @@
         </nav>
 
 
-        <div class="container">
+        <div>
             @if(flash.contains(Application.FLASH_ERROR_KEY)) {
                 <div class="alert alert-danger" role="alert">
                     <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">
@@ -85,26 +83,9 @@
                         Close</span></button>
                     @flash().get(Application.FLASH_MESSAGE_KEY)
                 </div>
-            }
+            }       
             @content
-
-
-
-
-
-            <hr>
-
-            <footer>
-                <p>&copy;
-                    2012-2014 Play! Authenticate. Licensed under Apache License, Version 2.0. View details <a href="https://github.com/joscha/play-authenticate/blob/master/LICENSE">
-                        here</a>.</p>
-                <p>
-                    <small>Styles by <a href="http://getbootstrap.com" target="_blank">
-                        Twitter Bootstrap</a> &middot;
-                        Provider icons by <a href="https://github.com/paulrobertlloyd/socialmediaicons/" target="_blank">
-                            Paul Robert Lloyd</a></small></p>
-            </footer>
-        </div> <!-- /container -->
+        </div>
 
     </body>
 </html>

@@ -38,6 +38,20 @@ create table recorrido (
   constraint pk_recorrido primary key (id_recorrido))
 ;
 
+create table ruta (
+  id_ruta                   serial not null,
+  recorrido_id_recorrido    bigint,
+  fecha_inicio_ruta         timestamp,
+  fecha_fin_ruta            timestamp,
+  latitud_inicio            float,
+  longitud_incio            float,
+  latitud_fin               float,
+  longitud_fin              float,
+  lugar_inicio              varchar(255),
+  lugar_fin                 varchar(255),
+  constraint pk_ruta primary key (id_ruta))
+;
+
 create table security_role (
   id                        bigserial not null,
   role_name                 varchar(255),
@@ -94,8 +108,10 @@ alter table metricas_x_recorridos add constraint fk_metricas_x_recorridos_usuar_
 create index ix_metricas_x_recorridos_usuar_3 on metricas_x_recorridos (usuario_id);
 alter table metricas_x_recorridos add constraint fk_metricas_x_recorridos_recor_4 foreign key (recorrido_id_recorrido) references recorrido (id_recorrido);
 create index ix_metricas_x_recorridos_recor_4 on metricas_x_recorridos (recorrido_id_recorrido);
-alter table token_action add constraint fk_token_action_targetUser_5 foreign key (target_user_id) references users (id);
-create index ix_token_action_targetUser_5 on token_action (target_user_id);
+alter table ruta add constraint fk_ruta_recorrido_5 foreign key (recorrido_id_recorrido) references recorrido (id_recorrido);
+create index ix_ruta_recorrido_5 on ruta (recorrido_id_recorrido);
+alter table token_action add constraint fk_token_action_targetUser_6 foreign key (target_user_id) references users (id);
+create index ix_token_action_targetUser_6 on token_action (target_user_id);
 
 
 
@@ -116,6 +132,8 @@ drop table if exists metrica cascade;
 drop table if exists metricas_x_recorridos cascade;
 
 drop table if exists recorrido cascade;
+
+drop table if exists ruta cascade;
 
 drop table if exists security_role cascade;
 
