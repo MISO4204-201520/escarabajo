@@ -1,6 +1,7 @@
 package database;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import models.Ruta;
 
@@ -14,5 +15,9 @@ public class RutaDAO {
 	public void agregarRuta(Ruta rt) throws SQLException
 	{
 		rt.save();
+	}
+	
+	public List<Ruta> listarRutas(){
+		return Ruta.find.all();
 	}
 }
