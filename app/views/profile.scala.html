@@ -2,53 +2,90 @@
 
 @import com.feth.play.module.pa.views.html._
 
+@import play.api.libs.json.Json
+
 @main(Messages("playauthenticate.profile.title"),"profile") {
 
+	<div class = "title">
     <h1>@Messages("playauthenticate.profile.title")</h1>
     <p>
-    Your name is @localUser.name and your email address is @if(!localUser.email) {<em>&lt;unknown&gt;</em>.} else {
-    	@localUser.email.
-	    <i>
-	    @if(!localUser.emailValidated && localUser.email) {
+    </div>
+    
+    <div class = "conten">
+    <h2>hola  @localUser.name es un gusto tenerte de nuevo por aca </h2>
+    </div>
+    
+    <div class="row">
+    <div class = "col-xs-6 col-md-4" id= "im_jug1">
+    
+					
+	 </div>
+    
+    <div class = "col-xs-9 col-md-8">
+    <h4> Datos personales</h2>
+    <h5>Nombre completo : @localUser.name</h5>
+    <h5>Id usuario de red social :@localUser.getulr</h5>
+    <h5>Correo electronico : @if(!localUser.email) {<em>&lt;unknown&gt;</em>.} else {@localUser.email.}</h5>
+    
+    <h5>Estado de la cuenta: @if(!localUser.emailValidated && localUser.email) {
 	      (<a href="@routes.Account.verifyEmail">unverified - click to verify</a>)
-	    } else {
-	      (verified)
-	    }</i>
-    }
-    <br />
-        @if(localUser.firstName && localUser.lastName) {
-            Your first name is @localUser.firstName and your last name is @localUser.lastName
-            <br/>
-        }
-    @defining(localUser.getProviders()) { providers =>
+	    } else {	      (verified)
+	    }</h5>
+	<h5>    Proveedores asociados con esta cuenta : @defining(localUser.getProviders()) { providers =>
         @if(providers.size() > 0) {
         @if(providers.size() ==1) {
-            @Messages("playauthenticate.profile.providers_one")
+            
         } else {
-            @Messages("playauthenticate.profile.providers_many",providers.size().toString())
+            
         }
         @for(p <- providers) {
             @_providerIcon(p)
         }
-        <br/>
-        }
-    }
-	<div id="im_jug1">
-	<h1>holaa</h1>
-	</div>
-    <br/>
+         }
+    }</h5>
+    
+    <h5> 
+	
     @currentAuth() { auth =>
-    @localUser.getulr
-     <script>
-      $(document).ready(function () {
-    	    var jsArray = [ @localUser.getulr.mkString(",") ];
-    	    console.log(jsArray[0]);
-    	    var url ="http://graph.facebook.com/"+jsArray[0]+"/picture?type=large"
-    	    		console.log(url);
-    	      	console.log("imagen de fb");
-    	        document.getElementById("im_jug1").innerHTML="<img src='http://graph.facebook.com/"+jsArray[0]+"/picture?type=large'></img>";
-    	       })
-       </script>
+    
+    
+    <script>
+    
+	    var jsArray = [ @localUser.getulr.mkString(",") ];  	    
+	    var a =0 ;
+	    for (index = 0; index < jsArray.length; ++index) {
+	    	if(jsArray[index].toString().length>14)
+	    		{
+	    		a = 1 ;  
+	    		var item = index;
+	    		}
+	    	else
+	    		{
+	    		
+	    		}
+	    
+	    }
+	    console.log(a)
+	    if(a==1)
+	    	{
+	    	
+	    	console.log("con foto de fb")
+            document.getElementById("im_jug1").innerHTML="<img src='http://graph.facebook.com/"+jsArray[item]+"/picture?type=large'></img>";
+
+
+
+
+	    	}
+	    else{
+	    	console.log("sin foto")
+	    	document.getElementById("im_jug1").innerHTML="<img src='http://i844.photobucket.com/albums/ab7/MARTIN3280/c2797649-a5bc-457d-9cb4-9c840c80eb37_zpswugxyyas.jpg' ></img>";
+	    }
+	    	
+	    
+	    
+	    
+	    </script>
+    
     	
     
         @Messages("playauthenticate.profile.logged") @_providerIcon(auth.getProvider())<br/>
@@ -60,10 +97,12 @@
     
     }
     
-    <br/>
-    <ul>
-    	<li><a href="@routes.Account.changePassword">@Messages("playauthenticate.profile.password_change")</a></li>
-    </ul>
+       </p>
+    </h5>
     
-    </p>
+    
+         </div>
+ <ul>
+	<li><a href="@routes.Account.changePassword">@Messages("playauthenticate.profile.password_change")</a></li>
+    </ul>
 }

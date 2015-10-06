@@ -10,6 +10,7 @@ import com.feth.play.module.pa.user.AuthUser;
 import com.feth.play.module.pa.user.AuthUserIdentity;
 import com.feth.play.module.pa.user.EmailIdentity;
 import com.feth.play.module.pa.user.NameIdentity;
+import akka.actor.dsl.Inbox.Get;
 import com.feth.play.module.pa.user.FirstLastNameIdentity;
 import models.TokenAction.Type;
 import play.data.format.Formats;
@@ -182,13 +183,12 @@ public class User extends AppModel implements Subject {
 		User.findByAuthUserIdentity(oldUser).merge(
 				User.findByAuthUserIdentity(newUser));
 	}
-
 	public Set<String> getProviders() {
 		final Set<String> providerKeys = new HashSet<String>(
 				this.linkedAccounts.size());
 		for (final LinkedAccount acc : this.linkedAccounts) {
-			providerKeys.add(acc.providerKey);
-		}
+						providerKeys.add(acc.providerKey);
+				}
 		return providerKeys;
 	}
 	
@@ -197,19 +197,18 @@ public class User extends AppModel implements Subject {
 		final Set<String> provideruserids = new HashSet<String>(
 				this.linkedAccounts.size());
 		for (final LinkedAccount acc : this.linkedAccounts) {
-			if (acc.providerUserId.length()== 17)
-			{ provideruserids.add(acc.providerUserId);
+			if (acc.providerUserId.length()> 25)
+			{ 
 					
 			}else{
-				
+				provideruserids.add(acc.providerUserId);
 
 			}
 			
 		}
 		return provideruserids;
 	}
-	
-	
+
 	
 
 	public static void addLinkedAccount(final AuthUser oldUser,
