@@ -3,6 +3,25 @@
 
 # --- !Ups
 
+create table estacion (
+  id_estacion               bigserial not null,
+  nombre                    varchar(255) not null,
+  lugar                     varchar(255),
+  latitud                   float,
+  longitud                  float,
+  tarifa_x_h                integer,
+  hora_inicio_atencion      timestamp,
+  hora_fin_atencion         timestamp,
+  para_alquiler             boolean,
+  para_entrega              boolean,
+  indicativo_telefono_fijo  varchar(255),
+  telefono_fijo             varchar(255),
+  celular                   varchar(255),
+  dia_frecuente             varchar(255),
+  sitio_de_alquiler_id_sitio bigint,
+  constraint pk_estacion primary key (id_estacion))
+;
+
 create table linked_account (
   id                        bigserial not null,
   user_id                   bigint,
@@ -58,6 +77,16 @@ create table security_role (
   constraint pk_security_role primary key (id))
 ;
 
+create table sitio_de_alquiler (
+  id_sitio                  bigserial not null,
+  nombre                    varchar(255) not null,
+  indicativo_telefono_fijo  varchar(255),
+  telefono_fijo             varchar(255),
+  email                     varchar(255),
+  celular                   varchar(255),
+  constraint pk_sitio_de_alquiler primary key (id_sitio))
+;
+
 create table token_action (
   id                        bigserial not null,
   token                     varchar(255),
@@ -100,18 +129,20 @@ create table users_user_permission (
   user_permission_id             bigint not null,
   constraint pk_users_user_permission primary key (users_id, user_permission_id))
 ;
-alter table linked_account add constraint fk_linked_account_user_1 foreign key (user_id) references users (id);
-create index ix_linked_account_user_1 on linked_account (user_id);
-alter table metricas_x_recorridos add constraint fk_metricas_x_recorridos_metri_2 foreign key (metrica_id_metrica) references metrica (id_metrica);
-create index ix_metricas_x_recorridos_metri_2 on metricas_x_recorridos (metrica_id_metrica);
-alter table metricas_x_recorridos add constraint fk_metricas_x_recorridos_usuar_3 foreign key (usuario_id) references users (id);
-create index ix_metricas_x_recorridos_usuar_3 on metricas_x_recorridos (usuario_id);
-alter table metricas_x_recorridos add constraint fk_metricas_x_recorridos_recor_4 foreign key (recorrido_id_recorrido) references recorrido (id_recorrido);
-create index ix_metricas_x_recorridos_recor_4 on metricas_x_recorridos (recorrido_id_recorrido);
-alter table ruta add constraint fk_ruta_recorrido_5 foreign key (recorrido_id_recorrido) references recorrido (id_recorrido);
-create index ix_ruta_recorrido_5 on ruta (recorrido_id_recorrido);
-alter table token_action add constraint fk_token_action_targetUser_6 foreign key (target_user_id) references users (id);
-create index ix_token_action_targetUser_6 on token_action (target_user_id);
+alter table estacion add constraint fk_estacion_sitioDeAlquiler_1 foreign key (sitio_de_alquiler_id_sitio) references sitio_de_alquiler (id_sitio);
+create index ix_estacion_sitioDeAlquiler_1 on estacion (sitio_de_alquiler_id_sitio);
+alter table linked_account add constraint fk_linked_account_user_2 foreign key (user_id) references users (id);
+create index ix_linked_account_user_2 on linked_account (user_id);
+alter table metricas_x_recorridos add constraint fk_metricas_x_recorridos_metri_3 foreign key (metrica_id_metrica) references metrica (id_metrica);
+create index ix_metricas_x_recorridos_metri_3 on metricas_x_recorridos (metrica_id_metrica);
+alter table metricas_x_recorridos add constraint fk_metricas_x_recorridos_usuar_4 foreign key (usuario_id) references users (id);
+create index ix_metricas_x_recorridos_usuar_4 on metricas_x_recorridos (usuario_id);
+alter table metricas_x_recorridos add constraint fk_metricas_x_recorridos_recor_5 foreign key (recorrido_id_recorrido) references recorrido (id_recorrido);
+create index ix_metricas_x_recorridos_recor_5 on metricas_x_recorridos (recorrido_id_recorrido);
+alter table ruta add constraint fk_ruta_recorrido_6 foreign key (recorrido_id_recorrido) references recorrido (id_recorrido);
+create index ix_ruta_recorrido_6 on ruta (recorrido_id_recorrido);
+alter table token_action add constraint fk_token_action_targetUser_7 foreign key (target_user_id) references users (id);
+create index ix_token_action_targetUser_7 on token_action (target_user_id);
 
 
 
@@ -125,6 +156,8 @@ alter table users_user_permission add constraint fk_users_user_permission_user_0
 
 # --- !Downs
 
+drop table if exists estacion cascade;
+
 drop table if exists linked_account cascade;
 
 drop table if exists metrica cascade;
@@ -136,6 +169,8 @@ drop table if exists recorrido cascade;
 drop table if exists ruta cascade;
 
 drop table if exists security_role cascade;
+
+drop table if exists sitio_de_alquiler cascade;
 
 drop table if exists token_action cascade;
 
