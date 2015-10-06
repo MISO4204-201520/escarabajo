@@ -3,6 +3,7 @@ package models;
 import be.objectify.deadbolt.core.models.Permission;
 import be.objectify.deadbolt.core.models.Role;
 import be.objectify.deadbolt.core.models.Subject;
+
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.ExpressionList;
 import com.feth.play.module.pa.providers.password.UsernamePasswordAuthUser;
@@ -10,12 +11,15 @@ import com.feth.play.module.pa.user.AuthUser;
 import com.feth.play.module.pa.user.AuthUserIdentity;
 import com.feth.play.module.pa.user.EmailIdentity;
 import com.feth.play.module.pa.user.NameIdentity;
+import akka.actor.dsl.Inbox.Get;
 import com.feth.play.module.pa.user.FirstLastNameIdentity;
+
 import models.TokenAction.Type;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 
 import javax.persistence.*;
+
 import java.util.*;
 
 /**
@@ -44,6 +48,7 @@ public class User extends AppModel implements Subject {
 	public String firstName;
 	
 	public String lastName;
+
 
 	@Formats.DateTime(pattern = "yyyy-MM-dd HH:mm:ss")
 	public Date lastLogin;
@@ -184,15 +189,33 @@ public class User extends AppModel implements Subject {
 		User.findByAuthUserIdentity(oldUser).merge(
 				User.findByAuthUserIdentity(newUser));
 	}
-
 	public Set<String> getProviders() {
 		final Set<String> providerKeys = new HashSet<String>(
 				this.linkedAccounts.size());
 		for (final LinkedAccount acc : this.linkedAccounts) {
-			providerKeys.add(acc.providerKey);
-		}
+						providerKeys.add(acc.providerKey);
+				}
 		return providerKeys;
 	}
+	
+	
+	public Set<String> getulr() {
+		final Set<String> provideruserids = new HashSet<String>(
+				this.linkedAccounts.size());
+		for (final LinkedAccount acc : this.linkedAccounts) {
+			if (acc.providerUserId.length()> 25)
+			{ 
+					
+			}else{
+				provideruserids.add(acc.providerUserId);
+
+			}
+			
+		}
+		return provideruserids;
+	}
+
+	
 
 	public static void addLinkedAccount(final AuthUser oldUser,
 			final AuthUser newUser) {
@@ -256,4 +279,8 @@ public class User extends AppModel implements Subject {
 	public void setSitiosDeAlquiler(List<SitioDeAlquiler> sitiosDeAlquiler) {
 		this.sitiosDeAlquiler = sitiosDeAlquiler;
 	}
+	
+	@OneToMany(mappedBy = "usuario")
+	private List<UsuarioXRecorrido> usuarioXRecorrido;
+
 }

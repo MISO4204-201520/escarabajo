@@ -1,5 +1,6 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -11,6 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.avaje.ebean.Model;
+import com.avaje.ebean.Model.Finder;
 
 @Entity
 @Table(name="ruta")
@@ -20,7 +22,7 @@ public class Ruta extends Model {
 	@Id
 	@Column(name="id_ruta", nullable=false)
 	@GeneratedValue
-	private int idRuta;
+	private Long idRuta;
 	
 	@ManyToOne
 	private Recorrido recorrido;
@@ -49,10 +51,19 @@ public class Ruta extends Model {
 	@Column(name="lugar_fin")
 	private String lugarFin;
 	
-	public int getIdRuta() {
+	public static Finder<Long, Ruta> find;
+	
+	public Ruta(){
+		super();
+		find = new Finder<Long, Ruta>(Ruta.class);
+		recorrido = new Recorrido();
+	}
+	
+	
+	public Long getIdRuta() {
 		return idRuta;
 	}
-	public void setIdRuta(int idRuta) {
+	public void setIdRuta(Long idRuta) {
 		this.idRuta = idRuta;
 	}
 	public Recorrido getIdRecorrido() {
