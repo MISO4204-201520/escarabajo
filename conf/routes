@@ -8,7 +8,11 @@ GET     /getFormRecorridos          controllers.ControllerRecorrido.getFormRecor
 POST    /FormRecorridos   		    controllers.ControllerRecorrido.postFormRecorridos
 GET		/listRecorridos				controllers.ControllerRecorrido.listarRecorridos()
 
-
+#Sitios de alquiler
+GET		/sitiosDeAlquiler			controllers.ControllerSitiosDeAlquiler.listarSitiosDeAlquiler()
+GET 	/sitiosDeAlquiler/:idSitio 	controllers.ControllerSitiosDeAlquiler.details(idSitio: Long)
+POST 	/sitiosDeAlquiler/save 		controllers.ControllerSitiosDeAlquiler.save()
+GET 	/sitiosDeAlquiler/ 		    controllers.ControllerSitiosDeAlquiler.newSitio()
 
 GET     /restricted                 controllers.Application.restricted
 GET     /assets/javascript/routes.js    controllers.Application.jsRoutes

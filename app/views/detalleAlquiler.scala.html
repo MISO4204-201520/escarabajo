@@ -1,0 +1,19 @@
+@(sitioForm: Form[SitioDeAlquiler])
+@import helper._
+
+@main("Formulario sitio de alquiler") {
+	<h1></h1>
+	@helper.form(action = routes.ControllerSitiosDeAlquiler.save()) {
+	<fieldset style="padding-left: 1cm;">
+		<legend>Sitio de alquiler de bicicletas: @sitioForm("Nombre").valueOr("New")</legend>
+		@helper.inputText(sitioForm("idSitio"), '_label -> "Identificador")
+		@helper.inputText(sitioForm("nombre"), '_label -> "Nombre")
+		@helper.inputText(sitioForm("indicativoTelefonoFijo"),'_label -> "Indicativo telefono")
+		@helper.inputText(sitioForm("telefonoFijo"), '_label -> "Telefono")
+		@helper.inputText(sitioForm("celular"),'_label -> "Celular")
+		@helper.inputText(sitioForm("email"),'_label -> "Correo electrónico")
+	</fieldset>
+	<input type="submit" class="btn btn-primary" value="Guardar" style="margin-left: 1cm;">
+	<a class="btn" href="@routes.ControllerSitiosDeAlquiler.listarSitiosDeAlquiler()">Cancelar</a>
+	}
+}

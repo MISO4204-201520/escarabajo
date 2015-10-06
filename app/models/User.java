@@ -60,6 +60,9 @@ public class User extends AppModel implements Subject {
 
 	@ManyToMany
 	public List<UserPermission> permissions;
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
+	private List<SitioDeAlquiler> sitiosDeAlquiler;	
 
 	public static final AppModel.Finder<Long, User> find = new AppModel.Finder<Long, User>(
 			Long.class, User.class);
@@ -244,5 +247,13 @@ public class User extends AppModel implements Subject {
 		// You might want to wrap this into a transaction
 		this.changePassword(authUser, create);
 		TokenAction.deleteByUser(this, Type.PASSWORD_RESET);
+	}
+
+	public List<SitioDeAlquiler> getSitiosDeAlquiler() {
+		return sitiosDeAlquiler;
+	}
+
+	public void setSitiosDeAlquiler(List<SitioDeAlquiler> sitiosDeAlquiler) {
+		this.sitiosDeAlquiler = sitiosDeAlquiler;
 	}
 }

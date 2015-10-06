@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -24,7 +25,7 @@ public class SitioDeAlquiler extends Model {
 	@Column(name="id_sitio", nullable=false)
 	private Long idSitio;  
 	
-	@Column(name="nombre", nullable=false)
+	@Column(name="nombre", nullable=false, unique=true)
 	private String nombre;
 	
 	@Column(name="indicativo_telefono_fijo")
@@ -40,13 +41,15 @@ public class SitioDeAlquiler extends Model {
 	private String celular;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "sitioDeAlquiler")
-	private List<Estacion> estaciones;
+	private List<Estacion> estaciones;	
 	
+	@ManyToOne
+	private User usuario;
 	
 	public static Finder<Long, SitioDeAlquiler> find;
 	
 	public SitioDeAlquiler(Long idSitio, String nombre, String indicativoTelefonoFijo, String telefonoFijo,
-			String email, String celular, List<Estacion> estaciones) {
+			String email, String celular, List<Estacion> estaciones, User usuario) {
 		super();
 		find = new Finder<Long, SitioDeAlquiler>(SitioDeAlquiler.class);
 		this.idSitio = idSitio;
@@ -56,6 +59,7 @@ public class SitioDeAlquiler extends Model {
 		this.email = email;
 		this.celular = celular;
 		this.estaciones = estaciones;
+		this.usuario = usuario;
 	}
 	
 	public SitioDeAlquiler() {
@@ -118,6 +122,14 @@ public class SitioDeAlquiler extends Model {
 
 	public void setEstaciones(List<Estacion> estaciones) {
 		this.estaciones = estaciones;
+	}
+
+	public User getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(User usuario) {
+		this.usuario = usuario;
 	}
 
 }

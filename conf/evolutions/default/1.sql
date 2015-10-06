@@ -84,6 +84,8 @@ create table sitio_de_alquiler (
   telefono_fijo             varchar(255),
   email                     varchar(255),
   celular                   varchar(255),
+  usuario_id                bigint,
+  constraint uq_sitio_de_alquiler_nombre unique (nombre),
   constraint pk_sitio_de_alquiler primary key (id_sitio))
 ;
 
@@ -141,8 +143,10 @@ alter table metricas_x_recorridos add constraint fk_metricas_x_recorridos_recor_
 create index ix_metricas_x_recorridos_recor_5 on metricas_x_recorridos (recorrido_id_recorrido);
 alter table ruta add constraint fk_ruta_recorrido_6 foreign key (recorrido_id_recorrido) references recorrido (id_recorrido);
 create index ix_ruta_recorrido_6 on ruta (recorrido_id_recorrido);
-alter table token_action add constraint fk_token_action_targetUser_7 foreign key (target_user_id) references users (id);
-create index ix_token_action_targetUser_7 on token_action (target_user_id);
+alter table sitio_de_alquiler add constraint fk_sitio_de_alquiler_usuario_7 foreign key (usuario_id) references users (id);
+create index ix_sitio_de_alquiler_usuario_7 on sitio_de_alquiler (usuario_id);
+alter table token_action add constraint fk_token_action_targetUser_8 foreign key (target_user_id) references users (id);
+create index ix_token_action_targetUser_8 on token_action (target_user_id);
 
 
 
