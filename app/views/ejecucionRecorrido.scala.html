@@ -1,10 +1,78 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
-</head>
-<body>
+@(rutas: List[Ruta])
 
-</body>
-</html>
+@import helper._
+
+<style type="text/css">
+  html { height: 100% }
+  body { height: 100%; margin: 0px; padding: 0px;}
+  
+  #map_canvas {
+      width:529px; 
+      height:400px;
+  }
+  .box{
+      width:553px; 
+      height:423px;
+      border:1px solid #ccc;
+      padding:10px;
+      box-shadow: 1px 1px 3px #ccc;
+      background:#e5eCf9;
+  }
+  .search input[type=text]{
+      float:left;
+      width:460px;
+      padding:8px;
+      border:1px solid #4B8EFA;
+  }
+  .search input[type=button]{
+      margin-top: 7px;
+      float:right;
+      background-color:#4B8EFA;
+      border:0;
+      display:block;
+      color:white;
+      padding:8px;
+      cursor: pointer;
+  }
+  h1{
+      text-align: center;
+      font-family: cursive;
+      margin-top:15px;
+      font-size: 45px;
+  }
+  h2{
+      margin-top:15px;
+  }
+</style>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&language=es"></script>
+    <script type="text/javascript" src="javascripts/Escarabajo_Recorridos.js"></script>
+    <table border="0" cellpadding="0" cellspacing="3">
+        <tr>
+            <td colspan="2">
+                Origen:
+                <input type="text" id="txtSource" value="Kennedy, Bogota, Colombia" style="width: 200px" />
+                &nbsp; Destino:
+                <input type="text" id="txtDestination" value="Usaquen, Bogota, Colombia" style="wi1dth: 200px" />
+                <br />
+                <input type="button" value="Get Route" onclick="GetRoute()" />
+                <hr />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div id="dvDistance">
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div id="dvMap" style="width: 500px; height: 500px">
+                </div>
+            </td>
+            <td>
+                <div id="dvPanel" style="width: 500px; height: 500px">
+                </div>
+            </td>
+        </tr>
+    </table>
+    <br />

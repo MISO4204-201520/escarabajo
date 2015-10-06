@@ -30,7 +30,6 @@
         })
 	}
 
-
 	var geoCoderStart;
 	var geoCoderEnd;
 	function initialize(address, addressEnd) {
@@ -54,12 +53,18 @@
 					addressLat = result[0].geometry.location.lat();
 					addressLong = result[0].geometry.location.lng();
 					
+					$('#latitudInicio').val(addressLat);
+					$('#longitudInicio').val(addressLong);
+					
 					 //Buscar coodenadas direccion final		
 					if (geoCoderEnd) {
 						geoCoderEnd.geocode(direccionFinal, function(result, status){
 							if (status == google.maps.GeocoderStatus.OK) {
 								addressEndLat = result[0].geometry.location.lat();
 								addressEndLong = result[0].geometry.location.lng();
+								
+								$('#latitudFin').val(addressEndLat);
+								$('#longitudFin').val(addressEndLong);
 								
 								var p1 = new google.maps.LatLng(addressLat, addressLong);
 								var p2 = new google.maps.LatLng(addressEndLat, addressEndLong);
@@ -135,7 +140,7 @@
       margin-top:15px;
   }
 </style>
-<div class="wrapper row2">
+<div class="wrapper row2" style="margin-top: 40px">
   <div id="breadcrumb" class="clear" style="font-size:large">
   		Administración recorridos
   </div>

@@ -3,6 +3,7 @@ package models;
 import be.objectify.deadbolt.core.models.Permission;
 import be.objectify.deadbolt.core.models.Role;
 import be.objectify.deadbolt.core.models.Subject;
+
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.ExpressionList;
 import com.feth.play.module.pa.providers.password.UsernamePasswordAuthUser;
@@ -12,11 +13,13 @@ import com.feth.play.module.pa.user.EmailIdentity;
 import com.feth.play.module.pa.user.NameIdentity;
 import akka.actor.dsl.Inbox.Get;
 import com.feth.play.module.pa.user.FirstLastNameIdentity;
+
 import models.TokenAction.Type;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 
 import javax.persistence.*;
+
 import java.util.*;
 
 /**
@@ -265,4 +268,7 @@ public class User extends AppModel implements Subject {
 		this.changePassword(authUser, create);
 		TokenAction.deleteByUser(this, Type.PASSWORD_RESET);
 	}
+	
+	@OneToMany(mappedBy = "usuario")
+	private List<UsuarioXRecorrido> usuarioXRecorrido;
 }

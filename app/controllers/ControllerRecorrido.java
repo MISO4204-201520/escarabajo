@@ -1,7 +1,6 @@
 package controllers;
 
 import java.sql.Connection;
-
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
@@ -20,19 +19,17 @@ import be.objectify.deadbolt.java.actions.Group;
 import be.objectify.deadbolt.java.actions.Restrict;
 import database.Connector;
 import database.RecorridoDAO;
-
 import database.RutaDAO;
-
 import play.*;
 import play.mvc.*;
 import play.data.Form;
 import play.data.format.Formats.DateTime;
 import play.data.validation.Constraints.*;
-
 import static play.libs.Json.toJson;
-
 import models.Recorrido;
 import models.Ruta;
+import models.User;
+import models.UsuarioXRecorrido;
 import play.mvc.Controller;
 import play.mvc.Result;
 import scala.Array;
@@ -40,10 +37,12 @@ import views.html.*;
 
 @Restrict(@Group(Application.USER_ROLE))
 public class ControllerRecorrido extends Controller{
-	
+
+	public static List<String> tipoRecorrido = new ArrayList<String>();;
+	public static Map<String, Boolean> diaFrecuente = new HashMap<String, Boolean>();
+	public static Map<String, Boolean> horaSalida = new HashMap<String, Boolean>();
 
 	public static Result postFormRecorridos() {
-
 		
 		Form<FormularioRecorrido> form = Form.form(FormularioRecorrido.class).bindFromRequest();
         if(form.hasErrors()) {
@@ -70,40 +69,52 @@ public class ControllerRecorrido extends Controller{
         	}
         	
         	Ruta ruta = new Ruta();
+        	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         	
-        	SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        	
-        	//try {
-				Date fechaInicio = new Date(); //format.parse(formRecorrido.fechaInicioRuta);
-				Date fechaFin = new Date();//format.parse(formRecorrido.fechaFinRuta);
+        	try {
+				Date fechaInicio = format.parse(formRecorrido.fechaInicioRuta);//new Date();
+				Date fechaFin = format.parse(formRecorrido.fechaFinRuta);//new Date();
 				
 				ruta.setFechaInicioRuta(fechaInicio);
 				ruta.setFechaFinRuta(fechaFin);
 				
-			/*} catch (ParseException e) {
-				// TODO Auto-generated catch block
+			} catch (ParseException e) {
 				e.printStackTrace();
-			}*/
+			}
         	
+			ruta.setLatitudInicio(Float.parseFloat(formRecorrido.latitudInicio));
+			ruta.setLongitudInicio(Float.parseFloat(formRecorrido.longitudInicio));
+			ruta.setLatitudFin(Float.parseFloat(formRecorrido.latitudFin));
+			ruta.setLongitudFin(Float.parseFloat(formRecorrido.longitudFin));
+			
         	ruta.setLugarInicio(formRecorrido.lugarInicio);
         	ruta.setLugarFin(formRecorrido.lugarFin);
-        	  
-        	insertarRecorrido(recorrido, ruta);
         	
-        	return ok((formRecorrido.nombre));
+        	User usuario = Application.getLocalUser(session()) ; 
+        	UsuarioXRecorrido usuarioRecorrido = new UsuarioXRecorrido();
+        	usuarioRecorrido.setUsuario(usuario);
+        	usuarioRecorrido.setIndAdministrador(true);
+        	usuarioRecorrido.setIndConfirmado(true);
+        	System.out.println(usuario.name);
+        	
+        	insertarRecorrido(recorrido, ruta, usuarioRecorrido);
+        	return ok(views.html.recorridos.render(Form.form(FormularioRecorrido.class), tipoRecorrido, diaFrecuente, horaSalida));
         }
 	}
 	
-	public String cadDias = "";
-	
-	
 	public static Result getFormRecorridos()
 	{
-        List<String> tipoRecorrido = new ArrayList<String>();
+		cargarListas();
+        return ok(views.html.recorridos.render(Form.form(FormularioRecorrido.class), tipoRecorrido, diaFrecuente, horaSalida));
+	}
+	
+	private static void cargarListas()
+	{
+		tipoRecorrido = new ArrayList<String>();
         tipoRecorrido.add("Frecuente");
         tipoRecorrido.add("Recreacion");
         
-        Map<String, Boolean> diaFrecuente = new HashMap<String, Boolean>();
+        diaFrecuente = new HashMap<String, Boolean>();
         diaFrecuente.put("Lu", false);
         diaFrecuente.put("Ma", false);
         diaFrecuente.put("Mi", false);
@@ -112,36 +123,33 @@ public class ControllerRecorrido extends Controller{
         diaFrecuente.put("Sa", false);
         diaFrecuente.put("Do", false);
         
-        Map<String, Boolean> horaSalida = new HashMap<String, Boolean>();
+        horaSalida = new HashMap<String, Boolean>();
         for (int i = 0; i < 24; i++) {
         	horaSalida.put(String.format("%02d", i) + ":00", false);
         	horaSalida.put(String.format("%02d", i) + ":30", false);
 		}
-        return ok(views.html.recorridos.render(Form.form(FormularioRecorrido.class), tipoRecorrido, diaFrecuente, horaSalida));
 	}
 	
-
-	private static void insertarRecorrido(Recorrido recorrido, Ruta ruta)
-
+	private static void insertarRecorrido(Recorrido recorrido, Ruta ruta, UsuarioXRecorrido usuarioRecorrido)
 	{
-		Connection con = Connector.getConnection();
 		RecorridoDAO recorridoDao = new RecorridoDAO();
-    	RutaDAO rutaDao =  new RutaDAO();
-		recorrido.getLstRuta().add(ruta);
+    	recorrido.getLstRuta().add(ruta);
+    	recorrido.getLstUsuarioXRecorrido().add(usuarioRecorrido);
 		recorridoDao.agregarRecorrido(recorrido);
-			//rutaDao.agregarRuta(ruta);
-		
 	}
-	
 	
 	public static Result listarRecorridos(){
 		
 		RecorridoDAO recorridoDAO = new RecorridoDAO();
-		
 		List<Recorrido> lstRecorridos = recorridoDAO.listarRecorridos();
-		
 		return ok(toJson(lstRecorridos));
+	}
+	
+	public static Result listarRecorridosWeb(){
 		
+		RecorridoDAO recorridoDAO = new RecorridoDAO();
+		List<Recorrido> lstRecorridos = recorridoDAO.listarRecorridos();
+		return ok(views.html.recorridosConsulta.render(lstRecorridos));
 	}
 	
 	public static class FormularioRecorrido {
