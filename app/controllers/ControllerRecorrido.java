@@ -1,7 +1,6 @@
 package controllers;
 
 import java.sql.Connection;
-
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
@@ -20,19 +19,17 @@ import be.objectify.deadbolt.java.actions.Group;
 import be.objectify.deadbolt.java.actions.Restrict;
 import database.Connector;
 import database.RecorridoDAO;
-
 import database.RutaDAO;
-
 import play.*;
 import play.mvc.*;
 import play.data.Form;
 import play.data.format.Formats.DateTime;
 import play.data.validation.Constraints.*;
-
 import static play.libs.Json.toJson;
-
 import models.Recorrido;
 import models.Ruta;
+import models.User;
+import models.UsuarioXRecorrido;
 import play.mvc.Controller;
 import play.mvc.Result;
 import scala.Array;
@@ -92,8 +89,15 @@ public class ControllerRecorrido extends Controller{
 			
         	ruta.setLugarInicio(formRecorrido.lugarInicio);
         	ruta.setLugarFin(formRecorrido.lugarFin);
-        	  
-        	insertarRecorrido(recorrido, ruta);
+        	
+        	User usuario = Application.getLocalUser(session()) ; 
+        	UsuarioXRecorrido usuarioRecorrido = new UsuarioXRecorrido();
+        	usuarioRecorrido.setUsuario(usuario);
+        	usuarioRecorrido.setIndAdministrador(true);
+        	usuarioRecorrido.setIndConfirmado(true);
+        	System.out.println(usuario.name);
+        	
+        	insertarRecorrido(recorrido, ruta, usuarioRecorrido);
         	return ok(views.html.recorridos.render(Form.form(FormularioRecorrido.class), tipoRecorrido, diaFrecuente, horaSalida));
         }
 	}
@@ -126,22 +130,26 @@ public class ControllerRecorrido extends Controller{
 		}
 	}
 	
-	private static void insertarRecorrido(Recorrido recorrido, Ruta ruta)
+	private static void insertarRecorrido(Recorrido recorrido, Ruta ruta, UsuarioXRecorrido usuarioRecorrido)
 	{
 		RecorridoDAO recorridoDao = new RecorridoDAO();
     	recorrido.getLstRuta().add(ruta);
+    	recorrido.getLstUsuarioXRecorrido().add(usuarioRecorrido);
 		recorridoDao.agregarRecorrido(recorrido);
 	}
-	
 	
 	public static Result listarRecorridos(){
 		
 		RecorridoDAO recorridoDAO = new RecorridoDAO();
-		
 		List<Recorrido> lstRecorridos = recorridoDAO.listarRecorridos();
-		
 		return ok(toJson(lstRecorridos));
+	}
+	
+	public static Result listarRecorridosWeb(){
 		
+		RecorridoDAO recorridoDAO = new RecorridoDAO();
+		List<Recorrido> lstRecorridos = recorridoDAO.listarRecorridos();
+		return ok(views.html.recorridosConsulta.render(lstRecorridos));
 	}
 	
 	public static class FormularioRecorrido {

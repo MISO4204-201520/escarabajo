@@ -11,10 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import scala.Array;
-
 import com.avaje.ebean.Model;
-
 
 @Entity
 @Table(name="recorrido")
@@ -22,6 +19,7 @@ public class Recorrido extends Model {
 
 	@Id
 	@Column(name="id_recorrido", nullable=false)
+	@GeneratedValue
 	private Long idRecorrido;
 	
 	@Column(name="tipo", nullable=false)
@@ -45,6 +43,9 @@ public class Recorrido extends Model {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "recorrido")
 	private List<Ruta> lstRuta;
 	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "recorrido")
+	private List<UsuarioXRecorrido> lstUsuarioXRecorrido;
+	
 	public static Finder<Long, Recorrido> find;
 	
 	public Recorrido()
@@ -52,6 +53,7 @@ public class Recorrido extends Model {
 		super();
 		find = new Finder<Long, Recorrido>(Recorrido.class);
 		lstRuta= new ArrayList<Ruta>();
+		lstUsuarioXRecorrido = new ArrayList<UsuarioXRecorrido>();
 	}
 	
 	public Recorrido(Long idRecorrido, int tipo, String nombre, String descripcion, String horaFrecuente, String diaFrecuente){
@@ -64,6 +66,13 @@ public class Recorrido extends Model {
 		this.diaFrecuente = diaFrecuente;
 	}
 	
+	public List<UsuarioXRecorrido> getLstUsuarioXRecorrido() {
+		return lstUsuarioXRecorrido;
+	}
+
+	public void setLstUsuarioXRecorrido(List<UsuarioXRecorrido> lstUsuarioXRecorrido) {
+		this.lstUsuarioXRecorrido = lstUsuarioXRecorrido;
+	}
 	
 	public List<Ruta> getLstRuta() {
 		return lstRuta;
