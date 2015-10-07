@@ -19,8 +19,9 @@
 </style>
 <script type="text/javascript">
 
-	$(document).ready(function(){
-	
+	$(document).ready(function(){		
+		
+		
 		$('#Recreacion').change(function (){
 			if( $(this).is(":checked") ){ 
             	$('#divDiaFrec').hide();
@@ -40,7 +41,22 @@
 				$('#divFechaFin').hide();
         	}
 		}); 
+		
+		
+		activarFrecuente();
 	});
+	
+	function activarFrecuente() {
+		$("[name=tipoRecorrido]").val(["Frecuente"]);	
+	
+        	$('#divDiaFrec').show();
+			$('#DivHoraFrec').show();
+			
+			$('#divFechaInicio').hide();
+			$('#divFechaFin').hide();  	
+	}
+	
+	
 	
 </script>
 

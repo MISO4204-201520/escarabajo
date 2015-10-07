@@ -2,15 +2,17 @@ package models;
 
 import java.util.Date;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 import play.data.format.Formats;
-import play.db.ebean.Model;
+
 
 import com.avaje.ebean.Ebean;
+import com.avaje.ebean.Model;
 import com.avaje.ebean.QueryIterator;
 import com.avaje.ebean.annotation.EnumValue;
 
@@ -54,6 +56,7 @@ public class TokenAction extends Model {
 	@Formats.DateTime(pattern = "yyyy-MM-dd HH:mm:ss")
 	public Date expires;
 
+	@SuppressWarnings("deprecation")
 	public static final Finder<Long, TokenAction> find = new Finder<Long, TokenAction>(
 			Long.class, TokenAction.class);
 

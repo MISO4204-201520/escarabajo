@@ -58,7 +58,7 @@ create table recorrido (
 ;
 
 create table ruta (
-  id_ruta                   serial not null,
+  id_ruta                   bigserial not null,
   recorrido_id_recorrido    bigint,
   fecha_inicio_ruta         timestamp,
   fecha_fin_ruta            timestamp,
@@ -119,6 +119,15 @@ create table user_permission (
   constraint pk_user_permission primary key (id))
 ;
 
+create table usuario_x_recorrido (
+  id_usuario_recorrido      bigserial not null,
+  usuario_id                bigint,
+  recorrido_id_recorrido    bigint,
+  ind_confirmado            boolean not null,
+  ind_administrador         boolean not null,
+  constraint pk_usuario_x_recorrido primary key (id_usuario_recorrido))
+;
+
 
 create table users_security_role (
   users_id                       bigint not null,
@@ -147,6 +156,10 @@ alter table sitio_de_alquiler add constraint fk_sitio_de_alquiler_usuario_7 fore
 create index ix_sitio_de_alquiler_usuario_7 on sitio_de_alquiler (usuario_id);
 alter table token_action add constraint fk_token_action_targetUser_8 foreign key (target_user_id) references users (id);
 create index ix_token_action_targetUser_8 on token_action (target_user_id);
+alter table usuario_x_recorrido add constraint fk_usuario_x_recorrido_usuario_9 foreign key (usuario_id) references users (id);
+create index ix_usuario_x_recorrido_usuario_9 on usuario_x_recorrido (usuario_id);
+alter table usuario_x_recorrido add constraint fk_usuario_x_recorrido_recorr_10 foreign key (recorrido_id_recorrido) references recorrido (id_recorrido);
+create index ix_usuario_x_recorrido_recorr_10 on usuario_x_recorrido (recorrido_id_recorrido);
 
 
 
@@ -185,4 +198,6 @@ drop table if exists users_security_role cascade;
 drop table if exists users_user_permission cascade;
 
 drop table if exists user_permission cascade;
+
+drop table if exists usuario_x_recorrido cascade;
 
