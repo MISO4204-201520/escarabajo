@@ -1,7 +1,9 @@
-		var map, currentPositionMarker;
+	var map, currentPositionMarker;
 		var source, destination;
+		var sourcePosition, destinationPosition;
         var directionsDisplay;
         var directionsService = new google.maps.DirectionsService();
+		var geocoder = new google.maps.Geocoder();
 		var initTime, finalTime;
         var realSource, realDestination;
 		
@@ -12,6 +14,7 @@
         });
 
         function GetRoute() {
+			//Asigna por defecto Bogotá en el centro del mapa
             var bogota = new google.maps.LatLng(4.598889, -74.080833);
             var mapOptions = {
                 zoom: 12,
@@ -22,7 +25,8 @@
             directionsDisplay.setMap(map);
             directionsDisplay.setPanel(document.getElementById('dvPanel'));
 			
-            //*********DIRECCIONES Y RUTAS**********************//
+			
+            //Consulta las direcciones para llegar del origen al destino
             source = document.getElementById("txtSource").value;
             destination = document.getElementById("txtDestination").value;
 
@@ -37,7 +41,7 @@
                 }
             });
 
-            //*********DISTANCIA Y DURACIÓN**********************//
+            //Calcula distancia y duración estimados
             var service = new google.maps.DistanceMatrixService();
             service.getDistanceMatrix({
                 origins: [source],
@@ -59,10 +63,14 @@
                     alert("No es posible encontrar un camino.");
                 }
             });
+			//Llama la función de calcular el clima en Escarabajo_Clima.js
+			GetCurrentWeather(source, destination);
         }
 		
 		function StartRoute(){
+			//Obtiene la hora de inicio
 			initTime = new Date().getTime();
+			//Consulta y monitorea la posición del usuario
 			if(navigator.geolocation){
 				navigator.geolocation.getCurrentPosition(function (p) {
 					realSource = p;
@@ -81,7 +89,9 @@
 		}
 		
 		function EndRoute(){
+			//Obtiene la hora de finalización
 			finalTime = new Date().getTime();
+			//Calcula la distancia con base a la posición final del usuario
 			if(navigator.geolocation){
 				navigator.geolocation.getCurrentPosition(function (p) {
 					realDestination = p;
@@ -117,9 +127,7 @@
 		}
 
 		function displayAndWatch(position) {
-			// set current position
 			setCurrentPosition(position);
-			// watch position
 			watchCurrentPosition();
 		}
 
