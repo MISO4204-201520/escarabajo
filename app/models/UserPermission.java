@@ -1,6 +1,7 @@
 package models;
 
 import javax.persistence.Entity;
+
 import javax.persistence.Id;
 
 import be.objectify.deadbolt.core.models.Permission;
@@ -21,8 +22,16 @@ public class UserPermission extends AppModel implements Permission {
 
 	public String value;
 
-	public static final AppModel.Finder<Long, UserPermission> find = new AppModel.Finder<Long, UserPermission>(
-			Long.class, UserPermission.class);
+	/*public static final AppModel.Finder<Long, UserPermission> find = new AppModel.Finder<Long, UserPermission>(
+			Long.class, UserPermission.class);*/
+	
+	public static AppModel.Finder<Long, UserPermission> find;
+	
+	public UserPermission(){
+		super();
+		find = new AppModel.Finder<Long, UserPermission> (UserPermission.class);
+	}
+	
 
 	public String getValue() {
 		return value;

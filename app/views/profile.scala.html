@@ -5,24 +5,22 @@
 @import play.api.libs.json.Json
 
 @main(Messages("playauthenticate.profile.title"),"profile") {
-
+<div class="container">
 	<div class = "title">
     <h1>@Messages("playauthenticate.profile.title")</h1>
     <p>
     </div>
     
     <div class = "conten">
-    <h2>hola  @localUser.name es un gusto tenerte de nuevo por aca </h2>
+    <h2>Hola  @localUser.name es un gusto tenerte de nuevo por aqu&iacute;</h2>
     </div>
     
     <div class="row">
-    <div class = "col-xs-6 col-md-4" id= "im_jug1">
-    
-					
+    <div class = "col-xs-6 col-md-4" id= "im_jug1">				
 	 </div>
     
     <div class = "col-xs-9 col-md-8">
-    <h4> Datos personales</h2>
+    <h2> Datos personales</h2>
     <h5>Nombre completo : @localUser.name</h5>
     <h5>Id usuario de red social :@localUser.getulr</h5>
     <h5>Correo electronico : @if(!localUser.email) {<em>&lt;unknown&gt;</em>.} else {@localUser.email.}</h5>
@@ -81,9 +79,7 @@
 	    	document.getElementById("im_jug1").innerHTML="<img src='http://i844.photobucket.com/albums/ab7/MARTIN3280/c2797649-a5bc-457d-9cb4-9c840c80eb37_zpswugxyyas.jpg' ></img>";
 	    }
 	    	
-	    
-	    
-	    
+
 	    </script>
     
     	
@@ -99,10 +95,16 @@
     
        </p>
     </h5>
-    
-    
+
          </div>
- <ul>
-	<li><a href="@routes.Account.changePassword">@Messages("playauthenticate.profile.password_change")</a></li>
-    </ul>
+         </div>
+		 <div class="row">
+		 <div class = "col-xs-12">
+			<a href="@routes.Account.changePassword">@Messages("playauthenticate.profile.password_change")</a></li>
+		
+		</div>
+		</div>
+		
+	
+</div>
 }

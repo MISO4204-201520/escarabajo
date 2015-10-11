@@ -69,9 +69,17 @@ public class User extends AppModel implements Subject {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
 	private List<SitioDeAlquiler> sitiosDeAlquiler;	
 
+	/*
 	public static final AppModel.Finder<Long, User> find = new AppModel.Finder<Long, User>(
-			Long.class, User.class);
+			Long.class, User.class);*/
 
+	public static AppModel.Finder<Long, User> find;
+	
+	public  User() {
+		super();
+		find = new AppModel.Finder<Long, User> (User.class);
+	}
+	
 	@Override
 	public String getIdentifier()
 	{
