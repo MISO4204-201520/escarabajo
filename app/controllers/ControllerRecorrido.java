@@ -1,29 +1,17 @@
 package controllers;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.typesafe.config.ConfigException.Parse;
-
 import be.objectify.deadbolt.java.actions.Group;
 import be.objectify.deadbolt.java.actions.Restrict;
-import database.Connector;
 import database.RecorridoDAO;
-import database.RutaDAO;
-import play.*;
-import play.mvc.*;
+import database.UserDAO;
 import play.data.Form;
-import play.data.format.Formats.DateTime;
 import play.data.validation.Constraints.*;
 import static play.libs.Json.toJson;
 import models.Recorrido;
@@ -32,8 +20,6 @@ import models.User;
 import models.UsuarioXRecorrido;
 import play.mvc.Controller;
 import play.mvc.Result;
-import scala.Array;
-import views.html.*;
 
 @Restrict(@Group(Application.USER_ROLE))
 public class ControllerRecorrido extends Controller{
@@ -41,12 +27,15 @@ public class ControllerRecorrido extends Controller{
 	public static List<String> tipoRecorrido = new ArrayList<String>();;
 	public static Map<String, Boolean> diaFrecuente = new HashMap<String, Boolean>();
 	public static Map<String, Boolean> horaSalida = new HashMap<String, Boolean>();
-
+	public static Map<String, Boolean> lstAmigos = new HashMap<String, Boolean>();
+	
 	public static Result postFormRecorridos() {
 		
 		Form<FormularioRecorrido> form = Form.form(FormularioRecorrido.class).bindFromRequest();
         if(form.hasErrors()) {
-            return ok("Error");//badRequest(views.html.recorridos.render(form, null, null, null));
+        	flash("error", "Se encontraron errores al crear el recorrido.");
+            return badRequest(views.html.recorridos.render(Form.form(FormularioRecorrido.class), tipoRecorrido, diaFrecuente, horaSalida, lstAmigos));
+      
         } else {
         	FormularioRecorrido formRecorrido = form.get();
         	
@@ -90,22 +79,39 @@ public class ControllerRecorrido extends Controller{
         	ruta.setLugarInicio(formRecorrido.lugarInicio);
         	ruta.setLugarFin(formRecorrido.lugarFin);
         	
+        	List<UsuarioXRecorrido> listUsuarioRecorrido = new ArrayList<UsuarioXRecorrido>();
+        	        	
         	User usuario = Application.getLocalUser(session()) ; 
         	UsuarioXRecorrido usuarioRecorrido = new UsuarioXRecorrido();
         	usuarioRecorrido.setUsuario(usuario);
         	usuarioRecorrido.setIndAdministrador(true);
         	usuarioRecorrido.setIndConfirmado(true);
-        	System.out.println(usuario.name);
         	
-        	insertarRecorrido(recorrido, ruta, usuarioRecorrido);
-        	return ok(views.html.recorridos.render(Form.form(FormularioRecorrido.class), tipoRecorrido, diaFrecuente, horaSalida));
+        	listUsuarioRecorrido.add(usuarioRecorrido);
+        	UserDAO userDao = new UserDAO();
+        	        	
+        	for (String amigo : formRecorrido.lstAmigos) {
+        		System.out.println("2***************** " + amigo.split("-")[0]);
+        		usuario = userDao.consultarUsuarioPorId(Long.parseLong(amigo.split("-")[1]));
+        		usuarioRecorrido = new UsuarioXRecorrido();
+            	usuarioRecorrido.setUsuario(usuario);
+            	usuarioRecorrido.setIndAdministrador(false);
+            	usuarioRecorrido.setIndConfirmado(false);
+            	listUsuarioRecorrido.add(usuarioRecorrido);
+			}
+        	
+        	insertarRecorrido(recorrido, ruta, listUsuarioRecorrido);
+        	
+        	flash("success", "Se ha creado correctamente el recorrido.");
+        	return ok(views.html.recorridos.render(Form.form(FormularioRecorrido.class), tipoRecorrido, diaFrecuente, horaSalida, lstAmigos));
         }
 	}
 	
 	public static Result getFormRecorridos()
 	{
 		cargarListas();
-        return ok(views.html.recorridos.render(Form.form(FormularioRecorrido.class), tipoRecorrido, diaFrecuente, horaSalida));
+		response().setContentType("text/html; charset=utf-8");
+		return ok(views.html.recorridos.render(Form.form(FormularioRecorrido.class), tipoRecorrido, diaFrecuente, horaSalida, lstAmigos));
 	}
 	
 	private static void cargarListas()
@@ -128,13 +134,23 @@ public class ControllerRecorrido extends Controller{
         	horaSalida.put(String.format("%02d", i) + ":00", false);
         	horaSalida.put(String.format("%02d", i) + ":30", false);
 		}
+        
+        UserDAO userDao = new UserDAO();
+        List<User> lstUser = userDao.listarUsuarios();
+        
+        User usuarioSession = Application.getLocalUser(session()); 
+        lstAmigos = new HashMap<String, Boolean>();
+        for (User usuario : lstUser) {
+        	if(usuarioSession.id != usuario.id)
+        		lstAmigos.put(usuario.name + "-" + usuario.id, false);
+        }
 	}
 	
-	private static void insertarRecorrido(Recorrido recorrido, Ruta ruta, UsuarioXRecorrido usuarioRecorrido)
+	private static void insertarRecorrido(Recorrido recorrido, Ruta ruta, List<UsuarioXRecorrido> listUsuarioRecorrido)
 	{
 		RecorridoDAO recorridoDao = new RecorridoDAO();
     	recorrido.getLstRuta().add(ruta);
-    	recorrido.getLstUsuarioXRecorrido().add(usuarioRecorrido);
+    	recorrido.setLstUsuarioXRecorrido(listUsuarioRecorrido);
 		recorridoDao.agregarRecorrido(recorrido);
 	}
 	
@@ -155,20 +171,19 @@ public class ControllerRecorrido extends Controller{
 	public static class FormularioRecorrido {
 		@Required public String tipoRecorrido;
 		@Required public String nombre;
-		public String descripcion;
-		public String horaFrecuente;
-		public List<String> diaFrecuente;
+		@Required public String descripcion;
+		@Required public String horaFrecuente;
+		@Required public List<String> diaFrecuente;
+		public List<String> lstAmigos;
 		public String fechaInicioRuta;
 		public String fechaFinRuta;
-		public String latitudInicio;
-		public String longitudInicio;
-		public String latitudFin;
-		public String longitudFin;
-		public String lugarInicio;
-		public String lugarFin;
+		@Required public String latitudInicio;
+		@Required public String longitudInicio;
+		@Required public String latitudFin;
+		@Required public String longitudFin;
+		@Required public String lugarInicio;
+		@Required public String lugarFin;
     }
-	
-	
 	
 }
 

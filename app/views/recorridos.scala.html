@@ -2,7 +2,8 @@
 
 	tipoRecorrido:List[String],  
 	diaFrecuente:Map[String,Boolean], 
-	horaFrecuente:Map[String,Boolean])
+	horaFrecuente:Map[String,Boolean],
+	lstAmigos:Map[String,Boolean])
 	
 @import helper._
 
@@ -26,20 +27,19 @@
 		directionsDisplay.setMap(map);
 		
         $('#search').bind('click',function(){
-            initialize($('#address').val(), $('#addressEnd').val());
+        	initialize($('#address').val(), $('#addressEnd').val());
         })
 	}
 
 	var geoCoderStart;
 	var geoCoderEnd;
 	function initialize(address, addressEnd) {
-	
+		
 		geoCoderStart = new google.maps.Geocoder(address)
 		var direccionInicio = {address:address};
 	
 		geoCoderEnd = new google.maps.Geocoder(addressEnd)
 		var direccionFinal = {address:addressEnd};
-		
 		
 		var addressLat = 0;
 		var addressLong = 0;
@@ -55,7 +55,7 @@
 					
 					$('#latitudInicio').val(addressLat);
 					$('#longitudInicio').val(addressLong);
-					
+		
 					 //Buscar coodenadas direccion final		
 					if (geoCoderEnd) {
 						geoCoderEnd.geocode(direccionFinal, function(result, status){
@@ -140,25 +140,22 @@
       margin-top:15px;
   }
 </style>
-<div class="wrapper row2" style="margin-top: 40px">
-  <div id="breadcrumb" class="clear" style="font-size:large">
-  		Administración recorridos
-  </div>
-</div>	
+
 <div class="wrapper row3">
   <main class="container clear"> 
-    <div class="content"> 
-      
-        <h2>Crea tu recorrido</h2>
+	<div class="content"> 
+		<h2>Crea tu recorrido</h2>
    		 
    		 @form(routes.ControllerRecorrido.postFormRecorridos) {
-   		 	 @fieldset(formRecorrido, tipoRecorrido, diaFrecuente, horaFrecuente, "1" , "2", "3", "4")
+   		 	 @fieldset(formRecorrido, tipoRecorrido, diaFrecuente, horaFrecuente, lstAmigos)
 		}
 	<br>
   
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDUtmM5eDzCCjpbXs9OrzCvKgHoflR-oVk&signed_in=true&callback=initMap"
         async defer></script>
+        </div>
   </main>
 </div>
+
 
 }
