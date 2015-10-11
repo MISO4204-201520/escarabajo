@@ -2,31 +2,18 @@
 	tipoRecorrido:List[String],  
 	diaFrecuente:Map[String,Boolean], 
 	horaFrecuente:Map[String,Boolean],
-	addressLat:String, 
-	addressLong:String, 
-	addressEndLat: String, 
-	addressEndLong: String)
+	lstAmigos:Map[String,Boolean])
 
 @import views.html.bootstrap3._
 
-<style>
-	#horaFrecuente{
-		width: 44%;	
-	}
-	#descripcion{
-		width: 100%;	
-	}
-</style>
 <script type="text/javascript">
-
-	$(document).ready(function(){		
-		
+	
+	
+		$(document).ready(function(){		
 		
 		$('#Recreacion').change(function (){
 			if( $(this).is(":checked") ){ 
             	$('#divDiaFrec').hide();
-				$('#divHoraFrec').hide();
-				
 				$('#divFechaInicio').show();
 				$('#divFechaFin').show();
         	}
@@ -35,119 +22,113 @@
 		$('#Frecuente').change(function (){
 			if( $(this).is(":checked") ){ 
             	$('#divDiaFrec').show();
-				$('#DivHoraFrec').show();
-				
 				$('#divFechaInicio').hide();
 				$('#divFechaFin').hide();
         	}
 		}); 
-		
 		
 		activarFrecuente();
 	});
 	
 	function activarFrecuente() {
 		$("[name=tipoRecorrido]").val(["Frecuente"]);	
-	
-        	$('#divDiaFrec').show();
-			$('#DivHoraFrec').show();
-			
+	    	$('#divDiaFrec').show();
 			$('#divFechaInicio').hide();
 			$('#divFechaFin').hide();  	
 	}
 	
-	
-	
 </script>
 
   <!-- Header -->
-	
-	<div style ="padding: 10px 0 10px 0">
+	<div style ="padding: 10px 0 5px 0">
 	@radiobuttons(formRecorrido("tipoRecorrido"),
 		label = "Tipo Recorrido:",
 		buttonNameList = tipoRecorrido)
 	</div>			
-	
-	<div style ="padding: 10px 0 10px 0">
+	<br>
+	<div style ="padding: 10px 0 5px 0">
 	@text(formRecorrido("nombre"),
 		label = "Nombre:",
-        placeholder = "nombre",
-        size = "50")
+        placeholder = "nombre")
 	</div>
-	
-	<div id="divDiaFrec" style ="padding: 10px 0 10px 0">	
-	@checkboxes(formRecorrido("diaFrecuente"),
-		label = "D&iacute;as recorrido:",
+	<br>
+	<div id="divDiaFrec" style ="padding-top: 10px">	
+		@checkboxes(formRecorrido("diaFrecuente"),
+		label = "Dias recorrido:",
 		checkboxMap = diaFrecuente)
+		<br>
 	</div>
-	
-	<div id="divHoraFrec" style ="padding: 10px 0 10px 0">
+	<div id="divHoraFrec" style ="padding: 10px 0 5px 0">
 	  @select(formRecorrido("horaFrecuente"),
 	  	  label = "Hora salida",
           optionMap = horaFrecuente,
-          isMultiple = false)
+          isMultiple = false,
+          classCustom = "col-sm-2")
 	</div>
-	
+	<br>
+	<div id="divFechaInicio" class="form-group" style ="padding: 10px 0 5px 0;">
+	    <label class="col-sm-2 control-label">Fecha salida</label>
+	    <div class="col-sm-2">
+	      <input type="date" 
+	             class="form-control" 
+	    		 name= "fechaInicioRuta" />
+	    </div>
+  	</div>
+	<br>
+	<div id="divFechaFin" class="form-group" style ="padding: 10px 0 5px 0">
+	    <label class="col-sm-2 control-label">Fecha regreso</label>
+	    <div class="col-sm-2">
+	      <input type="date" 
+	             class="form-control" 
+	    		 name= "fechaFinRuta" />
+	    </div>
+  	</div>
+	<br>
 	<hr>
-	
-	<h2>Ruta</h2>
-	<div id="divFechaInicio" style ="padding: 10px 0 10px 0; margin-left:0">
-		@helper.inputText(formRecorrido("fechaInicioRuta"),
-	    '_label -> "Fecha salida",
-	    'type -> "date",
-	    'format -> "dd/MM/yyyy HH:mm:ss"
-		)
+	<h2>Selecciona la ruta</h2>
+	<div style ="padding: 10px 0 10px 0">
+		@text(formRecorrido("lugarInicio"),
+			label = "Lugar salida:",
+	        placeholder = "Salida",
+	        id = "address")
 	</div>
-	
-	<div id="divFechaFin" style ="padding: 10px 0 10px 0">
-		@helper.inputText(formRecorrido("fechaFinRuta"),
-	    '_label -> "Fecha fin",
-	    'type -> "date"
-		)
+	<div style ="padding: 10px 0 10px 0;">
+		@text(formRecorrido("lugarFin"),
+			label = "Lugar llegada:",
+			placeholder = "Llegada",
+			id = "addressEnd")
 	</div>
-	<table border="0">
-		<tr>
-			<td>
-				<div style ="padding: 10px 0 10px 0">
-				@text(formRecorrido("lugarInicio"),
-					label = "Lugar salida:",
-			        placeholder = "Salida",
-			        size = "40",
-			        id = "address")
-				</div>
-			</td>
-			<td>
-				<div style ="padding: 10px 0 10px 0;">
-				@text(formRecorrido("lugarFin"),
-					label = "Lugar llegada:",
-					placeholder = "Llegada",
-					size = "40",
-					id = "addressEnd")
-				</div>
-			</td>
-			<td>
-				<div style ="padding: 10px 0 10px 0;">
-					<input id="search" type="button" value ="Search" class="btn btn-primary"/>
-				</div>	
-			</td>
-		</tr>
-	</table>
+	<div style ="width:100%; padding: 10px 0 10px 0; text-align: right;">
+		<input id="search" type="button" value ="Search" class="btn btn-primary"/>
+	</div>	
 	<br>
 	<div>
 		<div style="margin:auto" id="map_canvas"></div>
 	</div>
 	<hr>
+	<h2>Invita a tus amigos</h2>
+	<div style ="padding: 10px 0 10px 0; height: 80px">
+		@select(formRecorrido("lstAmigos"),
+          label = "Tus amigos",
+          optionMap = lstAmigos,
+          isMultiple = true,
+          classCustom = "col-sm-10")  
+	</div>
+	<br>          
+	<hr>
 	<br>
 	<div style ="padding: 10px 0 10px 0;">
 		@textarea(formRecorrido("descripcion"),
-			label = "Descripción recorrido:",
-        	placeholder = "Descripción")
-	</div>		
+			label = "Descripcion recorrido:",
+        	placeholder = "Descripcion",
+          	help = "Ingrese las recomendaciones necesarias para el recorrido.")
+	</div>	
+	<br>	
 	<div style="text-align:right">
 		<button id="submit" type="submit" value="Submit" class="btn btn-primary">Aceptar</button>
 		<button id="cancel" class="btn cancel">Cancelar</button>
 	</div>
-	
+	<div style="display:none">
 		@helper.inputText(
 	    	formRecorrido("latitudInicio"),
 	    	'_label -> "",
@@ -171,4 +152,4 @@
 	    	'_label -> "",
 	    	'style -> "display: none"
 		)
-	
+	</div>
