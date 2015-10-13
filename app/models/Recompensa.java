@@ -1,0 +1,57 @@
+package models;
+
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import play.data.format.Formats;
+
+@Entity
+@Table(name="recompensa")
+public class Recompensa {
+
+	@Id	
+	@Column(name="id", nullable=false)
+	public Long id;
+	
+	@Column(name="puntaje_requerido", nullable=false)
+	public Long puntajeRequerido;
+	
+	@Column(name="recompensa", nullable=false)
+	public String recompensa;
+	
+	@Column(name="telefono_contacto", nullable=false)
+	public String telefonoContacto;
+	
+	@Column(name="celular_contacto")
+	public String celularContacto;
+	
+	@Formats.DateTime(pattern = "dd-MM-yyyy")
+	@Column(name="fecha_limite", nullable=false)
+	public Date fechaLimite;
+	
+	public static AppModel.Finder<Long, Recompensa> find;
+
+	public Recompensa(Long id, Long puntajeRequerido, String recompensa, String telefonoContacto,
+			String celularContacto, Date fechaLimite) {
+		super();
+		find = new AppModel.Finder<Long, Recompensa> (Recompensa.class);
+		this.id = id;
+		this.puntajeRequerido = puntajeRequerido;
+		this.recompensa = recompensa;
+		this.telefonoContacto = telefonoContacto;
+		this.celularContacto = celularContacto;
+		this.fechaLimite = fechaLimite;
+	}
+
+	public Recompensa() {
+		super();
+		find = new AppModel.Finder<Long, Recompensa> (Recompensa.class);
+	}
+	
+	
+	
+}
