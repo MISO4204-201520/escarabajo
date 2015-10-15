@@ -46,6 +46,11 @@
                             </ul>
                         </li>
 						<li class="@("active".when(nav == "profile"))"><a href="@routes.ControllerSitiosDeAlquiler.listarSitiosDeAlquiler()">Mis sitios de alquiler</a></li>
+
+                        <li class="@("active".when(nav == "profile"))"><a href="@routes.ChatApplication.index()">Chat</a></li>
+
+
+
 						@subjectNotPresent() {
                             <li class="@("active".when(nav == "signup"))"><a href="@routes.Application.signup()">@Messages("playauthenticate.navigation.signup")</a></li>
                         }
