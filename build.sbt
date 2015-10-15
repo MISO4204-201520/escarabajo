@@ -21,6 +21,10 @@ resolvers += Resolver.url("play-authenticate (release)", url("http://joscha.gith
 
 resolvers += Resolver.url("play-authenticate (snapshot)", url("http://joscha.github.io/play-authenticate/repo/snapshots/"))(Resolver.ivyStylePatterns)
 
+resolvers += "release repository" at "http://chanan.github.io/maven-repo/releases/"
+
+resolvers += "snapshot repository" at "http://chanan.github.io/maven-repo/snapshots/"
+
 val appDependencies = Seq(  
   cache,
   javaWs,
@@ -42,6 +46,17 @@ EclipseKeys.projectFlavor := EclipseProjectFlavor.Java           // Java project
 EclipseKeys.createSrc := EclipseCreateSrc.ValueSet(EclipseCreateSrc.ManagedClasses, EclipseCreateSrc.ManagedResources)  // Use .class files instead of generated .scala files for views and routes 
 EclipseKeys.preTasks := Seq(compile in Compile)                  // Compile the project before generating Eclipse files, so that .class files for views and routes are present
 
+libraryDependencies ++= Seq(
+  javaJdbc,
+  cache,
+  javaWs,
+  "signalJ" %% "signalj" % "0.5.0",
+  "org.webjars" %% "webjars-play" % "2.3.0-2",
+  "org.webjars" % "bootstrap" % "3.3.1",
+  "org.webjars" % "jquery" % "2.1.1"
+)
+
+WebKeys.directWebModules in Assets += "signalj"
 
 
 lazy val root = project.in(file("."))
@@ -50,6 +65,8 @@ lazy val root = project.in(file("."))
     libraryDependencies ++= appDependencies
   )
 
+
+fork in run := true
 
 fork in run := true
 

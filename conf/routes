@@ -7,7 +7,7 @@ GET     /                           controllers.Application.index()
 GET     /getFormRecorridos          controllers.ControllerRecorrido.getFormRecorridos
 POST    /FormRecorridos   		    controllers.ControllerRecorrido.postFormRecorridos
 GET		/listRecorridos				controllers.ControllerRecorrido.listarRecorridos()
-GET		/listRecorridosWeb				controllers.ControllerRecorrido.listarRecorridosWeb()
+GET		/listRecorridosWeb			controllers.ControllerRecorrido.listarRecorridosWeb()
 
 #Sitios de alquiler
 GET		/sitiosDeAlquiler			controllers.ControllerSitiosDeAlquiler.listarSitiosDeAlquiler()
@@ -55,6 +55,11 @@ GET     /login/password/forgot     controllers.Signup.forgotPassword(email: Stri
 POST    /login/password/forgot     controllers.Signup.doForgotPassword
 
 
+GET         /chat                  controllers.ChatApplication.index
+GET         /chatFeed/:room        controllers.ChatApplication.chatFeed(room: String)
+POST        /chat                  controllers.ChatApplication.postMessage
+
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+
+GET         /assets/*file          controllers.Assets.at(path="/public", file)
