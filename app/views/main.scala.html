@@ -3,6 +3,7 @@
 @import be.objectify.deadbolt.java.views.html._
 @import be.objectify.deadbolt.core.utils.TemplateUtils._
 
+
 <!DOCTYPE html>
 <html lang="@lang().code()">
     <head>
@@ -38,18 +39,40 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li class="@("active".when(nav == ""))"><a href="@routes.Application.index()">@Messages("playauthenticate.navigation.home")</a></li>
+                        
+                        @restrict(la(as("user"))) {
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Administración recorridos <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li class="@("active".when(nav == "profile"))"><a href="@routes.ControllerRecorrido.getFormRecorridos()">Crear recorrido</a></li>
+                                <li><a href="@routes.ControllerRecorrido.getFormRecorridos()">Crear recorrido</a></li>
                                 <li><a href="@routes.ControllerRecorrido.listarRecorridosWeb()">Consultar Recorridos</a></li>
                             </ul>
                         </li>
-						<li class="@("active".when(nav == "profile"))"><a href="@routes.ControllerSitiosDeAlquiler.listarSitiosDeAlquiler()">Mis sitios de alquiler</a></li>
 
-                        <li class="@("active".when(nav == "profile"))"><a href="@routes.ChatApplication.index()">Chat</a></li>
+					    <li><a href="@routes.ChatApplication.index()">Chat</a></li>
 
-
+                        
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Retos y Recompensas <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="@routes.Application.profile()">Listado de Retos</a></li>
+                                <li><a href="@routes.Application.profile()">Mis recompensas</a></li>
+                            </ul>
+                        </li>
+                        
+                        }
+                        
+                        @restrict(la(as("admin"))) {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Configuración Gamification <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="@routes.Application.profile()">Gestión de Retos</a></li>
+                                <li><a href="@routes.Application.profile()">Gestión de Recompensas</a></li>
+                            </ul>
+                        </li>
+                        }
+                        
+						<!-- <li class="@("active".when(nav == "profile"))"><a href="@routes.ControllerSitiosDeAlquiler.listarSitiosDeAlquiler()">Mis sitios de alquiler</a></li> -->
 
 						@subjectNotPresent() {
                             <li class="@("active".when(nav == "signup"))"><a href="@routes.Application.signup()">@Messages("playauthenticate.navigation.signup")</a></li>
@@ -63,7 +86,9 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i> @user.name <span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
                                     <li class="@("active".when(nav == "profile"))"><a href="@routes.Application.profile()">@Messages("playauthenticate.navigation.profile")</a></li>
+                                    @restrict(la(as("user"))) {
                                     <li><a href="@routes.Account.link()">@Messages("playauthenticate.navigation.link_more")</a></li>
+                                    }
                                     <li class="divider"></li>
                                     <li><a href="@com.feth.play.module.pa.controllers.routes.Authenticate.logout()"><i class="icon-off"></i> @Messages("playauthenticate.navigation.logout")</a></li>
                                 </ul>
