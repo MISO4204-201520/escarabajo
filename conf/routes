@@ -4,10 +4,14 @@
 
 # Home page
 GET     /                           controllers.Application.index()
+
+#Sitios de Recorridos
 GET     /getFormRecorridos          controllers.ControllerRecorrido.getFormRecorridos
 POST    /FormRecorridos   		    controllers.ControllerRecorrido.postFormRecorridos
 GET		/listRecorridos				controllers.ControllerRecorrido.listarRecorridos()
-GET		/listRecorridosWeb				controllers.ControllerRecorrido.listarRecorridosWeb()
+GET		/listRecorridosWeb			controllers.ControllerRecorrido.listarRecorridosWeb()
+GET		/detallesRecorridos			controllers.ControllerRecorrido.detallesRecorridos()
+GET		/inscribirARecorrido		controllers.ControllerRecorrido.inscribirARecorrido()
 
 #Sitios de alquiler
 GET		/sitiosDeAlquiler			controllers.ControllerSitiosDeAlquiler.listarSitiosDeAlquiler()
