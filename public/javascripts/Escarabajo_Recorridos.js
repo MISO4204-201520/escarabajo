@@ -1,8 +1,12 @@
-		var map, currentPositionMarker;
+	var map, currentPositionMarker;
 		var source, destination;
+		var sourcePosition, destinationPosition;
         var directionsDisplay;
         var directionsService = new google.maps.DirectionsService();
-        
+		var geocoder = new google.maps.Geocoder();
+		var initTime, finalTime;
+        var realSource, realDestination;
+		
 		google.maps.event.addDomListener(window, 'load', function () {
             new google.maps.places.SearchBox(document.getElementById('txtSource'));
             new google.maps.places.SearchBox(document.getElementById('txtDestination'));
@@ -10,6 +14,7 @@
         });
 
         function GetRoute() {
+			//Asigna por defecto Bogotá en el centro del mapa
             var bogota = new google.maps.LatLng(4.598889, -74.080833);
             var mapOptions = {
                 zoom: 12,
@@ -20,7 +25,8 @@
             directionsDisplay.setMap(map);
             directionsDisplay.setPanel(document.getElementById('dvPanel'));
 			
-            //*********DIRECTIONS AND ROUTE**********************//
+			
+            //Consulta las direcciones para llegar del origen al destino
             source = document.getElementById("txtSource").value;
             destination = document.getElementById("txtDestination").value;
 
@@ -35,7 +41,7 @@
                 }
             });
 
-            //*********DISTANCE AND DURATION**********************//
+            //Calcula distancia y duración estimados
             var service = new google.maps.DistanceMatrixService();
             service.getDistanceMatrix({
                 origins: [source],
@@ -50,15 +56,25 @@
                     var duration = response.rows[0].elements[0].duration.text;
                     var dvDistance = document.getElementById("dvDistance");
                     dvDistance.innerHTML = "";
-                    dvDistance.innerHTML += "Distancia: " + distance + "<br />";
-                    dvDistance.innerHTML += "Duración:" + duration;
+                    dvDistance.innerHTML += "Distancia Estimada: " + distance + "<br />";
+                    dvDistance.innerHTML += "Duración Estimada: " + duration;
 
                 } else {
                     alert("No es posible encontrar un camino.");
                 }
             });
-			
+			//Llama la función de calcular el clima en Escarabajo_Clima.js
+			GetCurrentWeather(source, destination);
+        }
+		
+		function StartRoute(){
+			//Obtiene la hora de inicio
+			initTime = new Date().getTime();
+			//Consulta y monitorea la posición del usuario
 			if(navigator.geolocation){
+				navigator.geolocation.getCurrentPosition(function (p) {
+					realSource = p;
+				});
 				var opts = {
 					enableHighAccuracy: true,
 					timeout			  : Infinity,
@@ -69,7 +85,30 @@
 			else {
 				alert('Geo Location no es soportada por el explorador.');
 			}
-        }
+			
+		}
+		
+		function EndRoute(){
+			//Obtiene la hora de finalización
+			finalTime = new Date().getTime();
+			//Calcula la distancia con base a la posición final del usuario
+			if(navigator.geolocation){
+				navigator.geolocation.getCurrentPosition(function (p) {
+					realDestination = p;
+					var realDistance = google.maps.geometry.spherical.computeDistanceBetween(realSource, realDestination);
+			
+					var dvDistance = document.getElementById("dvDistance");
+					dvDistance.innerHTML += "<br/>";
+					dvDistance.innerHTML += "Distancia Real: " + realDistance + "<br />";
+					dvDistance.innerHTML += "Duración Real: " + ((finalTime-initTime)/1000) + " seg";
+				});
+				
+			}
+			else {
+				alert('Geo Location no es soportada por el explorador.');
+			}	
+			var realDistance = google.maps.geometry.spherical.computeDistanceBetween(realSource, realDestination);
+		}
 
 		function setCurrentPosition(pos) {
 			//currentPositionMarket.setMap(null);
@@ -88,9 +127,7 @@
 		}
 
 		function displayAndWatch(position) {
-			// set current position
 			setCurrentPosition(position);
-			// watch position
 			watchCurrentPosition();
 		}
 
