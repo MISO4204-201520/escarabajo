@@ -76,13 +76,13 @@ public class Account extends Controller {
 	private static final Form<Accept> ACCEPT_FORM = form(Accept.class);
 	private static final Form<Account.PasswordChange> PASSWORD_CHANGE_FORM = form(Account.PasswordChange.class);
 
-	@SubjectPresent
+	@Restrict(@Group(Application.USER_ROLE))
 	public static Result link() {
 		com.feth.play.module.pa.controllers.Authenticate.noCache(response());
 		return ok(link.render());
 	}
 
-	@Restrict(@Group(Application.USER_ROLE))
+	@Restrict({@Group(Application.USER_ROLE), @Group(Application.ADMIN_ROLE)})
 	public static Result verifyEmail() {
 		com.feth.play.module.pa.controllers.Authenticate.noCache(response());
 		final User user = Application.getLocalUser(session());
@@ -104,7 +104,7 @@ public class Account extends Controller {
 		return redirect(routes.Application.profile());
 	}
 
-	@Restrict(@Group(Application.USER_ROLE))
+	@Restrict({@Group(Application.USER_ROLE), @Group(Application.ADMIN_ROLE)})
 	public static Result changePassword() {
 		com.feth.play.module.pa.controllers.Authenticate.noCache(response());
 		final User u = Application.getLocalUser(session());
@@ -116,7 +116,7 @@ public class Account extends Controller {
 		}
 	}
 
-	@Restrict(@Group(Application.USER_ROLE))
+	@Restrict({@Group(Application.USER_ROLE), @Group(Application.ADMIN_ROLE)})
 	public static Result doChangePassword() {
 		com.feth.play.module.pa.controllers.Authenticate.noCache(response());
 		final Form<Account.PasswordChange> filledForm = PASSWORD_CHANGE_FORM
@@ -135,7 +135,7 @@ public class Account extends Controller {
 		}
 	}
 
-	@SubjectPresent
+	@Restrict(@Group(Application.USER_ROLE))
 	public static Result askLink() {
 		com.feth.play.module.pa.controllers.Authenticate.noCache(response());
 		final AuthUser u = PlayAuthenticate.getLinkUser(session());
@@ -146,7 +146,7 @@ public class Account extends Controller {
 		return ok(ask_link.render(ACCEPT_FORM, u));
 	}
 
-	@SubjectPresent
+	@Restrict(@Group(Application.USER_ROLE))
 	public static Result doLink() {
 		com.feth.play.module.pa.controllers.Authenticate.noCache(response());
 		final AuthUser u = PlayAuthenticate.getLinkUser(session());
@@ -170,7 +170,7 @@ public class Account extends Controller {
 		}
 	}
 
-	@SubjectPresent
+	@Restrict(@Group(Application.USER_ROLE))
 	public static Result askMerge() {
 		com.feth.play.module.pa.controllers.Authenticate.noCache(response());
 		// this is the currently logged in user
@@ -188,7 +188,7 @@ public class Account extends Controller {
 		return ok(ask_merge.render(ACCEPT_FORM, aUser, bUser));
 	}
 
-	@SubjectPresent
+	@Restrict(@Group(Application.USER_ROLE))
 	public static Result doMerge() {
 		com.feth.play.module.pa.controllers.Authenticate.noCache(response());
 		// this is the currently logged in user
