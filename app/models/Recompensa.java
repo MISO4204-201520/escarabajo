@@ -11,7 +11,7 @@ import play.data.format.Formats;
 
 @Entity
 @Table(name="recompensa")
-public class Recompensa {
+public class Recompensa extends AppModel {
 
 	@Id	
 	@Column(name="id", nullable=false)
@@ -33,10 +33,13 @@ public class Recompensa {
 	@Column(name="fecha_limite", nullable=false)
 	public Date fechaLimite;
 	
+	@Column(name="estado")
+	public String estado;	
+	
 	public static AppModel.Finder<Long, Recompensa> find;
 
 	public Recompensa(Long id, Long puntajeRequerido, String recompensa, String telefonoContacto,
-			String celularContacto, Date fechaLimite) {
+			String celularContacto, Date fechaLimite, String estado) {
 		super();
 		find = new AppModel.Finder<Long, Recompensa> (Recompensa.class);
 		this.id = id;
@@ -45,6 +48,7 @@ public class Recompensa {
 		this.telefonoContacto = telefonoContacto;
 		this.celularContacto = celularContacto;
 		this.fechaLimite = fechaLimite;
+		this.estado = estado;
 	}
 
 	public Recompensa() {
