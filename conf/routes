@@ -7,7 +7,10 @@ GET     /                           controllers.Application.index()
 GET     /getFormRecorridos          controllers.ControllerRecorrido.getFormRecorridos
 POST    /FormRecorridos   		    controllers.ControllerRecorrido.postFormRecorridos
 GET		/listRecorridos				controllers.ControllerRecorrido.listarRecorridos()
-GET		/listRecorridosWeb				controllers.ControllerRecorrido.listarRecorridosWeb()
+GET		/listRecorridosWeb			controllers.ControllerRecorrido.listarRecorridosWeb()
+
+#Recorridos
+GET		/ejecutarRecorrido			controllers.ControllerMetricaEnRecorrido.iniciarRecorridoWeb()
 
 #Sitios de alquiler
 GET		/sitiosDeAlquiler			controllers.ControllerSitiosDeAlquiler.listarSitiosDeAlquiler()

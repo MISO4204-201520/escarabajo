@@ -57,19 +57,21 @@
                     var dvDistance = document.getElementById("dvDistance");
                     dvDistance.innerHTML = "";
                     dvDistance.innerHTML += "Distancia Estimada: " + distance + "<br />";
-                    dvDistance.innerHTML += "Duración Estimada: " + duration;
+                    dvDistance.innerHTML += "Duraci&#243;n Estimada: " + duration;
 
                 } else {
                     alert("No es posible encontrar un camino.");
                 }
             });
 			//Llama la función de calcular el clima en Escarabajo_Clima.js
+			alert('Escarabajo_Clima');
 			GetCurrentWeather(source, destination);
         }
 		
 		function StartRoute(){
 			//Obtiene la hora de inicio
 			initTime = new Date().getTime();
+			alert(initTime);
 			//Consulta y monitorea la posición del usuario
 			if(navigator.geolocation){
 				navigator.geolocation.getCurrentPosition(function (p) {
@@ -91,23 +93,29 @@
 		function EndRoute(){
 			//Obtiene la hora de finalización
 			finalTime = new Date().getTime();
+			alert(finalTime);
 			//Calcula la distancia con base a la posición final del usuario
 			if(navigator.geolocation){
+				alert('Dentro de IF navigator ');
 				navigator.geolocation.getCurrentPosition(function (p) {
 					realDestination = p;
+					alert('p ' + p);
+					alert('antes de calcular distancia ');
+					console.log(realSource);
+					console.log(realDestination);
 					var realDistance = google.maps.geometry.spherical.computeDistanceBetween(realSource, realDestination);
-			
-					var dvDistance = document.getElementById("dvDistance");
-					dvDistance.innerHTML += "<br/>";
-					dvDistance.innerHTML += "Distancia Real: " + realDistance + "<br />";
-					dvDistance.innerHTML += "Duración Real: " + ((finalTime-initTime)/1000) + " seg";
+					alert('realDistance ' + realDistance);
+					var dvRealDistance = document.getElementById("dvRealDistance");
+					dvRealDistance.innerHTML += "<br/>";
+					dvRealDistance.innerHTML += "Distancia Real: " + realDistance + "<br />";
+					dvRealDistance.innerHTML += "Duraci&#243;n Real: " + ((finalTime-initTime)/1000) + " seg";
+					alert('realTime ' + ((finalTime-initTime)/1000));
 				});
 				
 			}
 			else {
 				alert('Geo Location no es soportada por el explorador.');
 			}	
-			var realDistance = google.maps.geometry.spherical.computeDistanceBetween(realSource, realDestination);
 		}
 
 		function setCurrentPosition(pos) {
