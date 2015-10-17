@@ -5,7 +5,6 @@ import java.util.List;
 import models.Recorrido;
 
 
-
 public class RecorridoDAO {
 	
 	/**
@@ -21,4 +20,7 @@ public class RecorridoDAO {
 		return Recorrido.find.all();
 	}
 	
+	public Recorrido consultarRecorridoPorId(Long id){
+		return Recorrido.find.byId(id);
+	}
 }
