@@ -9,12 +9,12 @@
 
 <script>
 	
-	function asignaId(idRecorrido)
+	function asignaId(idRecorridoSeleccionado)
 	{
 		$.ajaxSetup({ cache: false });
-		document.getElementById("idRecorrido").value = idRecorrido;
-		$.get( "detallesRecorridos?idRecorrido=" + idRecorrido, function( data ) {
-			  $( "#result" ).html( data );
+		$("#idRecorridoSeleccionado").val(idRecorridoSeleccionado);
+		$.get( "detallesRecorridos?idRecorrido=" + idRecorridoSeleccionado, function( data ) {
+			  $( "#result_detalle_recorrido" ).html( data );
 			  //alert( "Load was performed." );
 			});
 		//document.forms[routes.ControllerRecorrido.detallesRecorridos()].submit();
@@ -28,7 +28,7 @@
          
 		<h2>Consultar recorridos</h2>
 		<br>
-		@form(routes.ControllerRecorrido.detallesRecorridos()) {
+		
 			<table class="table">
 			    <thead>
 			        <tr>
@@ -52,18 +52,18 @@
 			            @rec.getLstRuta().map { rut =>
 			            	<td>@rut.getLugarInicio()</td>
 			            	<td>@rut.getLugarFin()</td>
-			            <td><button id="verDetalles" class="btn" onclick="asignaId('@rec.getIdRecorrido()'); return false;">Detalles</button></td>
+			            <td><button id="verDetalles" class="btn" onclick="asignaId('@rec.getIdRecorrido()');">Detalles</button></td>
 			            }
 			            <td><a class="btn btn-default" href="@routes.ControllerMetricaEnRecorrido.iniciarRecorridoWeb()" role="button">Iniciar Recorrido</a></td>
 			        </tr>
 			        }
 			    </tbody>
 			</table>
-			<input name="idRecorrido" id="idRecorrido" type="hidden" value="0"/>
-		}		
+			<input name="idRecorrido" id="idRecorridoSeleccionado" type="hidden" value="0"/>
+				
 		
 	</div>
-	<div id="result">
+	<div id="result_detalle_recorrido">
 		
 	</div>	
 	<br>
