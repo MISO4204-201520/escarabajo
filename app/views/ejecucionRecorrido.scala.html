@@ -5,17 +5,9 @@
 @main("ejecucionRecorrido"){
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&language=es"></script>
-<script type="text/javascript" src="Escarabajo_Recorridos.js"></script>
-<script type="text/javascript" src="Escarabajo_Clima.js"></script>
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="@routes.Assets.at("javascripts/Escarabajo_Recorridos.js")"></script>
+<script type="text/javascript" src="@routes.Assets.at("javascripts/Escarabajo_Clima.js")"></script>
 
 <style type="text/css">
   html { height: 100% }
@@ -61,55 +53,35 @@
 </style>
 
 		<h2>Iniciar recorrido</h2>
-		<form class="form-horizontal" role="form">
-		    <div class="row">
-		    <div class="col-sm-6 col-lg-4">
-		       <div class="form-group">
-		          Origen:
-		          <input type="text" class="form-control" id="txtSource" value="Kennedy, Bogota, Colombia"  />
-		       </div>
-		    </div>
-		    <div class="col-sm-6 col-lg-4">
-		       <div class="form-group">
-		          Destino:
-		 <input type="text" class="form-control" id="txtDestination" value="Usaquen, Bogota, Colombia"  />
-		          <br />
-		       </div>
-		    </div>
-		    <div class="col-sm-6 col-lg-4">
-		       <div class="form-group">
-		          <input type="button" class="btn btn-default" value="Calcular Ruta" onclick="GetRoute()" />
-		          <input type="button" class="btn btn-default" value="Iniciar Recorrido" onclick="StartRoute()" />
-		          <input type="button" class="btn btn-default" value="Finalizar Recorrido" onclick="EndRoute()" />
-		          <hr />
-		       </div>
-		    </div>
-		    <!-- </div> -->
-		    </td>
-		    </tr>
-		    <tr>
-		       <td colspan="4">
-		          <div id="dvDistance">
-		          </div>
-		       </td>
-		    </tr>
-		    <tr>
-		       <td colspan="1">
-		          <div id="dvWeatherSource">
-		          </div>
-		       </td>
-		       <td colspan="1">
-		          <div id="dvWeatherDestination">
-		          </div>
-		          <div class="container-fluid" id="main">
-		          <div class="row">
-		             <div id="dvMap" style="width: 500px; height: 500px">
-		       <td colspan="2">
-		       <div id="dvPanel" style="width: 500px; height: 500px">
-		       </div>
-		       </div>
-		       </div>
-		</form>
-		
-
+		<form class="form-vertical" role="form">
+			<div class="form-group">
+			<label for="txtSource">Origen:</label>
+			<input type="text" class="form-control" id="txtSource" value="Kennedy, Bogota, Colombia"  />
+			</div>
+			<div class="form-group">
+			<label for="txtDestination">Destino:</label>
+			<input type="text" class="form-control" id="txtDestination" value="Usaquen, Bogota, Colombia"  />
+			</div>
+			<div class="form-group">
+				<input type="button" class="btn btn-default" value="Calcular Ruta" onclick="GetRoute()" />
+				<input type="button" class="btn btn-default" value="Iniciar Recorrido" onclick="StartRoute()" />
+				<input type="button" class="btn btn-default" value="Finalizar Recorrido" onclick="EndRoute()" />
+			</div>
+			<div id="dvDistance">		
+			</div>
+			<div id="dvWeatherSource"/>	
+			</div>
+			<div id="dvWeatherDestination">
+			</div>
+			<div class="container-fluid" id="main">
+				<div class="row">
+					<div id="dvMap" style="width: 500px; height: 500px">
+					</div>
+				</div>
+				<div class="row">
+					<div id="dvPanel" style="width: 500px; height: 500px">
+					</div>
+				</div>
+			</div>	
+		</form>		
 }

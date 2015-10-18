@@ -1,6 +1,6 @@
-	var BASE_URL = "http://api.openweathermap.org/data/2.5/weather?";
+var BASE_URL = "http://api.openweathermap.org/data/2.5/weather?APPID=f6d04af6ab78e991990e4ea3e297bbf5&";
 	var UrlParams = "&units=metric&type=accurate&mode=json&lang=sp";
-	var Forecast_URL = "http://api.openweathermap.org/data/2.5/forecast/daily?";
+	var Forecast_URL = "http://api.openweathermap.org/data/2.5/forecast/daily?APPID=f6d04af6ab78e991990e4ea3e297bbf5&";
 	var ForeCast_Params = "&cnt=5&units=metric&type=accurate&mode=json&lang=sp";
 	var IMG_URL = "http://openweathermap.org/img/w/";
 	var geocoder = new google.maps.Geocoder();
@@ -27,7 +27,7 @@
 			  source = results[0].geometry.location;
 			  GetWeatherSource(source);
 			} else {
-			  alert('Geocode no fue exitoso por la siguiente razón: ' + status);
+			  alert('Geocode no fue exitoso por la siguiente razÃ³n: ' + status);
 			}
 		});
 		
@@ -36,7 +36,7 @@
 			  destination= results[0].geometry.location;
 			  GetWeatherDestination(destination);
 			} else {
-			  alert('Geocode no fue exitoso por la siguiente razón: ' + status);
+			  alert('Geocode no fue exitoso por la siguiente razÃ³n: ' + status);
 			}
 		});
 	}
@@ -96,4 +96,3 @@
 				"Nubosidad: " + obj.clouds.all + "% <br>" + 
 				"Viento: " + obj.wind.speed + " m/s <br>";
 	}
-	

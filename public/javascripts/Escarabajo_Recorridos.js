@@ -1,4 +1,4 @@
-	var map, currentPositionMarker;
+		var map, currentPositionMarker;
 		var source, destination;
 		var sourcePosition, destinationPosition;
         var directionsDisplay;
@@ -6,6 +6,8 @@
 		var geocoder = new google.maps.Geocoder();
 		var initTime, finalTime;
         var realSource, realDestination;
+        var currentPos;
+        var watchPositionID = null;
 		
 		google.maps.event.addDomListener(window, 'load', function () {
             new google.maps.places.SearchBox(document.getElementById('txtSource'));
@@ -73,14 +75,18 @@
 			//Consulta y monitorea la posición del usuario
 			if(navigator.geolocation){
 				navigator.geolocation.getCurrentPosition(function (p) {
-					realSource = p;
+					realSource = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
+					console.log(realSource);
 				});
 				var opts = {
 					enableHighAccuracy: true,
-					timeout			  : Infinity,
+					timeout			  : 5000,
 					maximumAge		  : 0
 				}
-				navigator.geolocation.watchPosition(displayAndWatch, CurrentLocationFailure, opts);
+				if(watchPositionID == null){
+					watchPositionID = navigator.geolocation.watchPosition(displayAndWatch, CurrentLocationFailure, opts);	
+				}
+				
 			}
 			else {
 				alert('Geo Location no es soportada por el explorador.');
@@ -91,10 +97,18 @@
 		function EndRoute(){
 			//Obtiene la hora de finalización
 			finalTime = new Date().getTime();
+
+			if(watchPositionID != null){
+				navigator.geolocation.clearWatch(watchPositionID);
+				watchPositionID = null;
+			}
 			//Calcula la distancia con base a la posición final del usuario
 			if(navigator.geolocation){
 				navigator.geolocation.getCurrentPosition(function (p) {
-					realDestination = p;
+					realDestination = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
+					console.log(realSource);
+					console.log(realDestination);
+					console.log(p);
 					var realDistance = google.maps.geometry.spherical.computeDistanceBetween(realSource, realDestination);
 			
 					var dvDistance = document.getElementById("dvDistance");
@@ -171,7 +185,7 @@
 			});
 		}*/
 		
-		function CurrentLocationFailure(){
+		function CurrentLocationFailure(error){
 				var errorType={
 					0:"Error Desconocido",
 					1:"Permisos negados por el usuario",

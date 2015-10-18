@@ -64,8 +64,8 @@
                 }
             });
 			//Llama la función de calcular el clima en Escarabajo_Clima.js
-			alert('Escarabajo_Clima');
-			GetCurrentWeather(source, destination);
+			//alert('Escarabajo_Clima');
+			//GetCurrentWeather(source, destination);
         }
 		
 		function StartRoute(){
@@ -103,11 +103,11 @@
 					alert('antes de calcular distancia ');
 					console.log(realSource);
 					console.log(realDestination);
-					var realDistance = google.maps.geometry.spherical.computeDistanceBetween(realSource, realDestination);
-					alert('realDistance ' + realDistance);
+					//var realDistance = google.maps.geometry.spherical.computeDistanceBetween(realSource, realDestination);
+					//alert('realDistance ' + realDistance);
 					var dvRealDistance = document.getElementById("dvRealDistance");
 					dvRealDistance.innerHTML += "<br/>";
-					dvRealDistance.innerHTML += "Distancia Real: " + realDistance + "<br />";
+					dvRealDistance.innerHTML += "Distancia Real: " + "<br />";
 					dvRealDistance.innerHTML += "Duraci&#243;n Real: " + ((finalTime-initTime)/1000) + " seg";
 					alert('realTime ' + ((finalTime-initTime)/1000));
 				});
