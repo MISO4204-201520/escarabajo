@@ -47,6 +47,26 @@ create table metricas_x_recorridos (
   constraint pk_metricas_x_recorridos primary key (id_metrica_recorrido))
 ;
 
+create table recompensa (
+  id                        bigserial not null,
+  puntaje_requerido         bigint not null,
+  recompensa                varchar(255) not null,
+  telefono_contacto         varchar(255) not null,
+  celular_contacto          varchar(255),
+  fecha_limite              timestamp not null,
+  estado                    varchar(255),
+  constraint pk_recompensa primary key (id))
+;
+
+create table recompensa_usuario (
+  id_recompensa             bigint not null,
+  id_usuario                bigint not null,
+  recompensa_id             bigint,
+  usuario_id                bigint,
+  fecha                     timestamp not null,
+  constraint pk_recompensa_usuario primary key (id_recompensa, id_usuario))
+;
+
 create table recorrido (
   id_recorrido              bigserial not null,
   tipo                      integer not null,
@@ -55,6 +75,31 @@ create table recorrido (
   hora_frecuente            varchar(255),
   dia_frecuente             varchar(255),
   constraint pk_recorrido primary key (id_recorrido))
+;
+
+create table retos (
+  id                        bigserial not null,
+  nombre                    varchar(255) not null,
+  fecha_inicio              timestamp,
+  fecha_fin                 timestamp,
+  metrica_id_metrica        bigint,
+  funcion                   varchar(255) not null,
+  operador                  varchar(255) not null,
+  valor_condicion           varchar(255) not null,
+  puntaje                   bigint not null,
+  estado                    varchar(255) not null,
+  constraint pk_retos primary key (id))
+;
+
+create table retos_usuario (
+  id_reto                   bigint not null,
+  id_usuario                bigint not null,
+  fecha                     timestamp,
+  nombre                    varchar(255) not null,
+  estado                    varchar(255) not null,
+  usuario_id                bigint,
+  reto_id                   bigint,
+  constraint pk_retos_usuario primary key (id_reto, id_usuario))
 ;
 
 create table ruta (
@@ -150,16 +195,26 @@ alter table metricas_x_recorridos add constraint fk_metricas_x_recorridos_usuar_
 create index ix_metricas_x_recorridos_usuar_4 on metricas_x_recorridos (usuario_id);
 alter table metricas_x_recorridos add constraint fk_metricas_x_recorridos_recor_5 foreign key (recorrido_id_recorrido) references recorrido (id_recorrido);
 create index ix_metricas_x_recorridos_recor_5 on metricas_x_recorridos (recorrido_id_recorrido);
-alter table ruta add constraint fk_ruta_recorrido_6 foreign key (recorrido_id_recorrido) references recorrido (id_recorrido);
-create index ix_ruta_recorrido_6 on ruta (recorrido_id_recorrido);
-alter table sitio_de_alquiler add constraint fk_sitio_de_alquiler_usuario_7 foreign key (usuario_id) references users (id);
-create index ix_sitio_de_alquiler_usuario_7 on sitio_de_alquiler (usuario_id);
-alter table token_action add constraint fk_token_action_targetUser_8 foreign key (target_user_id) references users (id);
-create index ix_token_action_targetUser_8 on token_action (target_user_id);
-alter table usuario_x_recorrido add constraint fk_usuario_x_recorrido_usuario_9 foreign key (usuario_id) references users (id);
-create index ix_usuario_x_recorrido_usuario_9 on usuario_x_recorrido (usuario_id);
-alter table usuario_x_recorrido add constraint fk_usuario_x_recorrido_recorr_10 foreign key (recorrido_id_recorrido) references recorrido (id_recorrido);
-create index ix_usuario_x_recorrido_recorr_10 on usuario_x_recorrido (recorrido_id_recorrido);
+alter table recompensa_usuario add constraint fk_recompensa_usuario_recompen_6 foreign key (recompensa_id) references recompensa (id);
+create index ix_recompensa_usuario_recompen_6 on recompensa_usuario (recompensa_id);
+alter table recompensa_usuario add constraint fk_recompensa_usuario_usuario_7 foreign key (usuario_id) references users (id);
+create index ix_recompensa_usuario_usuario_7 on recompensa_usuario (usuario_id);
+alter table retos add constraint fk_retos_metrica_8 foreign key (metrica_id_metrica) references metrica (id_metrica);
+create index ix_retos_metrica_8 on retos (metrica_id_metrica);
+alter table retos_usuario add constraint fk_retos_usuario_usuario_9 foreign key (usuario_id) references users (id);
+create index ix_retos_usuario_usuario_9 on retos_usuario (usuario_id);
+alter table retos_usuario add constraint fk_retos_usuario_reto_10 foreign key (reto_id) references retos (id);
+create index ix_retos_usuario_reto_10 on retos_usuario (reto_id);
+alter table ruta add constraint fk_ruta_recorrido_11 foreign key (recorrido_id_recorrido) references recorrido (id_recorrido);
+create index ix_ruta_recorrido_11 on ruta (recorrido_id_recorrido);
+alter table sitio_de_alquiler add constraint fk_sitio_de_alquiler_usuario_12 foreign key (usuario_id) references users (id);
+create index ix_sitio_de_alquiler_usuario_12 on sitio_de_alquiler (usuario_id);
+alter table token_action add constraint fk_token_action_targetUser_13 foreign key (target_user_id) references users (id);
+create index ix_token_action_targetUser_13 on token_action (target_user_id);
+alter table usuario_x_recorrido add constraint fk_usuario_x_recorrido_usuari_14 foreign key (usuario_id) references users (id);
+create index ix_usuario_x_recorrido_usuari_14 on usuario_x_recorrido (usuario_id);
+alter table usuario_x_recorrido add constraint fk_usuario_x_recorrido_recorr_15 foreign key (recorrido_id_recorrido) references recorrido (id_recorrido);
+create index ix_usuario_x_recorrido_recorr_15 on usuario_x_recorrido (recorrido_id_recorrido);
 
 
 
@@ -181,7 +236,15 @@ drop table if exists metrica cascade;
 
 drop table if exists metricas_x_recorridos cascade;
 
+drop table if exists recompensa cascade;
+
+drop table if exists recompensa_usuario cascade;
+
 drop table if exists recorrido cascade;
+
+drop table if exists retos cascade;
+
+drop table if exists retos_usuario cascade;
 
 drop table if exists ruta cascade;
 

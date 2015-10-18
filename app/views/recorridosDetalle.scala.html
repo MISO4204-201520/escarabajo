@@ -3,19 +3,19 @@
 	
 @import helper._
 
-@main("recorridosDetalle") {
+
 
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 
 <script>
 	
-	function asignaInscripcion(idRecorrido)
+	function asignaInscripcion(idRecorridoSeleccionado)
 	{
 		$.ajaxSetup({ cache: false });
-		document.getElementById("idRecorrido").value = idRecorrido;
+		$("#idRecorridoSeleccionado").val(idRecorridoSeleccionado);
 		$("#btnInscribir").hide();
 		$("#btnRetirar").hide();
-		$.get( "inscribirARecorrido?idRecorrido=" + idRecorrido, function( data ) {
+		$.get( "inscribirARecorrido?idRecorrido=" + idRecorridoSeleccionado, function( data ) {
 			  $( "#resultInscripcion" ).html( data );
 			  	
 			});
@@ -178,7 +178,7 @@
 		<input name="hddAddressLong" id="hddAddressLong" type="hidden" value=@formRecorrido.longitudInicio/>
 		<input name="hddAddressEndLat" id="hddAddressEndLat" type="hidden" value=@formRecorrido.latitudFin/>
 		<input name="hddAddressEndLong" id="hddAddressEndLong" type="hidden" value=@formRecorrido.longitudFin/>
-		<input name="idRecorrido" id="idRecorrido" type="hidden" value=@formRecorrido.idRecorrido/>
+		<!--  <input name="idRecorrido" id="idRecorrido" type="hidden" value=@formRecorrido.idRecorrido/>-->
 	}
 	
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDUtmM5eDzCCjpbXs9OrzCvKgHoflR-oVk&signed_in=true&callback=initMap"
@@ -188,4 +188,4 @@
 </div>
 	
 
-}
+
