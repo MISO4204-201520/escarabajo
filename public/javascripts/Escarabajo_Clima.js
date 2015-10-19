@@ -76,23 +76,37 @@ var BASE_URL = "http://api.openweathermap.org/data/2.5/weather?APPID=f6d04af6ab7
 	
 	function ParseSource(obj) {
 		// Clima actual en el origen
-		document.getElementById("dvWeatherSource").innerHTML = "Clima Origen <br>" + 
+		/*document.getElementById("dvWeatherSource").innerHTML = "Clima Origen <br>" + 
 				"<img src='" + IMG_URL + obj.weather[0].icon + ".png'> <br> " + 
 				"Condici&#243;n: " + obj.weather[0].description + "<br>" + 
 				"Temperatura: " + obj.main.temp + " C&#176;<br>" + 
 				"Humedad: " + obj.main.humidity + " % <br>" +
 				"Nubosidad: " + obj.clouds.all + "% <br>" + 
-				"Viento: " + obj.wind.speed + " m/s <br>";
+				"Viento: " + obj.wind.speed + " m/s <br>";*/
+		document.getElementById("imgClimaOrigen").src=IMG_URL + obj.weather[0].icon + ".png";
+		
+		document.getElementById("txtClimaCondicionOrigenVal").innerHTML=obj.weather[0].description;
+		document.getElementById("txtClimaTemperaturaOrigenVal").innerHTML=obj.main.temp;
+		document.getElementById("txtClimaHumedadOrigenVal").innerHTML=obj.main.humidity;
+		document.getElementById("txtClimaNubosidadOrigenVal").innerHTML=obj.clouds.all;
+		document.getElementById("txtClimaVientoOrigenVal").innerHTML=obj.wind.speed;	
 
 	}
 	
 	function ParseDestination(obj) {
 		// Clima actual en el origen
-		document.getElementById("dvWeatherDestination").innerHTML = "Clima Destino <br>" + 
+		/*document.getElementById("dvWeatherDestination").innerHTML = "Clima Destino <br>" + 
 				"<img src='" + IMG_URL + obj.weather[0].icon + ".png'> <br> " + 
 				"Condici&#243;n: " + obj.weather[0].description + "<br>" + 
 				"Temperatura: " + obj.main.temp + " C&#176;<br>" + 
 				"Humedad: " + obj.main.humidity + " % <br>" +
 				"Nubosidad: " + obj.clouds.all + "% <br>" + 
-				"Viento: " + obj.wind.speed + " m/s <br>";
+				"Viento: " + obj.wind.speed + " m/s <br>";*/
+		document.getElementById("imgClimaDestino").src=IMG_URL + obj.weather[0].icon + ".png";
+		document.getElementById("txtClimaCondicionDestinoVal").value=obj.weather[0].description;
+		document.getElementById("txtClimaTemperaturaDestinoVal").value=obj.main.temp;
+		document.getElementById("txtClimaHumedadDestinoVal").value=obj.main.humidity;
+		document.getElementById("txtClimaNubosidadDestinoVal").value=obj.clouds.all;
+		document.getElementById("txtClimaVientoDestinoVal").value=obj.wind.speed;
+
 	}

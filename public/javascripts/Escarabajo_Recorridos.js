@@ -13,6 +13,7 @@
             new google.maps.places.SearchBox(document.getElementById('txtSource'));
             new google.maps.places.SearchBox(document.getElementById('txtDestination'));
             directionsDisplay = new google.maps.DirectionsRenderer({ 'draggable': true });
+            GetRoute();
         });
 
         function GetRoute() {
@@ -56,10 +57,8 @@
                 if (status == google.maps.DistanceMatrixStatus.OK && response.rows[0].elements[0].status != "ZERO_RESULTS") {
                     var distance = response.rows[0].elements[0].distance.text;
                     var duration = response.rows[0].elements[0].duration.text;
-                    var dvDistance = document.getElementById("dvDistance");
-                    dvDistance.innerHTML = "";
-                    dvDistance.innerHTML += "Distancia Estimada: " + distance + "<br />";
-                    dvDistance.innerHTML += "Duración Estimada: " + duration;
+                    document.getElementById("txtTiempoEstimadoVal").value = distance;
+					document.getElementById("txtDistanciaEstimadaVal").value = duration;
 
                 } else {
                     alert("No es posible encontrar un camino.");
@@ -110,11 +109,8 @@
 					console.log(realDestination);
 					console.log(p);
 					var realDistance = google.maps.geometry.spherical.computeDistanceBetween(realSource, realDestination);
-			
-					var dvDistance = document.getElementById("dvDistance");
-					dvDistance.innerHTML += "<br/>";
-					dvDistance.innerHTML += "Distancia Real: " + realDistance + "<br />";
-					dvDistance.innerHTML += "Duración Real: " + ((finalTime-initTime)/1000) + " seg";
+					document.getElementById("txtTiempoRealVal").value = ((finalTime-initTime)/1000);
+					document.getElementById("txtDistanciaRealVal").value = realDistance;
 				});
 				
 			}
@@ -198,4 +194,12 @@
 				if(error.code == 0 || error.code == 2){
 					errMsg = errMsg+" - "+error.message;
 				}
+		}
+
+		function SaveMetrics(){
+			console.log("Entra a SaveMetrics");
+			var time = document.getElementById("txtTiempoRealVal").textContent;
+			var dist = document.getElementById("txtDistanciaRealVal").textContent;
+			window.location.href = "@routes.guardarMetricas/";
+			console.log("Finaliza SaveMetrics");
 		}

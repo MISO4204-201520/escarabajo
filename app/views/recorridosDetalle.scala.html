@@ -179,6 +179,10 @@
 		<input name="hddAddressEndLat" id="hddAddressEndLat" type="hidden" value=@formRecorrido.latitudFin/>
 		<input name="hddAddressEndLong" id="hddAddressEndLong" type="hidden" value=@formRecorrido.longitudFin/>
 		<!--  <input name="idRecorrido" id="idRecorrido" type="hidden" value=@formRecorrido.idRecorrido/>-->
+		
+		<div>
+			<a class="btn btn-default" href="@routes.ControllerMetricaEnRecorrido.iniciarRecorridoWeb(formRecorrido.idRecorrido)" role="button">Iniciar Recorrido</a>
+		</div>
 	}
 	
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDUtmM5eDzCCjpbXs9OrzCvKgHoflR-oVk&signed_in=true&callback=initMap"

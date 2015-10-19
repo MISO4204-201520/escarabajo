@@ -1,4 +1,4 @@
-
+@(recorrido:models.Recorrido)
 
 @import helper._
 
@@ -9,69 +9,127 @@
 <script type="text/javascript" src="@routes.Assets.at("javascripts/Escarabajo_Recorridos.js")"></script>
 <script type="text/javascript" src="@routes.Assets.at("javascripts/Escarabajo_Clima.js")"></script>
 
-<style type="text/css">
-  html { height: 100% }
-  body { height: 100%; margin: 0px; padding: 0px;}
-  
-  #map_canvas {
-      width:529px; 
-      height:400px;
-  }
-  .box{
-      width:553px; 
-      height:423px;
-      border:1px solid #ccc;
-      padding:10px;
-      box-shadow: 1px 1px 3px #ccc;
-      background:#e5eCf9;
-  }
-  .search input[type=text]{
-      float:left;
-      width:460px;
-      padding:8px;
-      border:1px solid #4B8EFA;
-  }
-  .search input[type=button]{
-      margin-top: 7px;
-      float:right;
-      background-color:#4B8EFA;
-      border:0;
-      display:block;
-      color:white;
-      padding:8px;
-      cursor: pointer;
-  }
-  h1{
-      text-align: center;
-      font-family: cursive;
-      margin-top:15px;
-      font-size: 45px;
-  }
-  h2{
-      margin-top:15px;
-  }
-</style>
+<div class="wrapper row3">
+  <main class="container clear"> 
+    <div class="content"> 
 
 		<h2>Iniciar recorrido</h2>
-		<form class="form-vertical" role="form">
+		<form class="form-vertical" role="form" method="post" action="@routes.ControllerMetricaEnRecorrido.guardarMetricas()">
+			@recorrido.getLstRuta().map { rut =>
 			<div class="form-group">
-			<label for="txtSource">Origen:</label>
-			<input type="text" class="form-control" id="txtSource" value="Kennedy, Bogota, Colombia"  />
+				<label for="txtSource">Origen:</label>
+				<input type="text" class="form-control" id="txtSource" value="@rut.getLugarInicio()"  />
 			</div>
 			<div class="form-group">
-			<label for="txtDestination">Destino:</label>
-			<input type="text" class="form-control" id="txtDestination" value="Usaquen, Bogota, Colombia"  />
+				<label for="txtDestination">Destino:</label>
+				<input type="text" class="form-control" id="txtDestination" value="@rut.getLugarFin()"  />
 			</div>
+			}
 			<div class="form-group">
-				<input type="button" class="btn btn-default" value="Calcular Ruta" onclick="GetRoute()" />
 				<input type="button" class="btn btn-default" value="Iniciar Recorrido" onclick="StartRoute()" />
 				<input type="button" class="btn btn-default" value="Finalizar Recorrido" onclick="EndRoute()" />
+				<input type="submit" class="btn btn-default" value="Guardar Métricas"/>
 			</div>
-			<div id="dvDistance">		
+			<div class="row">
+				<input type="hidden" id="recorridoId" name="recorridoId" value="@recorrido.getIdRecorrido()" hidden=true></input>
 			</div>
-			<div id="dvWeatherSource"/>	
+			<div class="row">
+				<div class="col-xs-6">	
+					<label for="txtDistanciaEstimada">Distancia Estimada:</label>
+				</div>
+				<div class="col-xs-6">
+					<label for="txtDistanciaReal">Distancia Real:</label>
+				</div>
 			</div>
-			<div id="dvWeatherDestination">
+			<div class="row">
+				<div class="col-xs-6">
+					<input type="text" id="txtDistanciaEstimadaVal" name="txtDistanciaEstimadaVal" style="border:none" readonly></input>
+				</div>
+				<div class="col-xs-6">
+					<input type="text" id="txtDistanciaRealVal" name="txtDistanciaRealVal" style="border:none" readonly></input>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-6">	
+					<label for="txtTiempoEstimado">Tiempo Estimada:</label>
+				</div>
+				<div class="col-xs-6">
+					<label for="txtTiempoReal">Tiempo Real:</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-6">
+					<input type="text" id="txtTiempoEstimadoVal" name="txtTiempoEstimadoVal" style="border:none" readonly></input>
+				</div>
+				<div class="col-xs-6">
+					<input type="text" id="txtTiempoRealVal" name="txtTiempoRealVal" style="border:none" readonly></input>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-6">
+					<label for="txtClimaOrigen">Clima Origen</label>
+				</div>
+				<div class="col-xs-6">
+					<label for="txtClimaDestino">Clima Destino</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-6">
+					<img id="imgClimaOrigen" src=""/>
+				</div>
+				<div class="col-xs-6">
+					<img id="imgClimaDestino" src=""/>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-6">
+					<label for="txtClimaCondicionOrigen">Condici&#243;n: </label>
+					<input type="text" id="txtClimaCondicionOrigenVal" name="txtClimaCondicionOrigenVal" style="border:none" readonly></input>
+				</div>
+				<div class="col-xs-6">
+					<label for="txtClimaCondicionDestino">Condici&#243;n: </label>
+					<input type="text" id="txtClimaCondicionDestinoVal" name="txtClimaCondicionDestinoVal" style="border:none" readonly></input>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-6">
+					<label for="txtClimaTemperaturaOrigen">Temperatura: </label>
+					<input type="text" id="txtClimaTemperaturaOrigenVal" name="txtClimaTemperaturaOrigenVal" style="border:none" readonly></input>
+				</div>
+				<div class="col-xs-6">
+					<label for="txtClimaTemperaturaDestino">Temperatura: </label>
+					<input type="text" id="txtClimaTemperaturaDestinoVal" name="txtClimaTemperaturaDestinoVal" style="border:none" readonly></input>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-6">
+					<label for="txtClimaHumedadOrigen">Humedad: </label>
+					<input type="text" id="txtClimaHumedadOrigenVal" name="txtClimaHumedadOrigenVal" style="border:none" readonly></input>
+				</div>
+				<div class="col-xs-6">
+					<label for="txtClimaHumedadDestino">Humedad: </label>
+					<input type="text" id="txtClimaHumedadDestinoVal" name="txtClimaHumedadDestinoVal" style="border:none" readonly></input>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-6">
+					<label for="txtClimaNubosidadOrigen">Nubosidad: </label>
+					<input type="text" id="txtClimaNubosidadOrigenVal" name="txtClimaNubosidadOrigenVal" style="border:none" readonly></input>
+				</div>
+				<div class="col-xs-6">
+					<label for="txtClimaNubosidadDestino">Nubosidad: </label>
+					<input type="text" id="txtClimaNubosidadDestinoVal" name="txtClimaNubosidadDestinoVal" style="border:none" readonly></input>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-6">
+					<label for="txtClimaVientoOrigen">Viento: </label>
+					<input type="text" id="txtClimaVientoOrigenVal" name="txtClimaVientoOrigenVal" style="border:none" readonly></input>
+				</div>
+				<div class="col-xs-6">
+					<label for="txtClimaVientoDestino">Viento: </label>
+					<input type="text" id="txtClimaVientoDestinoVal" name="txtClimaVientoDestinoVal" style="border:none" readonly></input>
+				</div>
 			</div>
 			<div class="container-fluid" id="main">
 				<div class="row">
@@ -83,5 +141,12 @@
 					</div>
 				</div>
 			</div>	
-		</form>		
+		</form>
+	</div>	
+  </main>
+</div>
+		
+
+
+
 }
