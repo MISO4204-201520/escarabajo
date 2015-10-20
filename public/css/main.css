@@ -75,7 +75,7 @@ span.form-control {
 
 
 #userField {
-  width: 210px;
+  width: 100%;
   position: relative;
   top: 1px;
 }
@@ -83,7 +83,6 @@ span.form-control {
 #header {
   color: #0000;
   width: 400px;
-  height: 34px;
   font-weight: bold;
   padding: 10px;
   background: #FFFF;
@@ -99,7 +98,7 @@ span.form-control {
 }
 
 #roomSelect {
-  width: 85px;
+  width: 100%;
 }
 
 .undo {

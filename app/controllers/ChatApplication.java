@@ -1,6 +1,8 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
+
+import models.User;
 import play.Logger;
 import play.libs.EventSource;
 import play.mvc.*;
@@ -19,7 +21,10 @@ public class ChatApplication extends Controller {
    * Controller action serving AngularJS chat page
    */
   public static Result index() {
-    return ok(views.html.chat.render("Chat using Server Sent Events and AngularJS"));
+	
+	final User localUser = Application.getLocalUser(session());
+	  
+    return ok(views.html.chat.render("Sistema de Mensajeria Instantanea", localUser));
   }
 
   /**

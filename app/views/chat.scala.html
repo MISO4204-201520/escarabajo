@@ -1,4 +1,4 @@
-@(message: String)
+@(message: String, localUser: models.User = null)
 
 @import helper._
 
@@ -9,17 +9,17 @@
         <script src="@routes.Assets.at("javascripts/app.js")"></script>
         <script src="@routes.Assets.at("javascripts/services.js")"></script>
         <script src="@routes.Assets.at("javascripts/controllers.js")"></script>
-     
-        
-    </head>
-    <h1><p align = "center"> Sistema de Mensajeria Instantanea</p></h1>
-    
     <body ng-app="sseChat">
-        
+    <div align = "center"><h1>@message</h1></div>
+      <div class="container"> 
         <div ng-controller="ChatCtrl">
             <div id="header">
-                Nick name: <input type="text" name="user" id="userField" value=""  />
-                <select ng-model="currentRoom" ng-change="setCurrentRoom(currentRoom)" 
+            <dl>
+  			<dt><label for="nombreUsuario">Nombre Completo: @localUser.name</label></dt>
+  			<dt><label for="chatUsetname">Escriba un Chat Username </label><input class="form-control" type="text" name="user" id="userField" value="John Doe" ng-model="user" > </dt>
+  			</dl>
+  			<label for="rooms">Sala de Chat Seleccionada</label>
+                <select class="form-control" ng-model="currentRoom" ng-change="setCurrentRoom(currentRoom)" 
                   ng-options="r.name for r in rooms" id="roomSelect"></select>
             </div>
 
@@ -32,12 +32,13 @@
 
             <div id="footer">
                 <form ng-submit="submitMsg()">
-                    <input type="text" name="chat" id="textField" ng-model="inputText"
+                    <input class="form-control" type="text" name="chat" id="textField" ng-model="inputText"
                      placeholder="Say something" class="ng-pristine ng-valid input-block-level" />
                     <input type="button" class="btn btn-primary" id="saySomething" value="Submit" ng-click="submitMsg()" />
                 </form>
             </div>
         </div>
- 
+ 	</div>
     </body>
+    
     }
