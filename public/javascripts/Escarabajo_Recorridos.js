@@ -1,4 +1,4 @@
-	var map, currentPositionMarker;
+		var map, currentPositionMarker;
 		var source, destination;
 		var sourcePosition, destinationPosition;
         var directionsDisplay;
@@ -6,11 +6,14 @@
 		var geocoder = new google.maps.Geocoder();
 		var initTime, finalTime;
         var realSource, realDestination;
+        var currentPos;
+        var watchPositionID = null;
 		
 		google.maps.event.addDomListener(window, 'load', function () {
             new google.maps.places.SearchBox(document.getElementById('txtSource'));
             new google.maps.places.SearchBox(document.getElementById('txtDestination'));
             directionsDisplay = new google.maps.DirectionsRenderer({ 'draggable': true });
+            GetRoute();
         });
 
         function GetRoute() {
@@ -52,12 +55,12 @@
                 avoidTolls: false
             }, function (response, status) {
                 if (status == google.maps.DistanceMatrixStatus.OK && response.rows[0].elements[0].status != "ZERO_RESULTS") {
-                    var distance = response.rows[0].elements[0].distance.text;
-                    var duration = response.rows[0].elements[0].duration.text;
-                    var dvDistance = document.getElementById("dvDistance");
-                    dvDistance.innerHTML = "";
-                    dvDistance.innerHTML += "Distancia Estimada: " + distance + "<br />";
-                    dvDistance.innerHTML += "Duración Estimada: " + duration;
+                    var distance = response.rows[0].elements[0].distance.value;
+                    var duration = response.rows[0].elements[0].duration.value;
+                    
+
+                    document.getElementById("txtTiempoEstimadoVal").value = parseFloat(duration/60).toFixed(2);
+					document.getElementById("txtDistanciaEstimadaVal").value = parseFloat(distance/1000).toFixed(2);
 
                 } else {
                     alert("No es posible encontrar un camino.");
@@ -73,14 +76,18 @@
 			//Consulta y monitorea la posición del usuario
 			if(navigator.geolocation){
 				navigator.geolocation.getCurrentPosition(function (p) {
-					realSource = p;
+					realSource = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
+					console.log(realSource);
 				});
 				var opts = {
 					enableHighAccuracy: true,
-					timeout			  : Infinity,
+					timeout			  : 5000,
 					maximumAge		  : 0
 				}
-				navigator.geolocation.watchPosition(displayAndWatch, CurrentLocationFailure, opts);
+				if(watchPositionID == null){
+					watchPositionID = navigator.geolocation.watchPosition(displayAndWatch, CurrentLocationFailure, opts);	
+				}
+				
 			}
 			else {
 				alert('Geo Location no es soportada por el explorador.');
@@ -91,16 +98,23 @@
 		function EndRoute(){
 			//Obtiene la hora de finalización
 			finalTime = new Date().getTime();
+
+			if(watchPositionID != null){
+				navigator.geolocation.clearWatch(watchPositionID);
+				watchPositionID = null;
+			}
 			//Calcula la distancia con base a la posición final del usuario
 			if(navigator.geolocation){
 				navigator.geolocation.getCurrentPosition(function (p) {
-					realDestination = p;
+					realDestination = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
+					console.log(realSource);
+					console.log(realDestination);
+					console.log(p);
 					var realDistance = google.maps.geometry.spherical.computeDistanceBetween(realSource, realDestination);
-			
-					var dvDistance = document.getElementById("dvDistance");
-					dvDistance.innerHTML += "<br/>";
-					dvDistance.innerHTML += "Distancia Real: " + realDistance + "<br />";
-					dvDistance.innerHTML += "Duración Real: " + ((finalTime-initTime)/1000) + " seg";
+					var avgSpeed = 60*(realDistance/1000)/((finalTime-initTime)/60000);
+					document.getElementById("txtTiempoRealVal").value = parseFloat((finalTime-initTime)/60000).toFixed(2);
+					document.getElementById("txtDistanciaRealVal").value = parseFloat(realDistance/1000).toFixed(2);
+					document.getElementById("txtVelocidadMediaVal").value = parseFloat(avgSpeed).toFixed(2);
 				});
 				
 			}
@@ -120,6 +134,7 @@
 				),
 				title: "Current Position"
 			});
+			map.setZoom(20);
 			map.panTo(new google.maps.LatLng(
 					pos.coords.latitude,
 					pos.coords.longitude
@@ -171,7 +186,7 @@
 			});
 		}*/
 		
-		function CurrentLocationFailure(){
+		function CurrentLocationFailure(error){
 				var errorType={
 					0:"Error Desconocido",
 					1:"Permisos negados por el usuario",
@@ -184,4 +199,12 @@
 				if(error.code == 0 || error.code == 2){
 					errMsg = errMsg+" - "+error.message;
 				}
+		}
+
+		function SaveMetrics(){
+			console.log("Entra a SaveMetrics");
+			var time = document.getElementById("txtTiempoRealVal").textContent;
+			var dist = document.getElementById("txtDistanciaRealVal").textContent;
+			window.location.href = "@routes.guardarMetricas/";
+			console.log("Finaliza SaveMetrics");
 		}

@@ -91,7 +91,7 @@ playauthenticate.link.account.ok=OK
 # play-authenticate: Signup folder translations
 
 playauthenticate.verify.email.title=Verifique su email
-playauthenticate.verify.email.requirement=Antes de usar PlayAuthenticate, debe validar su email.
+playauthenticate.verify.email.requirement=Antes de usar la aplicación del Proyecto Escarabajo, debe validar su email.
 playauthenticate.verify.email.cta=Se le ha enviado un email a la dirección registrada. Por favor, siga el link de este email para activar su cuenta.
 playauthenticate.password.reset.title=Restablecer contraseña
 playauthenticate.password.reset.cta=Restablecer mi contraseña
@@ -100,7 +100,7 @@ playauthenticate.password.forgot.title=Contraseña olvidada
 playauthenticate.password.forgot.cta=Enviar instrucciones para restablecer la contraseña
 
 playauthenticate.oauth.access.denied.title=Acceso denegado por OAuth
-playauthenticate.oauth.access.denied.explanation=Si quiere usar PlayAuthenticate con OAuth, debe aceptar la conexión.
+playauthenticate.oauth.access.denied.explanation=Si quiere usar Proyecto Escarabajo con OAuth, debe aceptar la conexión.
 playauthenticate.oauth.access.denied.alternative=Si prefiere no hacerlo, puede también
 playauthenticate.oauth.access.denied.alternative.cta=registrarse con un usuario y una contraseña.
 

@@ -37,9 +37,9 @@ public class Recorrido extends Model {
 	@Column(name="dia_frecuente")
 	private String diaFrecuente; 
 		
-	@OneToMany(mappedBy = "recorrido")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "recorrido")
 	private List<MetricasXRecorrido> metricasXRecorrido;
-	
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "recorrido")
 	private List<Ruta> lstRuta;
 	
@@ -130,5 +130,11 @@ public class Recorrido extends Model {
 		this.horaFrecuente = horaFrecuente;
 	}
 
-	
+	public List<MetricasXRecorrido> getMetricasXRecorrido() {
+		return metricasXRecorrido;
+	}
+
+	public void setMetricasXRecorrido(List<MetricasXRecorrido> metricasXRecorrido) {
+		this.metricasXRecorrido = metricasXRecorrido;
+	}
 }

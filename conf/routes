@@ -10,8 +10,12 @@ GET     /getFormRecorridos          controllers.ControllerRecorrido.getFormRecor
 POST    /FormRecorridos   		    controllers.ControllerRecorrido.postFormRecorridos
 GET		/listRecorridos				controllers.ControllerRecorrido.listarRecorridos()
 GET		/listRecorridosWeb			controllers.ControllerRecorrido.listarRecorridosWeb()
+
+#Recorridos
+GET		/ejecutarRecorrido			controllers.ControllerMetricas.iniciarRecorridoWeb(idRecorridoSeleccionado: Long)
 GET		/detallesRecorridos			controllers.ControllerRecorrido.detallesRecorridos()
 GET		/inscribirARecorrido		controllers.ControllerRecorrido.inscribirARecorrido()
+POST	/guardarMetricas			controllers.ControllerMetricas.guardarMetricas()
 
 #Sitios de alquiler
 GET		/sitiosDeAlquiler			controllers.ControllerSitiosDeAlquiler.listarSitiosDeAlquiler()

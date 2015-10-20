@@ -4,6 +4,7 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -16,6 +17,7 @@ public class MetricasXRecorrido extends Model{
 	
 	@Id
 	@Column(name="id_metrica_recorrido", nullable=false)
+	@GeneratedValue
 	private Long idMetricaXRecorrido;
 	
 	@ManyToOne
