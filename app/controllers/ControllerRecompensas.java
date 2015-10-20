@@ -16,9 +16,10 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.*;
 
-@Restrict(@Group(Application.USER_ROLE))
+@Restrict(@Group(Application.ADMIN_ROLE))
 public class ControllerRecompensas extends Controller{
 	
+	@Restrict(@Group(Application.USER_ROLE))
 	public static Result listarRecompensasActivas(){
 		
 		RecompensaDAO recompensaDAO = new RecompensaDAO();
