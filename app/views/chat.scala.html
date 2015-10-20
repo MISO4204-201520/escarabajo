@@ -1,27 +1,24 @@
-@(title: String)
+@(message: String)
 
-<!DOCTYPE html>
+@import helper._
 
-<html>
-    <head>
-        <title>@title</title>
-        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
-        <link rel="stylesheet" media="screen" href="//netdna.bootstrapcdn.com/bootstrap/2.3.2/css/bootstrap.min.css">
-        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
 
+@main("chat") {
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-
         <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.15/angular.min.js"></script>
         <script src="@routes.Assets.at("javascripts/app.js")"></script>
         <script src="@routes.Assets.at("javascripts/services.js")"></script>
         <script src="@routes.Assets.at("javascripts/controllers.js")"></script>
+        <link href="@routes.Assets.at("stylesheets/main.css")" rel="stylesheet">
         
     </head>
+    <h1><p align = "center"> Sistema de Mensajeria Instantanea</p></h1>
+    
     <body ng-app="sseChat">
         
         <div ng-controller="ChatCtrl">
             <div id="header">
-                Your Name: <input type="text" name="user" id="userField" value="John Doe" ng-model="user" />
+                Nick name: <input type="text" name="user" id="userField" value=""  />
                 <select ng-model="currentRoom" ng-change="setCurrentRoom(currentRoom)" 
                   ng-options="r.name for r in rooms" id="roomSelect"></select>
             </div>
@@ -43,4 +40,4 @@
         </div>
  
     </body>
-</html>
+    }
