@@ -1,0 +1,68 @@
+@(retoForm: ControllerRetos.FormularioReto,
+	nuevoReto : Boolean)
+@import helper._
+
+@main("Formulario reto") {
+	<h1></h1>
+	@helper.form(action = routes.ControllerRetos.guardar(nuevoReto)) {
+	<fieldset style="padding-left: 1cm;">
+		@if(nuevoReto){
+		<legend>Reto: Nuevo reto</legend>		
+		}else{
+		<legend>Reto: @retoForm.nombre</legend>
+		}		
+		<input name="id" id="id" type="hidden" value="@retoForm.id"/>
+		<table>		
+			<tr>
+				<td>Nombre:</td>
+				<td><input name="nombre" id="nombre" value="@retoForm.nombre"/></td>
+			</tr>
+			<tr>
+				<td>Fecha inicio:</td>
+				<td><input name="fechaIni" id="idechaIni" type="date" value="@retoForm.fechaIni"/></td>
+			</tr>
+			<tr>
+				<td>Fecha fin:</td>
+				<td><input name="fechaFin" id="idFechaFin" type="date" value="@retoForm.fechaFin"/></td>
+			</tr>
+			<tr>
+				<td>Id Metrica:</td>
+				<td><input name="idMetrica" id="idMetrica" value="@retoForm.idMetrica"/></td>
+			</tr>
+			<tr>
+				<td>Funcion:</td>
+				<td><input name="funcion" id="idFuncion" value="@retoForm.funcion"/></td>
+			</tr>
+			<tr>
+				<td>Operador:</td>
+				<!--td><input name="operador" id="idOperador" value="@retoForm.operador"/></td-->
+				<td>
+					<select name="operador">
+						<option value=">" @if(">".equals(retoForm.operador)){selected} > > </option>
+						<option value=">=" @if(">=".equals(retoForm.operador)){selected}> >= </option>
+						<option value="<" @if("<".equals(retoForm.operador)){selected}> < </option>
+						<option value="<=" @if("<=".equals(retoForm.operador)){selected}> <= </option>
+						<option value="=" @if("=".equals(retoForm.operador)){selected}> = </option>
+						<option value="!=" @if("!=".equals(retoForm.operador)){selected}> != </option>											
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Valor condición:</td>
+				<td><input name="valorCondicion" id="idValorCondicion" value="@retoForm.valorCondicion"/></td>
+			</tr>
+			<tr>
+				<td>Puntaje:</td>
+				<td><input name="puntaje" id="idPuntaje" value="@retoForm.puntaje"/></td>
+			</tr>
+			<tr>
+				<td>Estado:</td>
+				<td><input name="estado" id="idEstado" value="@retoForm.estado"/></td>
+			</tr>		
+		</table>
+	</fieldset>
+	<br/>
+	<input type="submit" class="btn btn-primary" value="Guardar" style="margin-left: 1cm;">
+	<a class="btn" href="@routes.ControllerRetos.listarRetos()">Cancelar</a>
+	}
+}

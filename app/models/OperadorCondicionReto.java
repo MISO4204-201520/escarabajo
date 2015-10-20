@@ -1,5 +1,8 @@
 package models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public enum OperadorCondicionReto {
 
 	MAYOR(">"),
@@ -17,5 +20,13 @@ public enum OperadorCondicionReto {
 	
 	public String getOperador(){
 		return operador;
+	}
+	
+	public static List<String> getSymbols(){
+		List<String> sym = new ArrayList<>();
+		for(OperadorCondicionReto o : OperadorCondicionReto.values()){
+			sym.add(o.getOperador());
+		}
+		return sym;
 	}
 }

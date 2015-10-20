@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -19,34 +20,33 @@ import play.data.format.Formats;
  */
 @Entity
 @Table(name = "retos_usuario")
-public class RetosUsuario extends AppModel{
+public class RetoUsuario extends AppModel{
 	
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
-	public RetosUsuarioPK retosUsuarioPK;
+	public RetoUsuarioPK retoUsuarioPK;
 
 	@Formats.DateTime(pattern = "dd-MM-yyyy")
 	@Column(name="fecha")
 	public Date fecha;
 	
-	@Column(name="nombre", nullable=false)
-	public String nombre;
-	
 	@Column(name="estado", nullable=false)
 	public String estado;
-	
+
 	@ManyToOne
+	@JoinColumn(name = "id_usuario", referencedColumnName = "id")
 	public User usuario;
 	
 	@ManyToOne
+	@JoinColumn(name = "id_reto", referencedColumnName = "id")
 	public Reto reto;
 
-	public static AppModel.Finder<Long, RetosUsuario> find;
+	public static AppModel.Finder<RetoUsuarioPK, RetoUsuario> find;
 	
-	public  RetosUsuario() {
+	public  RetoUsuario() {
 		super();
-		find = new AppModel.Finder<Long, RetosUsuario> (RetosUsuario.class);
+		find = new AppModel.Finder<RetoUsuarioPK, RetoUsuario> (RetoUsuario.class);
 	}
 
 }

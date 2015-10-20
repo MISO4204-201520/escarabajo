@@ -6,24 +6,36 @@ import models.Recompensa;
 
 public class RecompensaDAO {
 	
-	public List<Recompensa> listarRecompensasActivos(){
+	public List<Recompensa> consultarRecompensasActivas(){
 		return Recompensa.find.where().eq("estado", "activo").findList();
 	}	
 	
+	public List<Recompensa> consultarRecompensas(){
+		return Recompensa.find.all();
+	}
+	
 	public void agregarRecompensa(Recompensa recompensa){
-		recompensa.save();
+		if(recompensa.id==null){
+			recompensa.id = Recompensa.find.nextId();
+			recompensa.save();
+		}
+
 	}
 	
 	public void actualizarRecompensa(Recompensa recompensa){
 		Recompensa recompensaActual = consultarRecompensaPorId(recompensa.id);
 		
-		recompensaActual = recompensa;		
-		recompensaActual.save();
+		if(recompensaActual!=null){
+			recompensaActual = recompensa;		
+			recompensaActual.update();
+		}
 	}
 	
-	public void eliminarSitioDeAlquiler(Recompensa recompensa){
+	public void eliminarRecompensa(Recompensa recompensa){
 		Recompensa recompensaBorrar = consultarRecompensaPorId(recompensa.id);
-		recompensaBorrar.delete();
+		if(recompensaBorrar!=null){
+			recompensaBorrar.delete();
+		}		
 	}
 	
 	public Recompensa consultarRecompensaPorId(Long id){

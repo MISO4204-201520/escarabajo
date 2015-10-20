@@ -56,6 +56,8 @@ public class User extends AppModel implements Subject {
 	public boolean active;
 
 	public boolean emailValidated;
+	
+	public Long puntajeRetos;
 
 	@ManyToMany
 	public List<SecurityRole> roles;

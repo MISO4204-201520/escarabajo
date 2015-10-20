@@ -1,15 +1,18 @@
 package models;
 
-import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Embeddable
 public class RecompensaUsuarioPK {
 
-	@Column(name="id_recompensa", nullable=false)
+	@ManyToOne
+	@JoinColumn(name = "id_recompensa", referencedColumnName = "id")
 	public Long idRecompensa;
 	
-	@Column(name="id_usuario", nullable=false)
+	@ManyToOne
+	@JoinColumn(name = "id_usuario", referencedColumnName = "id")
 	public Long idUsuario;
 	
 	public int hashCode(){

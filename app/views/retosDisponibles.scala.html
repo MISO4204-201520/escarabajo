@@ -6,19 +6,6 @@
 
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 
-<script>
-	function del(urlToDelete) {
-		$.ajax({
-			url: urlToDelete,
-			type: 'DELETE',
-			success: function(results) {
-			// Refresh the page
-			location.reload();
-			}
-		});
-	}
-</script>
-
 <div class="wrapper row3">
   <main class="container clear"> 
     <div class="content"> 
@@ -36,8 +23,7 @@
 			            <th>Funcion</th>
 						<th>Operador</th>
 						<th>Valor condición</th>
-						<th>Puntaje</th>
-						<th></th>			            
+						<th>Puntaje</th>		            
 			        </tr>
 			    </thead>
 			    <tbody>
@@ -52,10 +38,6 @@
 			            <td>@reto.operador</td>
 			            <td>@reto.valorCondicion</td>
 			            <td>@reto.puntaje</td>
-			            <td>
-							<a onclick="del('@routes.ControllerRetos.eliminarReto(reto.id)')">Eliminar</a>
-							<a href="@routes.ControllerRetos.details(reto.id)">Editar</a>
-						</td>
 			        </tr>
 			        }
 			    </tbody>
@@ -63,10 +45,6 @@
 				
 		
 	</div>
-	<br>
-	<form action="@routes.ControllerRetos.agregarReto()">
-	    <input type="submit" class="btn btn-primary btn-block" value="Añadir reto">
-	</form>
   </main>
 </div>
 

@@ -6,35 +6,34 @@ import models.Reto;
 
 public class RetoDAO {
 	
-	public List<Reto> listarRetosActivos(){
+	public List<Reto> consultarRetosActivos(){
 		return Reto.find.where().eq("estado", "activo").findList();
-	}	
+	}
+	
+	public List<Reto> consultarRetos(){
+		return Reto.find.all();
+	}
 	
 	public void agregarReto(Reto reto){
+		reto.id = Reto.find.nextId();
 		reto.save();
 	}
 	
 	public void actualizarReto(Reto reto){
 		Reto retoActual = consultarRetoPorId(reto.id);
-		/*
-		retoActual.estado = reto.estado;
-		retoActual.fechaFin = reto.fechaFin;
-		retoActual.fechaIni = reto.fechaIni;
-		retoActual.funcion = reto.funcion;
-		retoActual.id = reto.id;
-		retoActual.metrica = reto.metrica;
-		retoActual.nombre = reto.nombre;
-		retoActual.operador = reto.operador;
-		retoActual.puntaje = reto.puntaje;
-		retoActual.valorCondicion = reto.valorCondicion;
-		*/
-		retoActual = reto;
-		retoActual.save();
+		
+		if(retoActual!=null){
+			retoActual = reto;
+			retoActual.update();
+		}
+
 	}
 	
-	public void eliminarSitioDeAlquiler(Reto reto){
+	public void eliminarReto(Reto reto){
 		Reto retoBorrar = consultarRetoPorId(reto.id);
-		retoBorrar.delete();
+		if(retoBorrar!=null){
+			retoBorrar.delete();			
+		}
 	}
 	
 	public Reto consultarRetoPorId(Long id){

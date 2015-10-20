@@ -1,0 +1,46 @@
+@(recomForm: ControllerRecompensas.FormularioRecompensa,
+	nuevaRecompensa : Boolean)
+@import helper._
+
+@main("Formulario recompensa") {
+	<h1></h1>
+	@helper.form(action = routes.ControllerRecompensas.guardar(nuevaRecompensa)) {
+	<fieldset style="padding-left: 1cm;">
+		@if(nuevaRecompensa){
+		<legend>Recompensa: Nueva recompensa</legend>		
+		}else{
+		<legend>Reto: @recomForm.recompensa</legend>
+		}		
+		<input name="id" id="id" type="hidden" value="@recomForm.id"/>
+		<table>		
+			<tr>
+				<td>Recompensa:</td>
+				<td><input name="recompensa" id="idRecompensa" value="@recomForm.recompensa"/></td>
+			</tr>
+			<tr>
+				<td>Puntaje requerido:</td>
+				<td><input name="puntajeRequerido" id="idPuntajeRequerido" value="@recomForm.puntajeRequerido"/></td>
+			</tr>
+			<tr>
+				<td>Telefono de contacto:</td>
+				<td><input name="telefonoContacto" id="idTelefonoContacto" value="@recomForm.telefonoContacto"/></td>
+			</tr>
+			<tr>
+				<td>Celular de contacto:</td>
+				<td><input name="celularContacto" id="idCelularContacto" value="@recomForm.celularContacto"/></td>
+			</tr>
+			<tr>
+				<td>Fecha límite para obtener:</td>
+				<td><input name="fechaLimite" id="idFechaLimite" type="date" value="@recomForm.fechaLimite"/></td>
+			</tr>
+			<tr>
+				<td>Estado:</td>
+				<td><input name="estado" id="idEstado" value="@recomForm.estado"/></td>
+			</tr>		
+		</table>
+	</fieldset>
+	<br/>
+	<input type="submit" class="btn btn-primary" value="Guardar" style="margin-left: 1cm;">
+	<a class="btn" href="@routes.ControllerRecompensas.listarRecompensas()">Cancelar</a>
+	}
+}

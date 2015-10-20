@@ -14,4 +14,5 @@ public class UserDAO {
 	public User consultarUsuarioPorId(Long id){
 		return User.find.byId(id);
 	}
+
 }
