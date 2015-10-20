@@ -1,6 +1,6 @@
-	var BASE_URL = "http://api.openweathermap.org/data/2.5/weather?";
+	var BASE_URL = "http://api.openweathermap.org/data/2.5/weather?APPID=f6d04af6ab78e991990e4ea3e297bbf5&";
 	var UrlParams = "&units=metric&type=accurate&mode=json&lang=sp";
-	var Forecast_URL = "http://api.openweathermap.org/data/2.5/forecast/daily?";
+	var Forecast_URL = "http://api.openweathermap.org/data/2.5/forecast/daily?APPID=f6d04af6ab78e991990e4ea3e297bbf5&";
 	var ForeCast_Params = "&cnt=5&units=metric&type=accurate&mode=json&lang=sp";
 	var IMG_URL = "http://openweathermap.org/img/w/";
 	var geocoder = new google.maps.Geocoder();
@@ -20,7 +20,6 @@
 	}*/
 	
 	function GetCurrentWeather(sourceDir, destinationDir) {
-		
 		//**********POSICIONES DEL RECORRIDO****************///
 		geocoder.geocode({'address': sourceDir}, function(results, status) {
 			if (status === google.maps.GeocoderStatus.OK) {
@@ -44,7 +43,6 @@
 	function GetWeatherSource(source){
 		// Configura las URL para obtener el clima actual en el origen
 		var SourceCurrentWeather_url = BASE_URL + "lat=" + source.lat() + "&lon=" + source.lng() + UrlParams;
-		
 		// Realiza la llamada al API de OpenWeather para obtener el clima actual en el origen
 		var SourceCurrentReq = new XMLHttpRequest();
 		SourceCurrentReq.onreadystatechange = function() {
@@ -60,7 +58,6 @@
 	function GetWeatherDestination(destination){
 		// Configura las URL para obtener el clima actual en el destino
 		var DestinationCurrentWeather_url = BASE_URL + "lat=" + destination.lat() + "&lon=" + destination.lng() + UrlParams;
-		
 		// Realiza la llamada al API de OpenWeather para obtener el clima actual en el destino
 		var DestinationCurrentReq = new XMLHttpRequest();
 		DestinationCurrentReq.onreadystatechange = function() {

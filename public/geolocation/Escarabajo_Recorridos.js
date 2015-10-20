@@ -1,4 +1,4 @@
-	var map, currentPositionMarker;
+		var map, currentPositionMarker;
 		var source, destination;
 		var sourcePosition, destinationPosition;
         var directionsDisplay;
@@ -95,6 +95,9 @@
 			if(navigator.geolocation){
 				navigator.geolocation.getCurrentPosition(function (p) {
 					realDestination = p;
+					console.log(realSource);
+					console.log(realDestination);
+					console.log(p);
 					var realDistance = google.maps.geometry.spherical.computeDistanceBetween(realSource, realDestination);
 			
 					var dvDistance = document.getElementById("dvDistance");
