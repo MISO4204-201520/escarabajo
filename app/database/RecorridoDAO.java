@@ -2,6 +2,7 @@ package database;
 
 import java.util.List;
 
+import models.MetricasXRecorrido;
 import models.Recorrido;
 
 
@@ -22,5 +23,16 @@ public class RecorridoDAO {
 	
 	public Recorrido consultarRecorridoPorId(Long id){
 		return Recorrido.find.byId(id);
+	}
+	
+	public void actualizarRecorridoConMetricas(Recorrido r){
+		System.out.println("Entra a Actualizar recorridos");
+		Recorrido recorridoActual = consultarRecorridoPorId(r.getIdRecorrido());
+		recorridoActual.setMetricasXRecorrido(r.getMetricasXRecorrido());
+		/*for(MetricasXRecorrido mRe : recorridoActual.getMetricasXRecorrido()){
+			System.out.println(mRe.getMetrica().getNombreMetrica() + " " + mRe.getValorMetrica());
+			mRe.save();
+		}*/
+		recorridoActual.save();
 	}
 }

@@ -85,11 +85,11 @@ var BASE_URL = "http://api.openweathermap.org/data/2.5/weather?APPID=f6d04af6ab7
 				"Viento: " + obj.wind.speed + " m/s <br>";*/
 		document.getElementById("imgClimaOrigen").src=IMG_URL + obj.weather[0].icon + ".png";
 		
-		document.getElementById("txtClimaCondicionOrigenVal").innerHTML=obj.weather[0].description;
-		document.getElementById("txtClimaTemperaturaOrigenVal").innerHTML=obj.main.temp;
-		document.getElementById("txtClimaHumedadOrigenVal").innerHTML=obj.main.humidity;
-		document.getElementById("txtClimaNubosidadOrigenVal").innerHTML=obj.clouds.all;
-		document.getElementById("txtClimaVientoOrigenVal").innerHTML=obj.wind.speed;	
+		document.getElementById("txtClimaCondicionOrigenVal").value=obj.weather[0].description;
+		document.getElementById("txtClimaTemperaturaOrigenVal").value=parseFloat(obj.main.temp).toFixed(2);
+		document.getElementById("txtClimaHumedadOrigenVal").value=parseFloat(obj.main.humidity).toFixed(2);
+		document.getElementById("txtClimaNubosidadOrigenVal").value=parseFloat(obj.clouds.all).toFixed(2);
+		document.getElementById("txtClimaVientoOrigenVal").value=parseFloat(obj.wind.speed).toFixed(2);	
 
 	}
 	
@@ -104,9 +104,9 @@ var BASE_URL = "http://api.openweathermap.org/data/2.5/weather?APPID=f6d04af6ab7
 				"Viento: " + obj.wind.speed + " m/s <br>";*/
 		document.getElementById("imgClimaDestino").src=IMG_URL + obj.weather[0].icon + ".png";
 		document.getElementById("txtClimaCondicionDestinoVal").value=obj.weather[0].description;
-		document.getElementById("txtClimaTemperaturaDestinoVal").value=obj.main.temp;
-		document.getElementById("txtClimaHumedadDestinoVal").value=obj.main.humidity;
-		document.getElementById("txtClimaNubosidadDestinoVal").value=obj.clouds.all;
-		document.getElementById("txtClimaVientoDestinoVal").value=obj.wind.speed;
+		document.getElementById("txtClimaTemperaturaDestinoVal").value=parseFloat(obj.main.temp).toFixed(2);
+		document.getElementById("txtClimaHumedadDestinoVal").value=parseFloat(obj.main.humidity).toFixed(2);
+		document.getElementById("txtClimaNubosidadDestinoVal").value=parseFloat(obj.clouds.all).toFixed(2);
+		document.getElementById("txtClimaVientoDestinoVal").value=parseFloat(obj.wind.speed).toFixed(2);
 
 	}

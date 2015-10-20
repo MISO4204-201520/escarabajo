@@ -55,10 +55,12 @@
                 avoidTolls: false
             }, function (response, status) {
                 if (status == google.maps.DistanceMatrixStatus.OK && response.rows[0].elements[0].status != "ZERO_RESULTS") {
-                    var distance = response.rows[0].elements[0].distance.text;
-                    var duration = response.rows[0].elements[0].duration.text;
-                    document.getElementById("txtTiempoEstimadoVal").value = distance;
-					document.getElementById("txtDistanciaEstimadaVal").value = duration;
+                    var distance = response.rows[0].elements[0].distance.value;
+                    var duration = response.rows[0].elements[0].duration.value;
+                    
+
+                    document.getElementById("txtTiempoEstimadoVal").value = parseFloat(duration/60).toFixed(2);
+					document.getElementById("txtDistanciaEstimadaVal").value = parseFloat(distance/1000).toFixed(2);
 
                 } else {
                     alert("No es posible encontrar un camino.");
@@ -109,8 +111,10 @@
 					console.log(realDestination);
 					console.log(p);
 					var realDistance = google.maps.geometry.spherical.computeDistanceBetween(realSource, realDestination);
-					document.getElementById("txtTiempoRealVal").value = ((finalTime-initTime)/1000);
-					document.getElementById("txtDistanciaRealVal").value = realDistance;
+					var avgSpeed = 60*(realDistance/1000)/((finalTime-initTime)/60000);
+					document.getElementById("txtTiempoRealVal").value = parseFloat((finalTime-initTime)/60000).toFixed(2);
+					document.getElementById("txtDistanciaRealVal").value = parseFloat(realDistance/1000).toFixed(2);
+					document.getElementById("txtVelocidadMediaVal").value = parseFloat(avgSpeed).toFixed(2);
 				});
 				
 			}
@@ -130,6 +134,7 @@
 				),
 				title: "Current Position"
 			});
+			map.setZoom(20);
 			map.panTo(new google.maps.LatLng(
 					pos.coords.latitude,
 					pos.coords.longitude
