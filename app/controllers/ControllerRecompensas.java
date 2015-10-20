@@ -29,7 +29,7 @@ public class ControllerRecompensas extends Controller{
 		return ok(views.html.recompensasDisponibles.render(recompensas,usuario.puntajeRetos));
 		
 	}	
-	
+	@Restrict(@Group(Application.USER_ROLE))
 	public static Result guardarRecompensaUsuario(Long idRecompensa){
 		RecompensaDAO recompensaDAO = new RecompensaDAO();
 		RecompensaUsuarioDAO dao = new RecompensaUsuarioDAO();
