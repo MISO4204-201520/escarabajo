@@ -78,6 +78,7 @@
 				navigator.geolocation.getCurrentPosition(function (p) {
 					realSource = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
 					console.log(realSource);
+					window.location.hash = '#dvMap';
 				});
 				var opts = {
 					enableHighAccuracy: true,
@@ -126,7 +127,8 @@
 
 		function setCurrentPosition(pos) {
 			//currentPositionMarket.setMap(null);
-			currentPositionMarker = new google.maps.Marker({
+			if(currentPositionMarker == null){
+				currentPositionMarker = new google.maps.Marker({
 				map: map,
 				position: new google.maps.LatLng(
 					pos.coords.latitude,
@@ -134,6 +136,11 @@
 				),
 				title: "Current Position"
 			});
+			}
+			else{
+				setMarkerPosition(currentPositionMarker, pos);
+			}
+			console.log(pos.coords.latitude + " " + pos.coords.longitude);
 			map.setZoom(20);
 			map.panTo(new google.maps.LatLng(
 					pos.coords.latitude,
