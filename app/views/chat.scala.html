@@ -1,28 +1,25 @@
-@(title: String)
+@(message: String, localUser: models.User = null)
 
-<!DOCTYPE html>
+@import helper._
 
-<html>
-    <head>
-        <title>@title</title>
-        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
-        <link rel="stylesheet" media="screen" href="//netdna.bootstrapcdn.com/bootstrap/2.3.2/css/bootstrap.min.css">
-        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
 
+@main("chat") {
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-
         <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.15/angular.min.js"></script>
         <script src="@routes.Assets.at("javascripts/app.js")"></script>
         <script src="@routes.Assets.at("javascripts/services.js")"></script>
         <script src="@routes.Assets.at("javascripts/controllers.js")"></script>
-        
-    </head>
     <body ng-app="sseChat">
-        
+    <div align = "center"><h1>@message</h1></div>
+      <div class="container"> 
         <div ng-controller="ChatCtrl">
             <div id="header">
-                Your Name: <input type="text" name="user" id="userField" value="John Doe" ng-model="user" />
-                <select ng-model="currentRoom" ng-change="setCurrentRoom(currentRoom)" 
+            <dl>
+  			<dt><label for="nombreUsuario">Nombre Completo: @localUser.name</label></dt>
+  			<dt><label for="chatUsetname">Escriba un Chat Username </label><input class="form-control" type="text" name="user" id="userField" value="John Doe" ng-model="user" > </dt>
+  			</dl>
+  			<label for="rooms">Sala de Chat Seleccionada</label>
+                <select class="form-control" ng-model="currentRoom" ng-change="setCurrentRoom(currentRoom)" 
                   ng-options="r.name for r in rooms" id="roomSelect"></select>
             </div>
 
@@ -35,12 +32,13 @@
 
             <div id="footer">
                 <form ng-submit="submitMsg()">
-                    <input type="text" name="chat" id="textField" ng-model="inputText"
+                    <input class="form-control" type="text" name="chat" id="textField" ng-model="inputText"
                      placeholder="Say something" class="ng-pristine ng-valid input-block-level" />
                     <input type="button" class="btn btn-primary" id="saySomething" value="Submit" ng-click="submitMsg()" />
                 </form>
             </div>
         </div>
- 
+ 	</div>
     </body>
-</html>
+    
+    }

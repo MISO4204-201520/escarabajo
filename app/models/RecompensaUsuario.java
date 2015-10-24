@@ -35,13 +35,15 @@ public class RecompensaUsuario extends AppModel{
 	public RecompensaUsuario() {
 		super();
 		find = new AppModel.Finder<RecompensaUsuarioPK, RecompensaUsuario> (RecompensaUsuario.class);
+		this.recompensaUsuarioPK = new RecompensaUsuarioPK();
+		this.fecha = new Date();
 	}
-
+/*
 	public RecompensaUsuario(RecompensaUsuarioPK recompensaUsuarioPK, Date fecha) {
 		super();
 		find = new AppModel.Finder<RecompensaUsuarioPK, RecompensaUsuario> (RecompensaUsuario.class);
-		this.recompensaUsuarioPK = recompensaUsuarioPK;
+		this.recompensaUsuarioPK = new RecompensaUsuarioPK();
 		this.fecha = fecha;
-	}
+	}*/
 	
 }

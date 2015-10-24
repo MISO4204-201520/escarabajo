@@ -48,4 +48,64 @@ span.form-control {
 	text-align: center;
 }
 
+/*ESTILOS DEL CHAT*/
+#chat {
+  min-height: 200px;
+  right: 10px;
+  left: 30px;
+  background: #FFFF;
+  width: 100%;
+}
+
+.msg {
+  color: #0000;
+  padding: 10px;
+  width: 400px;
+  background: #FF9966;
+}
+
+.others {
+  background: #99D8FF;
+}
+
+.juliet {
+  background: #FF69B4;
+}
+
+
+
+#userField {
+  width: 100%;
+  position: relative;
+  top: 1px;
+}
+
+#header {
+  color: #0000;
+  width: 400px;
+  font-weight: bold;
+  padding: 10px;
+  background: #FFFF;
+}
+
+#footer {
+  color: #EEE;
+  width: 400px;
+  height: 34px;
+  font-weight: bold;
+  padding: 10px;
+  background: #FFFF;
+}
+
+#roomSelect {
+  width: 100%;
+}
+
+.undo {
+  padding: 20px 0;
+}	
+/*Correcion color texto chat*/
+input#textField{
+	color: black;
+}
 	

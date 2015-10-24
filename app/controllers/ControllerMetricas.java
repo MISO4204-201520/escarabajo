@@ -70,7 +70,7 @@ public class ControllerMetricas extends Controller{
         	metricasRecorridoDistReal.setRecorrido(recorrido);
         	metricasRecorridoDistReal.setUsuario(Application.getLocalUser(session()));
         	metricasRecorridoDistReal.setMetrica(metricaDAO.consultarMetricaPorNombre("Distancia Real").get(0));
-        	metricasRecorridoDistReal.setValorMetrica(Double.parseDouble(txtDistanciaRealVal));
+        	metricasRecorridoDistReal.setValorMetrica(Double.parseDouble(txtDistanciaRealVal.isEmpty()?"0.0":txtDistanciaRealVal));
         	metricasRecorridoDistReal.setFecha(new Date(new java.util.Date().getTime()));
         	
         	lstMetricas.add(metricasRecorridoDistReal);
@@ -87,7 +87,7 @@ public class ControllerMetricas extends Controller{
         	metricasRecorridoTiemReal.setRecorrido(recorrido);
         	metricasRecorridoTiemReal.setUsuario(Application.getLocalUser(session()));
         	metricasRecorridoTiemReal.setMetrica(metricaDAO.consultarMetricaPorNombre("Tiempo Real").get(0));
-        	metricasRecorridoTiemReal.setValorMetrica(Double.parseDouble(txtTiempoRealVal));
+        	metricasRecorridoTiemReal.setValorMetrica(Double.parseDouble(txtTiempoRealVal.isEmpty()?"0.0":txtTiempoRealVal));
         	metricasRecorridoTiemReal.setFecha(new Date(new java.util.Date().getTime()));
         	
         	lstMetricas.add(metricasRecorridoTiemReal);
@@ -100,7 +100,7 @@ public class ControllerMetricas extends Controller{
         		metricaDAO.agregarMetrica(m);
         	}
         	
-        	double velocidad = 60*(Double.parseDouble(txtDistanciaRealVal)/Double.parseDouble(txtTiempoRealVal));
+        	double velocidad = 60*(Double.parseDouble(txtDistanciaRealVal.isEmpty()?"0.0":txtDistanciaRealVal)/Double.parseDouble(txtTiempoRealVal.isEmpty()?"1.0":txtTiempoRealVal));
         	
         	MetricasXRecorrido metricasRecorridoVeloMedi = new MetricasXRecorrido();
         	metricasRecorridoVeloMedi.setRecorrido(recorrido);
