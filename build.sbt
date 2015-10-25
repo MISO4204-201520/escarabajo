@@ -11,6 +11,8 @@ version := "1.0-SNAPSHOT"
 
 // add resolver for deadbolt and easymail snapshots
 
+resolvers += Resolver.url("Typesafe Ivy releases", url("https://repo.typesafe.com/typesafe/ivy-releases"))(Resolver.ivyStylePatterns)
+
 resolvers += Resolver.sonatypeRepo("snapshots")
 
 resolvers += Resolver.url("play-easymail (release)", url("http://joscha.github.io/play-easymail/repo/releases/"))(Resolver.ivyStylePatterns)
