@@ -11,6 +11,8 @@ version := "1.0-SNAPSHOT"
 
 // add resolver for deadbolt and easymail snapshots
 
+resolvers += Resolver.url("Typesafe Ivy releases", url("https://repo.typesafe.com/typesafe/ivy-releases"))(Resolver.ivyStylePatterns)
+
 resolvers += Resolver.sonatypeRepo("snapshots")
 
 resolvers += Resolver.url("play-easymail (release)", url("http://joscha.github.io/play-easymail/repo/releases/"))(Resolver.ivyStylePatterns)
@@ -25,6 +27,13 @@ resolvers += "release repository" at "http://chanan.github.io/maven-repo/release
 
 resolvers += "snapshot repository" at "http://chanan.github.io/maven-repo/snapshots/"
 
+resolvers += "Sonatype OSS Snapshots" at "http://oss.sonatype.org/content/repositories/snapshots"
+
+resolvers += Resolver.url("Typesafe Ivy", url("http://repo.typesafe.com/typesafe/ivy-snapshots"))(Resolver.ivyStylePatterns)
+
+resolvers += "Typesafe" at "http://repo.typesafe.com/typesafe/releases/"
+
+
 val appDependencies = Seq(  
   cache,
   javaWs,
@@ -34,7 +43,7 @@ val appDependencies = Seq(
   "be.objectify"  %% "deadbolt-java"     % "2.4.0",
   // Comment the next line for local development of the Play Authentication core:
   "com.feth"      %% "play-authenticate" % "0.7.0-SNAPSHOT",
-  "org.postgresql" % "postgresql" % "9.3-1100-jdbc4",
+  "org.postgresql" % "postgresql" % "9.4-1204-jdbc42",
   "com.typesafe.play" %% "play-json" % "2.4.3"
 )
 
@@ -65,6 +74,8 @@ lazy val root = project.in(file("."))
     libraryDependencies ++= appDependencies
   )
 
+
+fork in run := true
 
 fork in run := true
 
