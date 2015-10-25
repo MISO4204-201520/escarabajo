@@ -25,6 +25,13 @@ resolvers += "release repository" at "http://chanan.github.io/maven-repo/release
 
 resolvers += "snapshot repository" at "http://chanan.github.io/maven-repo/snapshots/"
 
+resolvers += "Sonatype OSS Snapshots" at "http://oss.sonatype.org/content/repositories/snapshots"
+
+resolvers += Resolver.url("Typesafe Ivy", url("http://repo.typesafe.com/typesafe/ivy-snapshots"))(Resolver.ivyStylePatterns)
+
+resolvers += "Typesafe" at "http://repo.typesafe.com/typesafe/releases/"
+
+
 val appDependencies = Seq(  
   cache,
   javaWs,
@@ -65,6 +72,8 @@ lazy val root = project.in(file("."))
     libraryDependencies ++= appDependencies
   )
 
+
+fork in run := true
 
 fork in run := true
 
