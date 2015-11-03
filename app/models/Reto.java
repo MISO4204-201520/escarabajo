@@ -26,11 +26,11 @@ public class Reto extends AppModel{
 	@Column(name="nombre", nullable=false)
 	public String nombre;
 	
-	@Formats.DateTime(pattern = "dd-MM-yyyy")
+	@Formats.DateTime(pattern = "yyyy-MM-dd")
 	@Column(name="fecha_inicio")
 	public Date fechaIni;
 	
-	@Formats.DateTime(pattern = "dd-MM-yyyy")
+	@Formats.DateTime(pattern = "yyyy-MM-dd")
 	@Column(name="fecha_fin")
 	public Date fechaFin;
 	
@@ -74,4 +74,13 @@ public class Reto extends AppModel{
 		this.puntaje = puntaje;
 		this.estado = estado;
 	} 
+	
+	public FuncionReto getFuncion(){
+		for(FuncionReto funcion: FuncionReto.values()){
+			if(funcion.name().equals(this.funcion)){
+				return funcion;
+			}
+		}
+		return null;
+	}
 }

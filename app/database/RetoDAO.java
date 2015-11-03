@@ -15,7 +15,6 @@ public class RetoDAO {
 	}
 	
 	public void agregarReto(Reto reto){
-		reto.id = Reto.find.nextId();
 		reto.save();
 	}
 	

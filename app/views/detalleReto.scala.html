@@ -1,5 +1,6 @@
 @(retoForm: ControllerRetos.FormularioReto,
-	nuevoReto : Boolean)
+	nuevoReto : Boolean,
+	metricas : List[models.Metrica])
 @import helper._
 
 @main("Formulario reto") {
@@ -19,24 +20,51 @@
 				<td width="20%"><input placeholder="Maxima velocidad 1" class="form-control" name="nombre" id="nombre" value="@retoForm.nombre"/></td>
 				<td width="60%"><em>Agregue un nombre para el reto a configurar. <br>Por ejemplo: "Maxima velocidad 1"</em></td>
 			</tr>
+			@if(nuevoReto){
 			<tr>
 				<td>Fecha inicio:</td>
-				<td><input  placeholder="2015-10-17" class="form-control" name="fechaIni" id="idechaIni" type="date" value="@retoForm.fechaIni"/></td>
+				<td><input  placeholder="2015-10-17" class="form-control" name="fechaIni" id="idFechaIni" type="date" value="@retoForm.fechaIni"/></td>
 				<td><em>Agregue una fecha desde donde iniciara a registrarse el reto<br>Por ejemplo: "2015-10-17"</em></td>
 			</tr>
 			<tr>
 				<td>Fecha fin:</td>
 				<td><input  placeholder="2015-10-19" class="form-control" name="fechaFin" id="idFechaFin" type="date" value="@retoForm.fechaFin"/></td>
 				<td><em>Agregue una fecha hasta donde se tomara registro del reto <br>Por ejemplo: "2015-10-19"</em></td>
+			</tr>	
+			}else{
+			<tr>
+				<td>Fecha inicio:</td>
+				<td><input  placeholder="2015-10-17" class="form-control" name="fechaIni" id="idFechaIni" type="date" value="@retoForm.fechaIni.format("yyyy-MM-dd")"/></td>
+				<td><em>Agregue una fecha desde donde iniciara a registrarse el reto<br>Por ejemplo: "2015-10-17"</em></td>
 			</tr>
 			<tr>
-				<td>Id Metrica:</td>
-				<td><input  placeholder="1" class="form-control" name="idMetrica" id="idMetrica" value="@retoForm.idMetrica"/></td>
+				<td>Fecha fin:</td>
+				<td><input  placeholder="2015-10-19" class="form-control" name="fechaFin" id="idFechaFin" type="date" value="@retoForm.fechaFin.format("yyyy-MM-dd")"/></td>
+				<td><em>Agregue una fecha hasta donde se tomara registro del reto <br>Por ejemplo: "2015-10-19"</em></td>
+			</tr>
+			}					
+			<tr>
+				<td>Metrica:</td>
+				<!-- td><input  placeholder="1" class="form-control" name="idMetrica" id="idMetrica" value="@retoForm.idMetrica"/></td-->
+				<td>
+					<select class="form-control"  name="idMetrica">
+					 @for(metrica <- metricas){
+				        <option value="@metrica.getIdMetrica()" @if(retoForm.idMetrica.equals(metrica.getIdMetrica())){selected} >@metrica.getNombreMetrica() [@metrica.getUnidadMedida()]</option>
+				     }										
+					</select>
+				</td>
 				<td><em>Agregue el codigo de la metrica a tomar en el reto<br>Por ejemplo: "1"</em></td>
 			</tr>
 			<tr>
 				<td>Funcion:</td>
-				<td><input  placeholder="MAX" class="form-control" name="funcion" id="idFuncion" value="@retoForm.funcion"/></td>
+				<!-- td><input  placeholder="MAX" class="form-control" name="funcion" id="idFuncion" value="@retoForm.funcion"/></td-->
+				<td>
+				<select class="form-control"  name="funcion">
+					 @for(funcionReto <- models.FuncionReto.values()){
+				        <option value="@funcionReto.name()" @if(retoForm.funcion.equals(funcionReto.name())){selected} >@funcionReto.getNombre()</option>
+				     }										
+				</select>
+				</td>
 				<td><em>Agregue el codigo de la funcion que se debe aplicar para calcular el cumplimiento del reto. <br>Por ejemplo: "MAX"</em></td>
 			</tr>
 			<tr>

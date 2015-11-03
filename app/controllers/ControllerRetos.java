@@ -7,9 +7,11 @@ import be.objectify.deadbolt.java.actions.Group;
 import be.objectify.deadbolt.java.actions.Restrict;
 import database.MetricaDAO;
 import database.RetoDAO;
+import models.FuncionReto;
 import models.Metrica;
 import models.Reto;
 import play.data.Form;
+import play.data.format.Formats;
 import play.data.validation.Constraints.Required;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -70,7 +72,9 @@ public class ControllerRetos extends Controller{
 		form.puntaje = reto.puntaje;
 		form.valorCondicion = reto.valorCondicion;		
 		
-		return ok(detalleReto.render(form,false));
+		List<Metrica> metricas = Metrica.find.all();
+		
+		return ok(detalleReto.render(form,false,metricas));
 	}
 	
 	public static Result guardar(boolean nuevoReto){
@@ -115,25 +119,35 @@ public class ControllerRetos extends Controller{
 		
 		if(retoBD!=null){
 			retoDAO.actualizarReto(retoA);
+			flash("success",
+					String.format("El reto '%s' ha sido actualizado.", retoA.nombre));
 		}else{
 			retoDAO.agregarReto(retoA);
+			flash("success",
+					String.format("El reto '%s' ha sido añadido.", retoA.nombre));
 		}		
-		flash("success",
-		String.format("El reto %s ha sido añadido.", retoA.nombre));
+		
 		return redirect(routes.ControllerRetos.listarRetos());
 	}
 	
 	public static Result agregarReto(){
 		FormularioReto form = new FormularioReto();
-		return ok(detalleReto.render(form,true));
+		List<Metrica> metricas = Metrica.find.all();
+		return ok(detalleReto.render(form,true,metricas));
 	}
 	
 	public static class FormularioReto {		
 		public Long id;
 		@Required public String nombre;		
-		@Required public Date fechaIni;		
-		@Required public Date fechaFin;
+		@Required
+		@Formats.DateTime(pattern = "yyyy-MM-dd") 
+		public Date fechaIni;		
+		@Required 
+		@Formats.DateTime(pattern = "yyyy-MM-dd") 
+		public Date fechaFin;
 		@Required public Long idMetrica;
+		/*@Required public String nombreMetrica;
+		@Required public String unidadMetrica;*/
 		@Required public String funcion;
 		@Required public String operador;
 		@Required public String valorCondicion;
