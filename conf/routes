@@ -19,6 +19,9 @@ DELETE  /retos/:id 					controllers.ControllerRetos.eliminarReto(id: Long)
 GET 	/retos/:id 					controllers.ControllerRetos.details(id: Long)
 POST 	/retos/save 				controllers.ControllerRetos.guardar(nuevoReto: Boolean)
 
+#Reportes
+GET		/reportes					controllers.ControllerReportes.generarReportePDF()
+
 #Recompensas
 GET     /guardarRecompensaUsuario	controllers.ControllerRecompensas.guardarRecompensaUsuario(id: Long)
 GET     /recompensas	 			controllers.ControllerRecompensas.listarRecompensas()

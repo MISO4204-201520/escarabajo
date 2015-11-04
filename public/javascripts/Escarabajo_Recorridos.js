@@ -16,6 +16,13 @@
             GetRoute();
         });
 
+        /*google.maps.event.addDomListener(window, 'resize', function() {
+        	new google.maps.places.SearchBox(document.getElementById('txtSource'));
+            new google.maps.places.SearchBox(document.getElementById('txtDestination'));
+            directionsDisplay = new google.maps.DirectionsRenderer({ 'draggable': true });
+            GetRoute();
+        });*/
+
         function GetRoute() {
 			//Asigna por defecto Bogotá en el centro del mapa
             var bogota = new google.maps.LatLng(4.598889, -74.080833);
