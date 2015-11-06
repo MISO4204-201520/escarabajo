@@ -1,5 +1,4 @@
 package controllers;
-
 import models.User;
 import play.Logger;
 import play.libs.EventSource;
@@ -15,7 +14,7 @@ public class Controllerpublicador extends Controller {
 	
 	
 	public static Result index() {
-		return ok(views.html.publicador.render("Publicador"));
+		return ok(views.html.publicador.render("publicador"));
 	  }
 
 }

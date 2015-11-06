@@ -1,0 +1,52 @@
+@(message: String)
+
+
+@main("publicador") {
+<div class="form-group">
+				<input type="button" class="btn btn-default" value="publicar twitter" onclick="publicartwitter()" />
+				<input type="button" class="btn btn-default" value="publicar facebook" onclick="publicarfacebook()" />
+</div>
+
+
+<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+
+
+<script>
+<a href="http://twitter.com/share" class="twitter-share-button" data-url="http://someurl.com" data-text="hello world" data-count="vertical" data-via="richerd">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js">
+
+
+var publicartwitter = function (){
+<a class='twitter-share-button' data-count='horizontal' data-lang='es' data-via='vagabundia' data-related='elblogdejabba:El Blog de Jabba' expr:data-url='&quot;&quot; + data:post.url + &quot;&quot;' expr:data-text='&quot;&quot; + data:post.title + &quot;&quot;' href='http://twitter.com/share' target='_blank'>Tweet</a>
+<script src='http://platform.twitter.com/widgets.js' type='text/javascript'/>
+}
+
+var publicarfacebook = function (){
+	
+	FB.init({
+    	appId      : app_id,
+    	status     : true,
+    	cookie     : true,                   
+    	xfbml      : true,  
+    	version    : 'v2.2' 
+  		});
+	var params = {};
+    params['message'] = 'Yo ya estoy utilizando escarabajo Te invito a que te unas y tu tambien la uses es genial';
+    params['name'] = 'Escarabajo';
+    params['description'] = 'Escarabajo es una aplicacion web y movil que le hace la vida mas facil a los usuarios de la bicicleta';
+    params['link'] = 'https://github.com/MISO4204-201520/escarabajo';
+    params['picture'] = 'http://i844.photobucket.com/albums/ab7/MARTIN3280/escarabajos-11_zpswiy0gdii.jpg';
+    //params['caption'] = 'Caption';
+    FB.api('/me/feed', 'post', params, function(response) {
+    if (!response || response.error) {
+      alert('Error occured');
+    } else {
+    alert('Published to stream - you might want to delete it now!');
+    }
+    });	
+}
+
+
+
+</script>
+
+}
