@@ -19,6 +19,9 @@ import models.Recorrido;
 import models.Ruta;
 import models.User;
 import models.UsuarioXRecorrido;
+import notificaciones.DatoNotificacion;
+import notificaciones.INotificador;
+import notificaciones.Notificador;
 import play.data.Form;
 import play.data.validation.Constraints.Required;
 import play.mvc.Controller;
@@ -265,8 +268,11 @@ public class ControllerRecorrido extends Controller{
 			usuarioRecorrido.setIndConfirmado(true);
 			usuarioRecorridoDao.agregarUsuarioXRecorrido(usuarioRecorrido);
 			mensaje="<div style='padding: 5px 5px 5px 5px; background-color:#c4ead0'>Se ha unido al recorrido satisfactoriamente</div>";
+			
+			notificacionDePruebaUnionARecorrido();
 		}
 
+		
 		return ok(mensaje);
 	}
 
@@ -290,6 +296,34 @@ public class ControllerRecorrido extends Controller{
 
 	public static class FormularioConsultaRecorrido {
 		public Long idRecorrido;
+	}
+	
+	
+	public static void notificacionDePruebaUnionARecorrido()
+	{
+		User usuarioSession = Application.getLocalUser(session());
+		
+		List<String> destinatarios = new ArrayList<String>();
+		destinatarios.add (usuarioSession.email);
+		
+		List<DatoNotificacion> contenidos = new ArrayList<DatoNotificacion>();
+		DatoNotificacion dn = new DatoNotificacion();
+		dn.nombreID = "USUARIO_NAME"  ;
+		dn.descripcion = "Estimado usuario " ;
+		dn.informacion =usuarioSession.name;
+		contenidos.add(dn);
+		DatoNotificacion dn2 = new DatoNotificacion();
+		dn2.nombreID = "DATO_IMPORTANTE";
+		dn2.descripcion ="si esto sirve me voy de rumba el finde";
+		dn2.informacion ="Se ha unido a un recorrido";
+		contenidos.add(dn2);
+		
+		
+		Notificador.enviarEmail(
+				Notificador.crearEmailHtml("Notificación de unión a un recorrido", 
+						INotificador.HTML_NOTIFICATION_TEMPLATE_DEFAULT, 
+						contenidos, 
+						destinatarios ));
 	}
 }
 

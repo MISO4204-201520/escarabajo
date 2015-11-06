@@ -1,0 +1,22 @@
+@(listContenidos:List[notificaciones.DatoNotificacion]) 
+Hola FULANITO,
+<br />
+<br />
+<div>
+<p>A continuación información de su interes</p>
+<ul>
+@for(dato <- listContenidos) {
+  <li>
+  <div>
+  <label>@dato.descripcion</label> 
+  <p>@dato.informacion</p>
+  </div>
+  </li>
+} 
+</ul>
+</div>
+<br />
+<p>
+	Le saluda,<br /> 
+	<i>El equipo de Proyecto Escarabajo</i>
+</p>
