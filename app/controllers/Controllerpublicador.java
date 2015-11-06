@@ -9,11 +9,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 public class Controllerpublicador extends Controller {
 	
 	
 	public static Result index() {
+		
 		return ok(views.html.publicador.render("publicador"));
 	  }
 
