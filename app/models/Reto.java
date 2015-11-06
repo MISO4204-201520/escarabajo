@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -21,6 +22,7 @@ public class Reto extends AppModel{
 
 	@Id
 	@Column(name="id")
+	@GeneratedValue
 	public Long id;
 
 	@Column(name="nombre", nullable=false)

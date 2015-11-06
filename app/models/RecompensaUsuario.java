@@ -5,6 +5,8 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -15,8 +17,10 @@ import play.data.format.Formats;
 @Table(name="recompensa_usuario")
 public class RecompensaUsuario extends AppModel{
 
-	@EmbeddedId
-	public RecompensaUsuarioPK recompensaUsuarioPK;
+	@Id
+	@Column(name="id_recompensa_usuario", nullable=false)
+	@GeneratedValue
+	public Long id;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_recompensa", referencedColumnName = "id")
@@ -30,12 +34,11 @@ public class RecompensaUsuario extends AppModel{
 	@Column(name="fecha", nullable=false)
 	public Date fecha;
 	
-	public static AppModel.Finder<RecompensaUsuarioPK, RecompensaUsuario> find;
+	public static AppModel.Finder<Long, RecompensaUsuario> find;
 
 	public RecompensaUsuario() {
 		super();
-		find = new AppModel.Finder<RecompensaUsuarioPK, RecompensaUsuario> (RecompensaUsuario.class);
-		this.recompensaUsuarioPK = new RecompensaUsuarioPK();
+		find = new AppModel.Finder<Long, RecompensaUsuario> (RecompensaUsuario.class);
 		this.fecha = new Date();
 	}
 /*

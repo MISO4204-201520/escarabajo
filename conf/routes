@@ -5,12 +5,6 @@
 # Home page
 GET     /                           controllers.Application.index()
 
-#RetosUsuarios
-GET     /retosUsuario	 			controllers.ControllerRetosUsuario.listarRetosUsuario()
-
-#RecompensasUsuario
-GET     /recompensasUsuario	 		controllers.ControllerRecompensasUsuario.listarRecompensasUsuario()
-
 #Retos
 GET     /retos	 					controllers.ControllerRetos.listarRetos()
 GET     /retosActivos	 			controllers.ControllerRetos.listarRetosActivos()
@@ -18,15 +12,17 @@ GET 	/agregarReto 				controllers.ControllerRetos.agregarReto()
 DELETE  /retos/:id 					controllers.ControllerRetos.eliminarReto(id: Long)
 GET 	/retos/:id 					controllers.ControllerRetos.details(id: Long)
 POST 	/retos/save 				controllers.ControllerRetos.guardar(nuevoReto: Boolean)
+GET     /retosUsuario	 			controllers.ControllerRetos.listarRetosUsuario()
 
 #Recompensas
 GET     /guardarRecompensaUsuario	controllers.ControllerRecompensas.guardarRecompensaUsuario(id: Long)
 GET     /recompensas	 			controllers.ControllerRecompensas.listarRecompensas()
-GET     /recompensasActivas	 			controllers.ControllerRecompensas.listarRecompensasActivas()
+GET     /recompensasDisponibles		controllers.ControllerRecompensas.listarRecompensasDisponiblesUsuario()
 GET 	/agregarRecompensa 			controllers.ControllerRecompensas.agregarRecompensa()
 DELETE  /recompensas/:id 			controllers.ControllerRecompensas.eliminarRecompensa(id: Long)
 GET 	/recompensas/:id 			controllers.ControllerRecompensas.details(id: Long)
 POST 	/recompensas/save 			controllers.ControllerRecompensas.guardar(nuevaRecompensa: Boolean)
+GET     /recompensasUsuario	 		controllers.ControllerRecompensas.listarRecompensasUsuario()
 
 #Sitios de Recorridos
 GET     /getFormRecorridos          controllers.ControllerRecorrido.getFormRecorridos

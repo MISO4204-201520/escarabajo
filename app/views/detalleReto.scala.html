@@ -49,7 +49,7 @@
 				<td>
 					<select class="form-control"  name="idMetrica">
 					 @for(metrica <- metricas){
-				        <option value="@metrica.getIdMetrica()" @if(retoForm.idMetrica.equals(metrica.getIdMetrica())){selected} >@metrica.getNombreMetrica() [@metrica.getUnidadMedida()]</option>
+				        <option value="@metrica.getIdMetrica()" @if(!nuevoReto && retoForm.idMetrica.equals(metrica.getIdMetrica())){selected} >@metrica.getNombreMetrica() [@metrica.getUnidadMedida()]</option>
 				     }										
 					</select>
 				</td>
@@ -61,7 +61,7 @@
 				<td>
 				<select class="form-control"  name="funcion">
 					 @for(funcionReto <- models.FuncionReto.values()){
-				        <option value="@funcionReto.name()" @if(retoForm.funcion.equals(funcionReto.name())){selected} >@funcionReto.getNombre()</option>
+				        <option value="@funcionReto.name()" @if(!nuevoReto && retoForm.funcion.equals(funcionReto.name())){selected} >@funcionReto.getNombre()</option>
 				     }										
 				</select>
 				</td>
@@ -94,7 +94,14 @@
 			</tr>
 			<tr>
 				<td>Estado:</td>
-				<td><input placeholder="activo" class="form-control"  name="estado" id="idEstado" value="@retoForm.estado"/></td>
+				<!-- td><input placeholder="activo" class="form-control"  name="estado" id="idEstado" value="@retoForm.estado"/></td-->
+				<td>
+				<select class="form-control"  name="estado">
+				@for(estadoReto <- models.EstadoReto.values()){
+			        <option value="@estadoReto.getEstado()" @if(!nuevoReto && estadoReto.getEstado().equals(retoForm.estado)){selected} >@estadoReto.getEstado()</option>
+			     }
+			     </select>
+			     </td>
 				<td><em>Agregue el estado de disponibilidad para este reto, los valores posibles son "activo" o "inactivo"</em></td>
 			</tr>		
 		</table>

@@ -7,14 +7,19 @@ import be.objectify.deadbolt.java.actions.Group;
 import be.objectify.deadbolt.java.actions.Restrict;
 import database.MetricaDAO;
 import database.RetoDAO;
-import models.FuncionReto;
+import database.RetoUsuarioDAO;
+import database.UserDAO;
+import models.EstadoRetoUsuario;
 import models.Metrica;
 import models.Reto;
+import models.RetoUsuario;
+import models.User;
 import play.data.Form;
 import play.data.format.Formats;
 import play.data.validation.Constraints.Required;
 import play.mvc.Controller;
 import play.mvc.Result;
+//import views.html.*;
 import views.html.*;
 
 @Restrict(@Group(Application.ADMIN_ROLE))
@@ -130,11 +135,53 @@ public class ControllerRetos extends Controller{
 		return redirect(routes.ControllerRetos.listarRetos());
 	}
 	
+	public static void actualizarRetosUsuario(){
+		
+		RetoDAO retoDAO = new RetoDAO();
+		User usuario = Application.getLocalUser(session());
+		List<Reto> retos = retoDAO.consultarRetosDisponiblesUsuario(usuario);
+		System.out.println(" ");
+		System.out.println("---------------------- RETOS DISPONIBLES ---------------------");
+		for(Reto reto:retos){
+			System.out.println("Reto: "+reto.nombre);
+			if(retoDAO.cumpleReto(reto,usuario)){
+				RetoUsuarioDAO retoUsuarioDAO = new RetoUsuarioDAO();
+				
+				RetoUsuario retoUsuario = new RetoUsuario();
+				retoUsuario.estado = EstadoRetoUsuario.VALIDO.getEstado();
+				retoUsuario.fecha = new Date();
+				retoUsuario.reto = reto;
+				retoUsuario.usuario = usuario;
+				
+				retoUsuarioDAO.agregarRetoUsuario(retoUsuario);
+				
+				//Actualización del puntaje
+				UserDAO userDAO = new UserDAO();
+				usuario.puntajeRetos = usuario.puntajeRetos+reto.puntaje;
+				userDAO.actualizarUsuario(usuario);
+			}			
+		}
+		
+	}
+	
+	
 	public static Result agregarReto(){
 		FormularioReto form = new FormularioReto();
 		List<Metrica> metricas = Metrica.find.all();
 		return ok(detalleReto.render(form,true,metricas));
 	}
+	
+	public static Result listarRetosUsuario(){
+		
+		actualizarRetosUsuario();
+		
+		RetoUsuarioDAO retoUsuarioDAO = new RetoUsuarioDAO();
+		
+		List<RetoUsuario> retos = retoUsuarioDAO.consultarRetosUsuario(Application.getLocalUser(session()));
+		
+		return ok(views.html.retosUsuario.render(retos));
+		
+	}	
 	
 	public static class FormularioReto {		
 		public Long id;

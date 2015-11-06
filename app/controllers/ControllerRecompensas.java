@@ -14,17 +14,18 @@ import play.data.Form;
 import play.data.validation.Constraints.Required;
 import play.mvc.Controller;
 import play.mvc.Result;
+//import views.html.*;
 import views.html.*;
 
 @Restrict(@Group(Application.ADMIN_ROLE))
 public class ControllerRecompensas extends Controller{
 	
 	@Restrict(@Group(Application.USER_ROLE))
-	public static Result listarRecompensasActivas(){
+	public static Result listarRecompensasDisponiblesUsuario(){
 		
 		RecompensaDAO recompensaDAO = new RecompensaDAO();
 		User usuario = Application.getLocalUser(session());
-		List<Recompensa> recompensas = recompensaDAO.consultarRecompensasActivas();
+		List<Recompensa> recompensas = recompensaDAO.consultarRecompensasDisponiblesUsuario(usuario);
 		
 		return ok(views.html.recompensasDisponibles.render(recompensas,usuario.puntajeRetos));
 		
@@ -49,10 +50,10 @@ public class ControllerRecompensas extends Controller{
 		}
 		
 		if(guardo){
-			return redirect(routes.ControllerRecompensasUsuario.listarRecompensasUsuario());
+			return redirect(routes.ControllerRecompensas.listarRecompensasUsuario());
 		}else{
 			flash("error", "La recompensa ya fue reclamada.");
-			return redirect(routes.ControllerRecompensas.listarRecompensasActivas());
+			return redirect(routes.ControllerRecompensas.listarRecompensasDisponiblesUsuario());
 		}
 		
 		
@@ -138,6 +139,17 @@ public class ControllerRecompensas extends Controller{
 		FormularioRecompensa form = new FormularioRecompensa();
 		return ok(detalleRecompensa.render(form,true));
 	}
+	
+	public static Result listarRecompensasUsuario(){
+		
+		RecompensaUsuarioDAO recomUsuarioDAO = new RecompensaUsuarioDAO();
+		
+		User usuario = Application.getLocalUser(session());
+		List<RecompensaUsuario> recom = recomUsuarioDAO.consultarRecompensasUsuario(usuario);
+		
+		return ok(views.html.recompensasUsuario.render(recom));
+		
+	}	
 	
 	public static class FormularioRecompensa {		
 		public Long id;

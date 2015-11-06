@@ -4,7 +4,6 @@ import java.util.List;
 
 import models.Reto;
 import models.RetoUsuario;
-import models.RetoUsuarioPK;
 import models.User;
 
 public class RetoUsuarioDAO {
@@ -18,7 +17,7 @@ public class RetoUsuarioDAO {
 	}
 	
 	public void actualizarRetoUsuario(RetoUsuario retoUsuario){
-		RetoUsuario retoUsuarioActual = consultarRetoUsuarioPorId(retoUsuario.retoUsuarioPK);
+		RetoUsuario retoUsuarioActual = consultarRetoUsuarioPorId(retoUsuario.id);
 		
 		if(retoUsuarioActual!=null){
 			retoUsuarioActual = retoUsuario;
@@ -28,14 +27,18 @@ public class RetoUsuarioDAO {
 	}
 	
 	public void eliminarRetoUsuario(RetoUsuario retoUsuario){
-		RetoUsuario retoUsuarioBorrar = consultarRetoUsuarioPorId(retoUsuario.retoUsuarioPK);
+		RetoUsuario retoUsuarioBorrar = consultarRetoUsuarioPorId(retoUsuario.id);
 		if(retoUsuarioBorrar!=null){
 			retoUsuarioBorrar.delete();			
 		}
 	}
 	
-	public RetoUsuario consultarRetoUsuarioPorId(RetoUsuarioPK id){
+	public RetoUsuario consultarRetoUsuarioPorId(Long id){
 		return RetoUsuario.find.byId(id);
-	}	
+	}
+	
+	public RetoUsuario consultarRetoUsuarioPorUsuarioReto(User usuario, Reto reto){
+		return RetoUsuario.find.where().eq("usuario", usuario).eq("reto", reto).findUnique();
+	}
 
 }
