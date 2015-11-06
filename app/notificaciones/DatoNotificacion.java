@@ -4,9 +4,9 @@ public class DatoNotificacion {
 
 	/**
 	 * Computer Friendly - USAR FORMATO DE CONSTATE	
-	 * Nombre/identificador del campo para hacer el mapping con el templade de notificaciones
+	 * clave/nombre/identificador del campo para hacer el mapping con el templade de notificaciones
 	 */
-	public String nombreID;
+	public String clave;
 		
 	/**
 	 * Informacion que se quiere dar al usuario. 
@@ -35,13 +35,13 @@ public class DatoNotificacion {
 	 */
 	public DatoNotificacion(String nombreID, String informacion) {
 		super();
-		this.nombreID = nombreID;
+		this.clave = nombreID;
 		this.informacion = informacion;
 	}
 
 	public DatoNotificacion(String nombreID, String informacion, String descripcion) {
 		super();
-		this.nombreID = nombreID;
+		this.clave = nombreID;
 		this.informacion = informacion;
 		this.descripcion = descripcion;
 	}

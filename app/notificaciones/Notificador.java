@@ -3,6 +3,7 @@ package notificaciones;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.mail.EmailAttachment;
 import com.feth.play.module.mail.Mailer;
@@ -18,7 +19,7 @@ public class Notificador implements INotificador
 	protected static Mailer mailer = Mailer.getDefaultMailer();
 	
 	
-	public static Mailer.Mail crearEmailHtml(String subject, String templateName,  List<DatoNotificacion> contenidos, List<String> destinatarios)
+	public static Mailer.Mail crearEmailHtml(String subject, String templateName,  Map<String, DatoNotificacion> contenidos, List<String> destinatarios)
 	{
 		/*NOTA: La lista de "contenidos" pueden ser nulos si el template contiene toda la informacion estatica,
 		y/o Si el correo viene con attachment por ejemplo. */
@@ -35,7 +36,7 @@ public class Notificador implements INotificador
 		Logger.info("Template Renderizado correctamente = "+ b.getHtml());
 		
 		// Creacion del email 
-        final Mailer.Mail customMail = new Mailer.Mail("custom mail | advanced", b, destinatarios);
+        final Mailer.Mail customMail = new Mailer.Mail(subject, b, destinatarios);
 		
         return customMail;
 	}
@@ -102,7 +103,7 @@ public class Notificador implements INotificador
 	 * @param contenidos Contenidos que se quieren agregar dinamicamente al template
 	 * @return Body con los contenidos puestos en el template.
 	 */
-	protected static Mailer.Mail.Body crearHtmlBody(String template, List<DatoNotificacion> contenidos )
+	protected static Mailer.Mail.Body crearHtmlBody(String template, Map<String, DatoNotificacion> contenidos )
 	{	
 		String htmlMensaje = getTemplateNotificacionCorreo(template, contenidos);
 		
@@ -117,7 +118,7 @@ public class Notificador implements INotificador
 	 * @param contenidos Contenidos que se quieren agregar dinamicamente al template
 	 * @return String del HTMl del teplate con los contenido dinamicos completados.
 	 */
-	protected static String getTemplateNotificacionCorreo(final String template , final List<DatoNotificacion> contenidos ) {
+	protected static String getTemplateNotificacionCorreo(final String template , final Map<String, DatoNotificacion> contenidos ) {
 		Class<?> cls = null;
 		String ret = null;
 		try {
@@ -132,7 +133,7 @@ public class Notificador implements INotificador
 		if (cls != null) {
 			Method htmlRender = null;
 			try {
-				htmlRender = cls.getMethod("render", List.class);
+				htmlRender = cls.getMethod("render", Map.class);
 				ret = htmlRender.invoke(null, contenidos)
 						.toString();
 
