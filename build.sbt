@@ -85,9 +85,9 @@ binaries in Aspectj <++= update map { report =>
     )
 }
 
-products in Compile <<= products in Aspectj
+//products in Compile <<= products in Aspectj
 
-products in Runtime <<= products in Compile
+//products in Runtime <<= products in Compile
 
  
 

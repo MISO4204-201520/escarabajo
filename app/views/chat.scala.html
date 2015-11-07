@@ -1,4 +1,4 @@
-@(message: String, localUser: models.User = null)
+@(message: String, localUser: models.User = null)(content: Html)(content1: Html)
 
 @import helper._
 
@@ -37,8 +37,11 @@
                     <input type="button" class="btn btn-primary" id="saySomething" value="Submit" ng-click="submitMsg()" />
                 </form>
             </div>
+            
         </div>
  	</div>
     </body>
+    @content
+    @content1
     
     }

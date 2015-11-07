@@ -3,6 +3,7 @@ import models.User;
 import play.Logger;
 import play.libs.EventSource;
 import play.mvc.*;
+import play.twirl.api.BufferedContent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,7 +15,8 @@ public class Controllerpublicador extends Controller {
 	
 	public static Result index() {
 		
-		return ok(views.html.publicador.render("publicador"));
-	  }
-
+		final User localUser = Application.getLocalUser(session());
+		
+		return ok(views.html.chat.render("Sistema de Mensajeria Instantanea", localUser,views.html.publicadorfacebook.render("publicador"),views.html.publicadortwitter.render("publicador")));	
+	}
 }

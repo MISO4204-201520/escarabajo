@@ -24,7 +24,8 @@ public class ChatApplication extends Controller {
 	
 	final User localUser = Application.getLocalUser(session());
 	  
-    return ok(views.html.chat.render("Sistema de Mensajeria Instantanea", localUser));
+    
+    return ok(views.html.chat.render("Sistema de Mensajeria Instantanea", localUser, views.html.publicador.render(),views.html.publicador.render()));
   }
 
   /**

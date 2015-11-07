@@ -1,0 +1,64 @@
+@(message: String)
+
+
+@main("publicadorfacebook") {
+<div class = "postredesf">
+
+				<input type=image src="/assets/icons/compartirfacebook.png" onclick="publicarfacebook()">
+</div>
+<script >
+(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+window.fbAsyncInit = function() {
+	  FB.init({
+	appId      : '1485449348416707',
+	status     : true,
+	cookie     : true,                   
+	xfbml      : true,  
+	version    : 'v2.2' 
+		});
+}
+
+
+var publicarfacebook = function (){
+    FB.ui(
+      {
+        method: 'stream.publish',
+        message: 'Escarabajo aqui.',
+        attachment: {
+          name: 'Escarabajo',
+          caption: 'Caption here.',
+          description: (
+            'description here'
+          ),
+          href: 'www.google.com.co'
+        },
+        action_links: [
+          { text: 'Code', href: 'www.github.com' }
+        ],
+        user_prompt_message: 'Personal message here'
+      },
+      function(response) {
+        if (response && response.post_id) {
+          alert('Post was published.');
+        } else {
+          alert('Post was not published.');
+        }
+      }
+    );  
+ }
+
+
+
+
+</script>
+
+
+
+
+}
