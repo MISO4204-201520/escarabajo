@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-11-02T23:12:40 -->
+<!-- 2015-11-07T14:48:37 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TestReport" pageWidth="840" pageHeight="600" orientation="Landscape" whenNoDataType="NoDataSection" columnWidth="800" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="70993bc2-be6b-4847-a4ed-30184a9dbaad">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Escarabajo Adapter"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
@@ -20,7 +20,8 @@
        me.distancia_real,
        me.tiempo_real,
        me.velocidad_media,
-       u.name
+       u.name,
+       re.nombre
 from ruta ru, 
      recorrido re,
      usuario_x_recorrido ur,
@@ -49,13 +50,32 @@ where ru.recorrido_id_recorrido = re.id_recorrido
 	<field name="tiempo_real" class="java.lang.Double"/>
 	<field name="velocidad_media" class="java.lang.Double"/>
 	<field name="name" class="java.lang.String"/>
+	<field name="nombre" class="java.lang.String"/>
 	<variable name="v_distancia_total" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{distancia_real}]]></variableExpression>
+	</variable>
+	<variable name="v_distancia_min" class="java.lang.Double" calculation="Lowest">
+		<variableExpression><![CDATA[$F{distancia_real}]]></variableExpression>
+	</variable>
+	<variable name="v_distancia_max" class="java.lang.Double" calculation="Highest">
 		<variableExpression><![CDATA[$F{distancia_real}]]></variableExpression>
 	</variable>
 	<variable name="v_tiempo_total" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{tiempo_real}]]></variableExpression>
 	</variable>
+	<variable name="v_tiempo_min" class="java.lang.Double" calculation="Lowest">
+		<variableExpression><![CDATA[$F{tiempo_real}]]></variableExpression>
+	</variable>
+	<variable name="v_tiempo_max" class="java.lang.Double" calculation="Highest">
+		<variableExpression><![CDATA[$F{tiempo_real}]]></variableExpression>
+	</variable>
 	<variable name="v_velocidad_media" class="java.lang.Double" calculation="Average">
+		<variableExpression><![CDATA[$F{velocidad_media}]]></variableExpression>
+	</variable>
+	<variable name="v_velocidad_min" class="java.lang.Double" calculation="Lowest">
+		<variableExpression><![CDATA[$F{velocidad_media}]]></variableExpression>
+	</variable>
+	<variable name="v_velocidad_max" class="java.lang.Double" calculation="Highest">
 		<variableExpression><![CDATA[$F{velocidad_media}]]></variableExpression>
 	</variable>
 	<background>
@@ -117,7 +137,7 @@ where ru.recorrido_id_recorrido = re.id_recorrido
 				<text><![CDATA[FECHA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="80" y="30" width="120" height="30" forecolor="#000000" backcolor="#6C7196" uuid="5991c863-e881-4f01-84a3-f8c622717f01"/>
+				<reportElement x="80" y="30" width="150" height="30" forecolor="#000000" backcolor="#6C7196" uuid="5991c863-e881-4f01-84a3-f8c622717f01"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -127,23 +147,10 @@ where ru.recorrido_id_recorrido = re.id_recorrido
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[PARTIDA]]></text>
+				<text><![CDATA[NOMBRE RECORRIDO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="200" y="30" width="120" height="30" forecolor="#000000" backcolor="#6C7196" uuid="5991c863-e881-4f01-84a3-f8c622717f01"/>
-				<box>
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[LLEGADA]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="320" y="30" width="80" height="30" forecolor="#000000" backcolor="#6C7196" uuid="5991c863-e881-4f01-84a3-f8c622717f01"/>
+				<reportElement x="230" y="30" width="80" height="30" forecolor="#000000" backcolor="#6C7196" uuid="5991c863-e881-4f01-84a3-f8c622717f01"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -156,7 +163,7 @@ where ru.recorrido_id_recorrido = re.id_recorrido
 				<text><![CDATA[DISTANCIA (Km)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="400" y="30" width="80" height="30" forecolor="#000000" backcolor="#6C7196" uuid="5991c863-e881-4f01-84a3-f8c622717f01"/>
+				<reportElement x="310" y="30" width="80" height="30" forecolor="#000000" backcolor="#6C7196" uuid="5991c863-e881-4f01-84a3-f8c622717f01"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -169,7 +176,7 @@ where ru.recorrido_id_recorrido = re.id_recorrido
 				<text><![CDATA[TIEMPO (min)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="480" y="30" width="80" height="30" forecolor="#000000" backcolor="#6C7196" uuid="5991c863-e881-4f01-84a3-f8c622717f01"/>
+				<reportElement x="390" y="30" width="80" height="30" forecolor="#000000" backcolor="#6C7196" uuid="5991c863-e881-4f01-84a3-f8c622717f01"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -186,27 +193,22 @@ where ru.recorrido_id_recorrido = re.id_recorrido
 	<detail>
 		<band height="48" splitType="Stretch">
 			<textField>
-				<reportElement x="80" y="10" width="120" height="30" uuid="441327d6-a7c8-40c4-ae12-7be9430f9009"/>
+				<reportElement x="80" y="10" width="150" height="30" uuid="441327d6-a7c8-40c4-ae12-7be9430f9009"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{lugar_inicio}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="200" y="10" width="120" height="30" uuid="441327d6-a7c8-40c4-ae12-7be9430f9009"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{lugar_fin}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="320" y="10" width="80" height="30" uuid="441327d6-a7c8-40c4-ae12-7be9430f9009"/>
+				<reportElement x="230" y="10" width="80" height="30" uuid="441327d6-a7c8-40c4-ae12-7be9430f9009"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{distancia_real}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="400" y="10" width="80" height="30" uuid="441327d6-a7c8-40c4-ae12-7be9430f9009"/>
+				<reportElement x="310" y="10" width="80" height="30" uuid="441327d6-a7c8-40c4-ae12-7be9430f9009"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{tiempo_real}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="480" y="10" width="80" height="30" uuid="441327d6-a7c8-40c4-ae12-7be9430f9009"/>
+				<reportElement x="390" y="10" width="80" height="30" uuid="441327d6-a7c8-40c4-ae12-7be9430f9009"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{velocidad_media}]]></textFieldExpression>
 			</textField>
@@ -219,48 +221,132 @@ where ru.recorrido_id_recorrido = re.id_recorrido
 		<band height="54" splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="90" splitType="Stretch">
+		<band height="125" splitType="Stretch">
 			<staticText>
-				<reportElement x="33" y="10" width="200" height="30" uuid="a2332ab8-6e03-42a1-b5a5-cf9655636fa2"/>
+				<reportElement x="0" y="10" width="160" height="30" uuid="a2332ab8-6e03-42a1-b5a5-cf9655636fa2"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="14" isBold="true"/>
+					<font size="13" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Distancia Total Recorrida]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="299" y="10" width="200" height="30" uuid="a2332ab8-6e03-42a1-b5a5-cf9655636fa2"/>
+				<reportElement x="0" y="50" width="160" height="30" uuid="a2332ab8-6e03-42a1-b5a5-cf9655636fa2"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="14" isBold="true"/>
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Distancia Mín Recorrida]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="90" width="160" height="30" uuid="a2332ab8-6e03-42a1-b5a5-cf9655636fa2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Distancia Máx Recorrida]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="290" y="10" width="160" height="30" uuid="a2332ab8-6e03-42a1-b5a5-cf9655636fa2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Tiempo Total Invertido]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="565" y="10" width="200" height="30" uuid="a2332ab8-6e03-42a1-b5a5-cf9655636fa2"/>
+				<reportElement x="290" y="50" width="160" height="30" uuid="a2332ab8-6e03-42a1-b5a5-cf9655636fa2"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="14" isBold="true"/>
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tiempo Mín Invertido]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="290" y="90" width="160" height="30" uuid="a2332ab8-6e03-42a1-b5a5-cf9655636fa2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tiempo Máx Invertido]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="580" y="10" width="160" height="30" uuid="a2332ab8-6e03-42a1-b5a5-cf9655636fa2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Velocidad Media]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="63" y="40" width="140" height="30" uuid="db298ebc-f542-467f-b1cf-220ba9e8671c"/>
+			<staticText>
+				<reportElement x="580" y="50" width="160" height="30" uuid="a2332ab8-6e03-42a1-b5a5-cf9655636fa2"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="14" isBold="true"/>
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Velocidad Mínima]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="580" y="90" width="160" height="30" uuid="a2332ab8-6e03-42a1-b5a5-cf9655636fa2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Velocidad Máxima]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="160" y="10" width="60" height="30" uuid="db298ebc-f542-467f-b1cf-220ba9e8671c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{v_distancia_total} + " Km"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="329" y="40" width="140" height="30" uuid="3dd36cf4-a81d-483e-a973-0afbd1531d6f"/>
+				<reportElement x="160" y="50" width="60" height="30" uuid="db298ebc-f542-467f-b1cf-220ba9e8671c"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="14" isBold="true"/>
+					<font size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{v_distancia_min} + " Km"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="160" y="90" width="60" height="30" uuid="db298ebc-f542-467f-b1cf-220ba9e8671c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{v_distancia_max} + " Km"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="450" y="10" width="60" height="30" uuid="3dd36cf4-a81d-483e-a973-0afbd1531d6f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{v_tiempo_total} + " min"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="595" y="40" width="140" height="30" uuid="3dd36cf4-a81d-483e-a973-0afbd1531d6f"/>
+				<reportElement x="450" y="50" width="60" height="30" uuid="3dd36cf4-a81d-483e-a973-0afbd1531d6f"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="14" isBold="true"/>
+					<font size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{v_tiempo_min} + " min"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="450" y="90" width="60" height="30" uuid="3dd36cf4-a81d-483e-a973-0afbd1531d6f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{v_tiempo_max} + " min"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="740" y="10" width="60" height="30" uuid="3dd36cf4-a81d-483e-a973-0afbd1531d6f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{v_velocidad_media} + " Km/h"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="740" y="50" width="60" height="30" uuid="3dd36cf4-a81d-483e-a973-0afbd1531d6f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{v_velocidad_min} + " Km/h"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="740" y="90" width="60" height="30" uuid="3dd36cf4-a81d-483e-a973-0afbd1531d6f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{v_velocidad_max} + " Km/h"]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>
