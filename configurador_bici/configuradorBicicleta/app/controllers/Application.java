@@ -37,27 +37,35 @@ public class Application extends Controller {
     public static List<Caracteristica> listCaracteristicas;
     public static List<Restriccion> listRestricciones;
     
-    public Result index() throws JAXBException{
+    public Result index(){
         
-    	JAXBContext jaxbContext = JAXBContext.newInstance(ObjectFactory.class);
-	    Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+    	try {
+    		
+    		JAXBContext jaxbContext = JAXBContext.newInstance(ObjectFactory.class);
+    	    Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+    	    
+    	    File file = Play.application().getFile("conf/model.xml");
+    	    FeatureModel featureModel = (FeatureModel)unmarshaller.unmarshal(file);
+    	    Struct struct = featureModel.getStruct();
+    	    And and = struct.getAnd();
+    	        
+    	    Caracteristica caracteristica=new Caracteristica();
+    	    caracteristica.setNombre(and.getName());
+    	    listCaracteristicas = new ArrayList<Caracteristica>();
+    	    listRestricciones = new ArrayList<Restriccion>();
+    	    
+    	    agregarListaCaracteristicas(and.getAndOrAltOrOr(), caracteristica);
+    	    String cadRestricciones = agregarListaRestricciones(featureModel.getConstraints());
+    	    
+    	    return ok(index.render(caracteristica, cadRestricciones));
+    	    
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ok("error carger XML");
+		}
+    	
+    	//Json.toJson(listRestricciones);
 	    
-	    File file = new File("modelo/model.xml");
-	    FeatureModel featureModel = (FeatureModel)unmarshaller.unmarshal(file);
-	    Struct struct = featureModel.getStruct();
-	    And and = struct.getAnd();
-	        
-	    int i = 0;
-	    Caracteristica caracteristica=new Caracteristica();
-	    caracteristica.setNombre(and.getName());
-	    listCaracteristicas = new ArrayList<Caracteristica>();
-	    listRestricciones = new ArrayList<Restriccion>();
-	    
-	    agregarListaCaracteristicas(and.getAndOrAltOrOr(), caracteristica);
-	    String cadRestricciones = agregarListaRestricciones(featureModel.getConstraints());
-	    
-	    //Json.toJson(listRestricciones);
-	    return ok(index.render(caracteristica, cadRestricciones));
     }
 
     public static void agregarImagenes(Caracteristica caracteristica, String descripcion)
