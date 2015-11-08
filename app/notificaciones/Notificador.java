@@ -7,10 +7,12 @@ import java.util.Map;
 
 import org.apache.commons.mail.EmailAttachment;
 import com.feth.play.module.mail.Mailer;
+
+import notificaciones.ICatalogoNotificaciones.TipoNotificacion;
 import play.Logger;
 import play.Play;
 
-public class Notificador implements INotificador
+public class Notificador
 {
 	
 	/**
@@ -19,7 +21,7 @@ public class Notificador implements INotificador
 	protected static Mailer mailer = Mailer.getDefaultMailer();
 	
 	
-	public static Mailer.Mail crearEmailHtml(String subject, String templateName,  Map<String, DatoNotificacion> contenidos, List<String> destinatarios)
+	public static Mailer.Mail crearEmailHtml(String subject, TipoNotificacion  tipoNotificacion ,  Map<String, DatoNotificacion> contenidos, List<String> destinatarios)
 	{
 		/*NOTA: La lista de "contenidos" pueden ser nulos si el template contiene toda la informacion estatica,
 		y/o Si el correo viene con attachment por ejemplo. */
@@ -32,7 +34,7 @@ public class Notificador implements INotificador
 		}
 		
 		// Busca el template, lo renderiza y crea un objeto de tipo Body
-		Mailer.Mail.Body  b = crearHtmlBody(HTML_NOTIFICATION_TEMPLATE_DEFAULT, contenidos);		
+		Mailer.Mail.Body  b = crearHtmlBody(tipoNotificacion.getNombreTemplate(), contenidos);		
 		Logger.info("Template Renderizado correctamente = "+ b.getHtml());
 		
 		// Creacion del email 

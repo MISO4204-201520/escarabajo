@@ -6,12 +6,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-
-import com.feth.play.module.mail.Mailer;
 
 import be.objectify.deadbolt.java.actions.Group;
 import be.objectify.deadbolt.java.actions.Restrict;
@@ -22,9 +19,8 @@ import models.Recorrido;
 import models.Ruta;
 import models.User;
 import models.UsuarioXRecorrido;
-import notificaciones.DatoNotificacion;
-import notificaciones.INotificador;
-import notificaciones.Notificador;
+import notificaciones.CatalogoNotificaciones;
+import notificaciones.ICatalogoNotificaciones;
 import play.data.Form;
 import play.data.validation.Constraints.Required;
 import play.mvc.Controller;
@@ -117,6 +113,9 @@ public class ControllerRecorrido extends Controller{
 
 			insertarRecorrido(recorrido, ruta, listUsuarioRecorrido);
 
+			
+			notificarInvitacionARecorrdo(recorrido, ruta, usuario, listUsuarioRecorrido);
+			
 			flash("success", "Se ha creado correctamente el recorrido.");
 			return ok(views.html.recorridos.render(Form.form(FormularioRecorrido.class), tipoRecorrido, diaFrecuente, horaSalida, lstAmigos));
 		}
@@ -262,7 +261,7 @@ public class ControllerRecorrido extends Controller{
 			usuarioRecorridoDao.eliminarUsuarioXRecorrido(lstUsuarioRecorrido.get(0));
 			mensaje = "<div style='padding: 5px 5px 5px 5px; background-color:#c4ead0'>Se ha retirado del recorrido satisfactoriamente</div>";
 		
-			notificacionDePruebaUnionARecorrido(0);
+			notificarCambioParticipacionRecorrido (ICatalogoNotificaciones.EstadoParticipacion.RETIRADO_DE_RECORRIDO);
 		}
 		else
 		{
@@ -274,7 +273,7 @@ public class ControllerRecorrido extends Controller{
 			usuarioRecorridoDao.agregarUsuarioXRecorrido(usuarioRecorrido);
 			mensaje="<div style='padding: 5px 5px 5px 5px; background-color:#c4ead0'>Se ha unido al recorrido satisfactoriamente</div>";
 			
-			notificacionDePruebaUnionARecorrido(1);
+			notificarCambioParticipacionRecorrido(ICatalogoNotificaciones.EstadoParticipacion.UNIDO_A_RECORRIDO);
 		}
 
 		
@@ -303,44 +302,64 @@ public class ControllerRecorrido extends Controller{
 		public Long idRecorrido;
 	}
 	
-	
-	public static void notificacionDePruebaUnionARecorrido(int estado)
+	/**
+	 * 
+	 * @param nuevoEstado
+	 */
+	private static void notificarCambioParticipacionRecorrido(ICatalogoNotificaciones.EstadoParticipacion nuevoEstado)
 	{
-		/* TODO SE PODRIA INEDEPENDIZAR UN POCO MAS DEL CONTROLADOR, SI SE CREA UNA CLASE
-		CON UN LISATADO MAESTRO DE TODAS LAS NOTIFICAIONES. CADA CONTROLLADOR PARASARIA SU CONTEXTO
 		
-		Q CUALQUIER CONTROLADOR SOLO LLAME EN CIERTOS PUNTOS EL METODO Q QUIERA.
-		*/
+		User usuarioSession = Application.getLocalUser(session());	
 		
-		User usuarioSession = Application.getLocalUser(session());
+		String emailUsuario = usuarioSession.email;	
+		String nombreUsuario= usuarioSession.name;
 		
-		List<String> destinatarios = new ArrayList<String>();
-		destinatarios.add (usuarioSession.email);
-		
-		Map<String, DatoNotificacion> contenidos = new HashMap<String, DatoNotificacion>(10);
-		DatoNotificacion datoSinDescripcion = new DatoNotificacion();
-		datoSinDescripcion.clave = "USUARIO_NAME"  ;
-		datoSinDescripcion.informacion =usuarioSession.name;
-		contenidos.put(datoSinDescripcion.clave, datoSinDescripcion);
-		
-		DatoNotificacion datoConDescripcion = new DatoNotificacion();
-		datoConDescripcion.clave = "DATO_EJEMPLO_INFORMACION";
-		datoConDescripcion.informacion ="Se ha " + (estado==1?"UNIDO a":"RETIRADO de") + " un recorrido";
-		datoConDescripcion.descripcion ="Ha habido un cambio en el estado de uno de sus recorridos programados";
-		contenidos.put(datoConDescripcion.clave,datoConDescripcion);
-		
-		DatoNotificacion datoCSS = new DatoNotificacion();
-		datoCSS.clave = "DATO_EJEMPLO_CSS";
-		datoCSS.informacion =estado==1?"#0000ff":"#ff0000";
-		contenidos.put(datoCSS.clave,datoCSS);
-		
-		Mailer.Mail notificacion = Notificador.crearEmailHtml("Notificación de recorridos", 
-				INotificador.HTML_NOTIFICATION_TEMPLATE_DEFAULT, 
-				contenidos, 
-				destinatarios);
-		
-		Notificador.enviarEmail(notificacion);
+		if (emailUsuario!=null && !emailUsuario.isEmpty())
+		{
+			ICatalogoNotificaciones icn = CatalogoNotificaciones.getICatalogoInstance();
+			icn.notificacionCambioParticipacionRecorrido(emailUsuario, nombreUsuario, nuevoEstado);
+		}
 	}
+	
+	/**
+	 * 
+	 * @param recorrido
+	 * @param ruta
+	 * @param usuario
+	 * @param listUsuarioRecorrido
+	 */
+	private static void notificarInvitacionARecorrdo(Recorrido recorrido, Ruta ruta, User usuario, List<UsuarioXRecorrido> listUsuarioRecorrido)
+	{
+		
+		String nombreRecorrido = recorrido.getNombre();
+		String lugarInicio = ruta.getLugarInicio();
+		String lugarFin = ruta.getLugarFin();
+		String descripcion = recorrido.getDescripcion();
+		
+		//Recorrido Frecuente
+		if (recorrido.getTipo()==0)
+		{
+			String horaFrecuente = recorrido.getHoraFrecuente();
+			String diaFrecuente = recorrido.getDiaFrecuente();
+			
+			
+		} 
+		//Recorrido Recreacion
+		else if (recorrido.getTipo()==1)
+		{
+			SimpleDateFormat sdf = new SimpleDateFormat("dd MMM, yyyy");
+
+			String fechaInicio =  sdf.format(ruta.getFechaInicioRuta());
+			String fechaFin = sdf.format(ruta.getFechaFinRuta());
+			
+			
+			
+		}		
+		
+	}
+	
+	
+	
 }
 
 
