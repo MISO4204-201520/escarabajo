@@ -1,4 +1,4 @@
-@(message: String)
+@(message: String , mensaje : String)
 
 
 @main("publicadortwitter") {
@@ -16,7 +16,7 @@
   data-via="Line_Escarabajo"
   data-related="twitterapi,twitter"
   data-hashtags="noalbullyngdeDeisy"
-  data-text="custom share text">
+  data-text=@mensaje>
 Tweet
 </a>
 </div>

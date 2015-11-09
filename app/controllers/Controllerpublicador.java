@@ -17,6 +17,6 @@ public class Controllerpublicador extends Controller {
 		
 		final User localUser = Application.getLocalUser(session());
 		
-		return ok(views.html.chat.render("Sistema de Mensajeria Instantanea", localUser,views.html.publicadorfacebook.render("publicador"),views.html.publicadortwitter.render("publicador")));	
+		return ok(views.html.chat.render("Sistema de Mensajeria Instantanea", localUser, null, null));	
 	}
 }

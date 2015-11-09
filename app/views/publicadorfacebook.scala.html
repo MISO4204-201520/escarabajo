@@ -1,4 +1,4 @@
-@(message: String)
+@(message: String, mensaje :String)
 
 
 @main("publicadorfacebook") {
@@ -29,7 +29,7 @@ var publicarfacebook = function (){
     FB.ui(
       {
         method: 'stream.publish',
-        message: 'Escarabajo aqui.',
+        message: @mensaje,
         attachment: {
           name: 'Escarabajo',
           caption: 'Caption here.',

@@ -22,16 +22,21 @@ public class ControllerMetricas extends Controller{
 		System.out.println(idRecorridoSeleccionado.longValue());
 		RecorridoDAO recorridoDAO = new RecorridoDAO();
 		Recorrido recorrido = recorridoDAO.consultarRecorridoPorId(idRecorridoSeleccionado);
-		//String names[];
-		//names = 
-		return templateRecorridoWeb(recorrido);
+		String mensaje = "hola estoy iniando un nuevo recorrido";
+		return templateRecorridoWeb(recorrido, mensaje);
+		
 				
 	}	
 	
 	
 	
-	private static Result templateRecorridoWeb(Recorrido recorrido) {
-		return ok(views.html.ejecucionRecorrido.render(recorrido,null, null));
+	private static Result templateRecorridoWeb(Recorrido recorrido, String mensaje) {
+		
+		
+		//return ok(views.html.ejecucionRecorrido.render(recorrido,null, null));
+		//return ok(views.html.ejecucionRecorrido.render(recorrido,views.html.publicadorfacebook.render("publicador"), null));
+		return ok(views.html.ejecucionRecorrido.render(recorrido,views.html.publicadorfacebook.render("publicador", mensaje), views.html.publicadortwitter.render("publicador", mensaje)));
+		 
 		
 	}
 
