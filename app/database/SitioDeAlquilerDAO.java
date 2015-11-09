@@ -21,24 +21,29 @@ public class SitioDeAlquilerDAO {
 		sitio.save();
 	}
 	
-	public void actualizarSitioDeAlquiler(SitioDeAlquiler sitio){
-		SitioDeAlquiler sitioActual = consultarSitioDeAlquilerPorId(sitio.getIdSitio());
-		sitioActual.setIndicativoTelefonoFijo(sitio.getIndicativoTelefonoFijo());
-		sitioActual.setTelefonoFijo(sitio.getTelefonoFijo());
-		sitioActual.setEmail(sitio.getEmail());
-		sitioActual.setNombre(sitio.getNombre());
-		sitioActual.setCelular(sitio.getCelular());
-		sitioActual.setEstaciones(sitio.getEstaciones());
-		sitioActual.save();
+	public boolean actualizarSitioDeAlquiler(SitioDeAlquiler sitio){
+		SitioDeAlquiler sitioActual = consultarSitioDeAlquilerPorId(sitio.id);
+		boolean actualizo = false;
+		if(sitioActual!=null){
+			sitioActual = sitio;
+			actualizo = true;
+			sitioActual.update();
+		}
+		return actualizo;
 	}
 	
 	public void eliminarSitioDeAlquiler(SitioDeAlquiler sitio){
-		SitioDeAlquiler sitioActual = consultarSitioDeAlquilerPorId(sitio.getIdSitio());
+		SitioDeAlquiler sitioActual = consultarSitioDeAlquilerPorId(sitio.id);
 		sitioActual.delete();
 	}
 	
 	public SitioDeAlquiler consultarSitioDeAlquilerPorId(Long id){
-		return SitioDeAlquiler.find.byId(id);
+
+		if(id!=null){
+			return SitioDeAlquiler.find.byId(id);
+		}else{
+			return null;
+		}		
 	}
 	
 	public List<SitioDeAlquiler> consultarSitioDeAlquilerPorNombre(String nombre){

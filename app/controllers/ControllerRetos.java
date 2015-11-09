@@ -193,8 +193,6 @@ public class ControllerRetos extends Controller{
 		@Formats.DateTime(pattern = "yyyy-MM-dd") 
 		public Date fechaFin;
 		@Required public Long idMetrica;
-		/*@Required public String nombreMetrica;
-		@Required public String unidadMetrica;*/
 		@Required public String funcion;
 		@Required public String operador;
 		@Required public String valorCondicion;
