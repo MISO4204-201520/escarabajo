@@ -1,5 +1,7 @@
 package notificaciones;
 
+import java.util.List;
+
 public interface ICatalogoNotificaciones {
 
 	
@@ -11,10 +13,12 @@ public interface ICatalogoNotificaciones {
 	
 	public enum TipoNotificacion {
 		
-		CAMBIO_PARTICIPACION_RECORRIDO ("views.html.notifications.templates.notificacion_cambio_participacion"), 
-		INVITACION_A_UN_RECORRIDO ("views.html.notifications.templates.notification_invitacion_recorrido"), 
-		ALCANCE_DE_UN_NUEVO_RETO ("views.html.notifications.templates.notification_alcance_reto"), 
-		RECLAMO_DE_RECOMPENSA ("views.html.notifications.templates.notification_reclamo_recompensa");
+		CAMBIO_PARTICIPACION_RECORRIDO_FRECUENTE ("views.html.notifications.templates.cambio_participacion_frecuente"), 
+		CAMBIO_PARTICIPACION_RECORRIDO_RECREACION ("views.html.notifications.templates.cambio_participacion_recreacion"), 
+		INVITACION_A_UN_RECORRIDO_FRECUENTE ("views.html.notifications.templates.invitacion_recorrido_frecuente"), 
+		INVITACION_A_UN_RECORRIDO_RECREATIVO ("views.html.notifications.templates.invitacion_recorrido_recreacion"), 
+		ALCANCE_DE_UN_NUEVO_RETO ("views.html.notifications.nuevo_reto_alcanzado"), 
+		RECLAMO_DE_RECOMPENSA ("views.html.notifications.templates.nueva_recompensa_reclamada");
 
 		private final String templateNotificacion;
 
@@ -30,10 +34,65 @@ public interface ICatalogoNotificaciones {
 	
 	/**
 	 * 
+	 * @param usuarioInvita
+	 * @param nombreRecorrido
+	 * @param lugarInicio
+	 * @param lugarFin
+	 * @param descripcion
+	 * @param horaFrecuente
+	 * @param diaFrecuente
+	 * @param emailsInvitados
+	 */
+	public void notificacionInvitacionRecorridoFrecuente(String usuarioInvita, String nombreRecorrido,
+			String lugarInicio, String lugarFin, String descripcion, String horaFrecuente, String diaFrecuente,
+			List<String> emailsInvitados);
+
+	/**
+	 * 
+	 * @param usuarioInvita
+	 * @param nombreRecorrido
+	 * @param lugarInicio
+	 * @param lugarFin
+	 * @param descripcion
+	 * @param horaRecreacion
+	 * @param fechaInicio
+	 * @param fechaFin
+	 * @param emailsInvitados
+	 */
+	public void notificacionInvitacionRecorridoRecreacion(String usuarioInvita, String nombreRecorrido,
+			String lugarInicio, String lugarFin, String descripcion, String horaRecreacion, String fechaInicio,
+			String fechaFin, List<String> emailsInvitados);
+
+	/**
+	 * 
+	 * @param estadoParticipacion
 	 * @param emailUsuario
 	 * @param nombreUsuario
-	 * @param nuevoEstado
+	 * @param nombreRecorrido
+	 * @param lugarInicio
+	 * @param lugarFin
+	 * @param descripcion
+	 * @param horaFrecuente
+	 * @param diaFrecuente
 	 */
-	public void notificacionCambioParticipacionRecorrido(String emailUsuario, String nombreUsuario, 
-			EstadoParticipacion nuevoEstado);
+	public void notificacionCambioParticipacionRecorridoFrecuente(EstadoParticipacion estadoParticipacion, String emailUsuario, String nombreUsuario,
+			String nombreRecorrido, String lugarInicio, String lugarFin, String descripcion, String horaFrecuente,
+			String diaFrecuente);
+
+	/**
+	 * 
+	 * @param estadoParticipacion
+	 * @param emailUsuario
+	 * @param nombreUsuario
+	 * @param nombreRecorrido
+	 * @param lugarInicio
+	 * @param lugarFin
+	 * @param descripcion
+	 * @param horaRecreacion
+	 * @param fechaInicio
+	 * @param fechaFin
+	 */
+	public void notificacionCambioParticipacionRecorridoRecreacion(EstadoParticipacion estadoParticipacion, String emailUsuario, String nombreUsuario,
+			String nombreRecorrido, String lugarInicio, String lugarFin, String descripcion, String horaRecreacion,
+			String fechaInicio, String fechaFin);
 }

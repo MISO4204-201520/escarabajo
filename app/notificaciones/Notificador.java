@@ -21,7 +21,7 @@ public class Notificador
 	protected static Mailer mailer = Mailer.getDefaultMailer();
 	
 	
-	public static Mailer.Mail crearEmailHtml(String subject, TipoNotificacion  tipoNotificacion ,  Map<String, DatoNotificacion> contenidos, List<String> destinatarios)
+	public static Mailer.Mail crearEmailHtml(String subject, TipoNotificacion  tipoNotificacion ,  Map<String, String> contenidos, List<String> destinatarios)
 	{
 		/*NOTA: La lista de "contenidos" pueden ser nulos si el template contiene toda la informacion estatica,
 		y/o Si el correo viene con attachment por ejemplo. */
@@ -105,7 +105,7 @@ public class Notificador
 	 * @param contenidos Contenidos que se quieren agregar dinamicamente al template
 	 * @return Body con los contenidos puestos en el template.
 	 */
-	protected static Mailer.Mail.Body crearHtmlBody(String template, Map<String, DatoNotificacion> contenidos )
+	protected static Mailer.Mail.Body crearHtmlBody(String template, Map<String, String> contenidos )
 	{	
 		String htmlMensaje = getTemplateNotificacionCorreo(template, contenidos);
 		
@@ -120,7 +120,7 @@ public class Notificador
 	 * @param contenidos Contenidos que se quieren agregar dinamicamente al template
 	 * @return String del HTMl del teplate con los contenido dinamicos completados.
 	 */
-	protected static String getTemplateNotificacionCorreo(final String template , final Map<String, DatoNotificacion> contenidos ) {
+	protected static String getTemplateNotificacionCorreo(final String template , final Map<String, String> contenidos ) {
 		Class<?> cls = null;
 		String ret = null;
 		try {
