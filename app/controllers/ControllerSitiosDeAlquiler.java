@@ -20,7 +20,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.*;
 
-@Restrict(@Group(Application.USER_ROLE))
+@Restrict({@Group(Application.USER_ROLE), @Group(Application.ADMIN_ROLE)})
 public class ControllerSitiosDeAlquiler extends Controller{
 	
 	public static Result listarSitiosDeAlquiler(){

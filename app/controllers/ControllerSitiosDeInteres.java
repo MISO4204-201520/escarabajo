@@ -12,10 +12,10 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.*;
 
-@Restrict(@Group(Application.ADMIN_ROLE))
+@Restrict({@Group(Application.USER_ROLE), @Group(Application.ADMIN_ROLE)})
 public class ControllerSitiosDeInteres extends Controller{
 	
-	@Restrict(@Group(Application.USER_ROLE))
+	
 	public static Result listarSitiosDeInteres(){
 		
 		SitioDeInteresDAO sitioDAO = new SitioDeInteresDAO();

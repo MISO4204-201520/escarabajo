@@ -22,10 +22,9 @@ import play.mvc.Result;
 //import views.html.*;
 import views.html.*;
 
-@Restrict(@Group(Application.ADMIN_ROLE))
+@Restrict({@Group(Application.USER_ROLE), @Group(Application.ADMIN_ROLE)})
 public class ControllerRetos extends Controller{
 	
-	@Restrict(@Group(Application.USER_ROLE))
 	public static Result listarRetosActivos(){
 		
 		RetoDAO retoDAO = new RetoDAO();
@@ -36,7 +35,6 @@ public class ControllerRetos extends Controller{
 		
 	}	
 	
-
 	public static Result listarRetos(){
 		
 		RetoDAO retoDAO = new RetoDAO();
