@@ -17,8 +17,12 @@ public class SitioDeInteresDAO {
 	 * 
 	 * @param sitio El sitio de alquiler
 	 */
-	public void agregarSitioDeInteres(SitioDeInteres sitio){
-		sitio.save();
+	public boolean agregarSitioDeInteres(SitioDeInteres sitio){
+		if(sitio!=null){
+			sitio.save();
+			return true;
+		}		
+		return false;
 	}
 	
 	public boolean actualizarSitioDeInteres(SitioDeInteres sitio){
@@ -27,7 +31,7 @@ public class SitioDeInteresDAO {
 		if(sitioActual!=null){
 			sitioActual = sitio;
 			actualizo = true;
-			sitioActual.save();
+			sitioActual.update();
 		}
 		return actualizo;
 	}

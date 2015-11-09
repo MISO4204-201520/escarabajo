@@ -1,0 +1,44 @@
+@(sitioForm: ControllerSitiosDeInteres.FormularioSitioDeInteres,
+	nuevoSitio : Boolean)
+@import helper._
+
+@main("Formulario reto") {
+ <div class="container">
+	<h1></h1>
+	@helper.form(action = routes.ControllerSitiosDeInteres.guardar(nuevoSitio)) {
+	<fieldset style="padding-left: 1cm;">
+		@if(nuevoSitio){
+		<legend>Sitio de interes: Nuevo sitio</legend>		
+		}else{
+		<legend>Sitio de interes: @sitioForm.nombre</legend>
+		}		
+		<input name="id" id="id" type="hidden" value="@sitioForm.id"/>
+		<table class="table">		
+			<tr>
+				<td width="20%">Nombre:</td>
+				<td width="20%"><input placeholder="Parque Simon Bolivar" class="form-control" name="nombre" id="nombre" value="@sitioForm.nombre"/></td>
+				<td width="60%"><em>Agregue un nombre para el sitio de interes a crear.</td>
+			</tr>
+			<tr>
+				<td width="20%">Latitud:</td>
+				<td width="20%"><input placeholder="Latitud" class="form-control" name="latitud" id="latitud" value="@sitioForm.latitud"/></td>
+				<td width="60%"><em>Agregue la latitud del sitio de interes. <br>Por ejemplo: "40.75793"</em></td>
+			</tr>
+			<tr>
+				<td width="20%">Longitud:</td>
+				<td width="20%"><input placeholder="Longitud" class="form-control" name="longitud" id="longitud" value="@sitioForm.longitud"/></td>
+				<td width="60%"><em>Agregue la longitud del sitio de interes. <br>Por ejemplo: "-73.98551"</em></td>
+			</tr>	
+			<tr>
+				<td width="20%">Descripcion:</td>
+				<td width="20%"><textarea rows="10" cols="15" placeholder="Descripcion del sitio de interes" class="form-control" name="descripcion" id="descripcion">@sitioForm.descripcion</textarea></td>
+				<td width="60%"><em>Agregue la descripcion del sitio de interes.</td>
+			</tr>	
+		</table>
+	</fieldset>
+	<br/>
+	<input type="submit" class="btn btn-primary" value="Guardar" style="margin-left: 1cm;">
+	<a class="btn" href="@routes.ControllerSitiosDeInteres.listarSitiosDeInteres()">Cancelar</a>
+	}
+	</div>
+}
