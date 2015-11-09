@@ -17,35 +17,34 @@
 		<table class="table">		
 			<tr>
 				<td width="20%">Nombre:</td>
-				<td width="20%"><input placeholder="Maxima velocidad 1" class="form-control" name="nombre" id="nombre" value="@retoForm.nombre"/></td>
-				<td width="60%"><em>Agregue un nombre para el reto a configurar. <br>Por ejemplo: "Maxima velocidad 1"</em></td>
+				<td width="20%"><input placeholder="Máxima velocidad 1" class="form-control" name="nombre" id="nombre" value="@retoForm.nombre"/></td>
+				<td width="60%"><em>Agregue un nombre para el reto a configurar. <br>Por ejemplo: "Máxima velocidad 1"</em></td>
 			</tr>
 			@if(nuevoReto){
 			<tr>
 				<td>Fecha inicio:</td>
 				<td><input  placeholder="2015-10-17" class="form-control" name="fechaIni" id="idFechaIni" type="date" value="@retoForm.fechaIni"/></td>
-				<td><em>Agregue una fecha desde donde iniciara a registrarse el reto<br>Por ejemplo: "2015-10-17"</em></td>
+				<td><em>Agregue una fecha desde donde comenzará a registrarse el reto<br>Por ejemplo: "2015-10-17"</em></td>
 			</tr>
 			<tr>
 				<td>Fecha fin:</td>
 				<td><input  placeholder="2015-10-19" class="form-control" name="fechaFin" id="idFechaFin" type="date" value="@retoForm.fechaFin"/></td>
-				<td><em>Agregue una fecha hasta donde se tomara registro del reto <br>Por ejemplo: "2015-10-19"</em></td>
+				<td><em>Agregue una fecha hasta donde se tomará registro del reto. <br>Por ejemplo: "2015-10-19"</em></td>
 			</tr>	
 			}else{
 			<tr>
 				<td>Fecha inicio:</td>
 				<td><input  placeholder="2015-10-17" class="form-control" name="fechaIni" id="idFechaIni" type="date" value="@retoForm.fechaIni.format("yyyy-MM-dd")"/></td>
-				<td><em>Agregue una fecha desde donde iniciara a registrarse el reto<br>Por ejemplo: "2015-10-17"</em></td>
+				<td><em>Agregue una fecha desde donde comenzará a registrarse el reto.<br>Por ejemplo: "2015-10-17"</em></td>
 			</tr>
 			<tr>
 				<td>Fecha fin:</td>
 				<td><input  placeholder="2015-10-19" class="form-control" name="fechaFin" id="idFechaFin" type="date" value="@retoForm.fechaFin.format("yyyy-MM-dd")"/></td>
-				<td><em>Agregue una fecha hasta donde se tomara registro del reto <br>Por ejemplo: "2015-10-19"</em></td>
+				<td><em>Agregue una fecha hasta donde se tomará registro del reto <br>Por ejemplo: "2015-10-19"</em></td>
 			</tr>
 			}					
 			<tr>
-				<td>Metrica:</td>
-				<!-- td><input  placeholder="1" class="form-control" name="idMetrica" id="idMetrica" value="@retoForm.idMetrica"/></td-->
+				<td>Métrica:</td>
 				<td>
 					<select class="form-control"  name="idMetrica">
 					 @for(metrica <- metricas){
@@ -53,11 +52,10 @@
 				     }										
 					</select>
 				</td>
-				<td><em>Agregue el codigo de la metrica a tomar en el reto<br>Por ejemplo: "1"</em></td>
+				<td><em>Agregue el código de la métrica a tomar en el reto.<br>Por ejemplo: "1"</em></td>
 			</tr>
 			<tr>
-				<td>Funcion:</td>
-				<!-- td><input  placeholder="MAX" class="form-control" name="funcion" id="idFuncion" value="@retoForm.funcion"/></td-->
+				<td>Función:</td>
 				<td>
 				<select class="form-control"  name="funcion">
 					 @for(funcionReto <- models.FuncionReto.values()){
@@ -65,11 +63,10 @@
 				     }										
 				</select>
 				</td>
-				<td><em>Agregue el codigo de la funcion que se debe aplicar para calcular el cumplimiento del reto. <br>Por ejemplo: "MAX"</em></td>
+				<td><em>Agregue el código de la funcion que se debe aplicar para calcular el cumplimiento del reto. <br>Por ejemplo: "MAX"</em></td>
 			</tr>
 			<tr>
 				<td>Operador:</td>
-				<!--td><input name="operador" id="idOperador" value="@retoForm.operador"/></td-->
 				<td>
 					<select class="form-control"  name="operador">
 						<option value=">" @if(">".equals(retoForm.operador)){selected} > > </option>
@@ -80,21 +77,20 @@
 						<option value="!=" @if("!=".equals(retoForm.operador)){selected}> != </option>											
 					</select>
 				</td>
-				<td><em>Seleccione el operador para calcular el valor del reto <br>Por ejemplo: ">"</em></td>
+				<td><em>Seleccione el operador para calcular el valor del reto. <br>Por ejemplo: ">"</em></td>
 			</tr>
 			<tr>
 				<td>Valor condición:</td>
 				<td><input placeholder="20" class="form-control"  name="valorCondicion" id="idValorCondicion" value="@retoForm.valorCondicion"/></td>
-				<td><em>Agregue el valor de condicion que debe cumplir la metrica, para cumplir el reto <br>Por ejemplo: "20"</em></td>
+				<td><em>Agregue el valor de condición que debe cumplir la métrica, para cumplir el reto <br>Por ejemplo: "20"</em></td>
 			</tr>
 			<tr>
 				<td>Puntaje:</td>
 				<td><input placeholder="100" class="form-control"  name="puntaje" id="idPuntaje" value="@retoForm.puntaje"/></td>
-				<td><em>Agregue el puntaje que se otroga al cumplir el reto, acumulandolos el usuario reclamara recompensas. <br>Por ejemplo: "500"</em></td>
+				<td><em>Agregue el puntaje que se otorga al cumplir el reto, acumulándolos el usuario reclamara recompensas. <br>Por ejemplo: "500"</em></td>
 			</tr>
 			<tr>
 				<td>Estado:</td>
-				<!-- td><input placeholder="activo" class="form-control"  name="estado" id="idEstado" value="@retoForm.estado"/></td-->
 				<td>
 				<select class="form-control"  name="estado">
 				@for(estadoReto <- models.EstadoReto.values()){
