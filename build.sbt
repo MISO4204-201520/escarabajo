@@ -62,8 +62,9 @@ libraryDependencies ++= Seq(
   "signalJ" %% "signalj" % "0.5.0",
   "org.webjars" %% "webjars-play" % "2.3.0-2",
   "org.webjars" % "bootstrap" % "3.3.1",
-  "org.aspectj" % "aspectjtools" % "1.7.2",
+   "org.springframework" % "spring-context" % "3.2.2.RELEASE",
   "org.springframework" % "spring-aspects" % "3.2.2.RELEASE",
+  "org.springframework.data" % "spring-data-jpa" % "1.3.2.RELEASE",
   "org.webjars" % "jquery" % "2.1.1"
 )
 
@@ -75,6 +76,7 @@ lazy val root = project.in(file("."))
   .settings(
     libraryDependencies ++= appDependencies
   )
+  
 aspectjSettings
 
 inputs in Aspectj <+= compiledClasses
@@ -85,13 +87,9 @@ binaries in Aspectj <++= update map { report =>
     )
 }
 
-//products in Compile <<= products in Aspectj
+products in Compile <<= products in Aspectj
 
-//products in Runtime <<= products in Compile
-
- 
-
-
+products in Runtime <<= products in Compile
 
 
 fork in run := true

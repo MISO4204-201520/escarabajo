@@ -22,9 +22,25 @@ public class ControllerMetricas extends Controller{
 		System.out.println(idRecorridoSeleccionado.longValue());
 		RecorridoDAO recorridoDAO = new RecorridoDAO();
 		Recorrido recorrido = recorridoDAO.consultarRecorridoPorId(idRecorridoSeleccionado);
+		//String names[];
+		//names = 
+		return templateRecorridoWeb(recorrido);
+				
+	}	
+	
+	
+	
+	private static Result templateRecorridoWeb(Recorrido recorrido) {
+		return ok(views.html.ejecucionRecorrido.render(recorrido,null, null));
 		
-		return ok(views.html.ejecucionRecorrido.render(recorrido));
 	}
+
+
+
+	//public static Result templateRecorridoWeb
+	
+	
+	
 	
 	public static Result guardarMetricas(){
 		

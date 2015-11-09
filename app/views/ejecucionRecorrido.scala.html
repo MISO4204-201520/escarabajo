@@ -1,4 +1,4 @@
-@(recorrido:models.Recorrido)
+@(recorrido:models.Recorrido)(content: Html)(content1: Html)
 
 @import helper._
 
@@ -156,6 +156,8 @@
 					<div id="dvPanel" style="width: 500px; height: 500px">
 					</div>
 				</div>
+				@content
+				@content1
 			</div>	
 		</form>
 	</div>	
