@@ -15,7 +15,8 @@ POST 	/retos/save 				controllers.ControllerRetos.guardar(nuevoReto: Boolean)
 GET     /retosUsuario	 			controllers.ControllerRetos.listarRetosUsuario()
 
 #Reportes
-GET		/reportes					controllers.ControllerReportes.generarReportePDF()
+GET		/reporteMetricas			controllers.ControllerReportes.generarReporteMetricasPDF()
+GET		/reporteRecorrido			controllers.ControllerReportes.generarReporteRecorridoPDF()
 
 #Recompensas
 GET     /guardarRecompensaUsuario	controllers.ControllerRecompensas.guardarRecompensaUsuario(id: Long)

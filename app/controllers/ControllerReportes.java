@@ -20,7 +20,7 @@ public class ControllerReportes extends Controller{
 	
 	static String REPORT_DEFINITION_PATH = "./app/reports/";
 	
-	public static Result generarReportePDF(){
+	public static Result generarReporteMetricasPDF(){
 		
 		String fileName="./app/reports/ReporteMetricas";
 
@@ -49,5 +49,32 @@ public class ControllerReportes extends Controller{
 		}
 	}
 	
+	public static Result generarReporteRecorridoPDF(){
+		
+		String fileName="./app/reports/ReporteRecorrido";
+
+		try {
+			Map<String, Object> parameters = new HashMap<String, Object>();
+			
+			User usuario = Application.getLocalUser(session());
+			
+			parameters.put("p_usuario", usuario.id);
+			parameters.put("p_fecha", new Date());
 	
+			JasperCompileManager.compileReportToFile(fileName + ".jrxml");
+			
+			String printFileName = JasperFillManager.fillReportToFile(fileName + ".jasper" , parameters, DB.getConnection());
+			
+			if (printFileName != null) {
+				JasperExportManager.exportReportToPdfFile(printFileName, fileName + ".pdf");
+			}
+		
+			return ok(new File(fileName + ".pdf"));
+
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
+	}
 }
