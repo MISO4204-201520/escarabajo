@@ -25,6 +25,7 @@ import views.html.*;
 @Restrict({@Group(Application.USER_ROLE), @Group(Application.ADMIN_ROLE)})
 public class ControllerRetos extends Controller{
 	
+	@Restrict(@Group(Application.USER_ROLE))
 	public static Result listarRetosActivos(){
 		
 		RetoDAO retoDAO = new RetoDAO();
@@ -35,6 +36,7 @@ public class ControllerRetos extends Controller{
 		
 	}	
 	
+	@Restrict(@Group(Application.ADMIN_ROLE))
 	public static Result listarRetos(){
 		
 		RetoDAO retoDAO = new RetoDAO();
@@ -45,6 +47,7 @@ public class ControllerRetos extends Controller{
 		
 	}	
 	
+	@Restrict(@Group(Application.ADMIN_ROLE))
 	public static Result eliminarReto(Long idReto){
 		RetoDAO retoDAO = new RetoDAO();
 		
@@ -56,6 +59,7 @@ public class ControllerRetos extends Controller{
 		return redirect(routes.ControllerRetos.listarRetos());
 	}
 	
+	@Restrict(@Group(Application.ADMIN_ROLE))
 	public static Result details(Long idReto) {
 		RetoDAO retoDAO = new RetoDAO();
 		final Reto reto = retoDAO.consultarRetoPorId(idReto);
@@ -80,6 +84,7 @@ public class ControllerRetos extends Controller{
 		return ok(detalleReto.render(form,false,metricas));
 	}
 	
+	@Restrict(@Group(Application.ADMIN_ROLE))
 	public static Result guardar(boolean nuevoReto){
 		Form<FormularioReto> boundForm = Form.form(FormularioReto.class).bindFromRequest();
 		
@@ -155,7 +160,12 @@ public class ControllerRetos extends Controller{
 				
 				//Actualización del puntaje
 				UserDAO userDAO = new UserDAO();
-				usuario.puntajeRetos = usuario.puntajeRetos+reto.puntaje;
+				if(usuario.puntajeRetos==null){
+					usuario.puntajeRetos = reto.puntaje;
+				}else{
+					usuario.puntajeRetos = usuario.puntajeRetos+reto.puntaje;	
+				}
+				
 				userDAO.actualizarUsuario(usuario);
 				
 				//TODO NOTIFICAR CUMPLIMENTO DE RETO
@@ -168,12 +178,14 @@ public class ControllerRetos extends Controller{
 	}
 	
 
+	@Restrict(@Group(Application.ADMIN_ROLE))
 	public static Result agregarReto(){
 		FormularioReto form = new FormularioReto();
 		List<Metrica> metricas = Metrica.find.all();
 		return ok(detalleReto.render(form,true,metricas));
 	}
 	
+	@Restrict(@Group(Application.USER_ROLE))
 	public static Result listarRetosUsuario(){
 		
 		actualizarRetosUsuario();

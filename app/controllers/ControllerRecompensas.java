@@ -20,6 +20,7 @@ import views.html.*;
 @Restrict({@Group(Application.USER_ROLE), @Group(Application.ADMIN_ROLE)})
 public class ControllerRecompensas extends Controller{
 	
+	@Restrict(@Group(Application.USER_ROLE))
 	public static Result listarRecompensasDisponiblesUsuario(){
 		
 		RecompensaDAO recompensaDAO = new RecompensaDAO();
@@ -29,6 +30,7 @@ public class ControllerRecompensas extends Controller{
 		return ok(views.html.recompensasDisponibles.render(recompensas,usuario.puntajeRetos));
 		
 	}	
+	
 	@Restrict(@Group(Application.USER_ROLE))
 	public static Result guardarRecompensaUsuario(Long idRecompensa){
 		RecompensaDAO recompensaDAO = new RecompensaDAO();
@@ -38,7 +40,7 @@ public class ControllerRecompensas extends Controller{
 		Date date = new Date();
 		
 		boolean guardo = false;
-		if(recom!=null && usuario.puntajeRetos>=recom.puntajeRequerido){
+		if(recom!=null && usuario.puntajeRetos!=null && usuario.puntajeRetos>=recom.puntajeRequerido){
 			RecompensaUsuario ru = new RecompensaUsuario();
 			ru.recompensa = recom;
 			usuario.puntajeRetos = usuario.puntajeRetos-recom.puntajeRequerido;
@@ -54,13 +56,14 @@ public class ControllerRecompensas extends Controller{
 			//https://www.iconfinder.com/icons/532803/box_gift_gift_box_holiday_package_present_icon#size=128
 			return redirect(routes.ControllerRecompensas.listarRecompensasUsuario());
 		}else{
-			flash("error", "La recompensa ya fue reclamada.");
+			flash("error", "La recompensa ya fue reclamada o no tiene los puntos suficientes para reclamar la recompensa.");
 			return redirect(routes.ControllerRecompensas.listarRecompensasDisponiblesUsuario());
 		}
 		
 		
 	}
 	
+	@Restrict(@Group(Application.ADMIN_ROLE))
 	public static Result listarRecompensas(){
 		
 		RecompensaDAO recompensaDAO = new RecompensaDAO();
@@ -71,6 +74,7 @@ public class ControllerRecompensas extends Controller{
 		
 	}	
 	
+	@Restrict(@Group(Application.ADMIN_ROLE))
 	public static Result eliminarRecompensa(Long idRecompensa){
 		RecompensaDAO recompensaDAO = new RecompensaDAO();
 		
@@ -82,6 +86,7 @@ public class ControllerRecompensas extends Controller{
 		return redirect(routes.ControllerRecompensas.listarRecompensas());
 	}
 	
+	@Restrict(@Group(Application.ADMIN_ROLE))
 	public static Result details(Long idRecompensa) {
 		RecompensaDAO recompensaDAO = new RecompensaDAO();		
 		final Recompensa recompensa = recompensaDAO.consultarRecompensaPorId(idRecompensa);
@@ -101,6 +106,7 @@ public class ControllerRecompensas extends Controller{
 		return ok(detalleRecompensa.render(form,false));
 	}
 	
+	@Restrict(@Group(Application.ADMIN_ROLE))
 	public static Result guardar(boolean nuevaRecompensa){
 		Form<FormularioRecompensa> boundForm = Form.form(FormularioRecompensa.class).bindFromRequest();		
 
@@ -137,11 +143,13 @@ public class ControllerRecompensas extends Controller{
 		return redirect(routes.ControllerRecompensas.listarRecompensas());
 	}
 	
+	@Restrict(@Group(Application.ADMIN_ROLE))
 	public static Result agregarRecompensa(){
 		FormularioRecompensa form = new FormularioRecompensa();
 		return ok(detalleRecompensa.render(form,true));
 	}
 	
+	@Restrict(@Group(Application.USER_ROLE))
 	public static Result listarRecompensasUsuario(){
 		
 		RecompensaUsuarioDAO recomUsuarioDAO = new RecompensaUsuarioDAO();
