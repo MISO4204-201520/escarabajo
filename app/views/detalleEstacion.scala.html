@@ -4,10 +4,15 @@
 @import helper._
 
 @main("Formulario estacion") {
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&language=es"></script>
+<script type="text/javascript" src="@routes.Assets.at("js/escarabajoSitios.js")"></script>
+<script>
+window.onload = asignarUbicacion(@estacionForm.latitud,@estacionForm.longitud,@nuevaEstacion);
+</script>
  <div class="container">
 	<h1></h1>
-	@helper.form(action = routes.ControllerSitiosDeAlquiler.guardarEstacion(nuevaEstacion)) {
-	<fieldset style="padding-left: 1cm;">
+	@helper.form(action = routes.ControllerSitiosDeAlquiler.guardarEstacion(nuevaEstacion)) {	
+	<fieldset style="padding-left: 1cm;">			
 		@if(nuevaEstacion){
 		<legend>Estación: Nueva estación</legend>		
 		}else{
@@ -19,17 +24,13 @@
 				<td width="20%">Nombre:</td>
 				<td width="20%"><input placeholder="Nombre estación" class="form-control" name="nombre" id="nombre" value="@estacionForm.nombre"/></td>
 				<td width="60%"><em>Agregue un nombre para la estación a crear. <br>Por ejemplo: "Estación Biblioteca Virgilio Barco"</em></td>
-			</tr>
-			<tr>
-				<td width="20%">Latitud:</td>
-				<td width="20%"><input placeholder="Latitud" class="form-control" name="latitud" id="latitud" value="@estacionForm.latitud"/></td>
-				<td width="60%"><em>Agregue la latitud de la estación. <br>Por ejemplo: "40.75793"</em></td>
-			</tr>
-			<tr>
-				<td width="20%">Longitud:</td>
-				<td width="20%"><input placeholder="Longitud" class="form-control" name="longitud" id="longitud" value="@estacionForm.longitud"/></td>
-				<td width="60%"><em>Agregue la longitud de la estación. <br>Por ejemplo: "-73.98551"</em></td>
-			</tr>
+			</tr>	
+			<div class="row" >
+				<input type="hidden" id="latitud" name="latitud" value="" hidden=true></input>
+			</div>
+			<div class="row">
+				<input type="hidden" id="longitud" name="longitud" value="" hidden=true></input>
+			</div>	
 			<tr>
 				<td>Hora inicio atención:</td>
 				<td>
@@ -71,9 +72,22 @@
 					</select>
 				</td>
 				<td><em>Seleccione si en la estación se pueden entregar las bicicletas alquiladas. <br>Por ejemplo: "Si"</em></td>
+			</tr>
+			<tr>
+				<td>
+					Seleccione la ubicación en el mapa:
+				</td>
+				<td style="width:100%" colspan="2">
+				<div class="row" style="width:100%;margin: 0 auto;">
+					<div id="dvMap" style="width: 500px; height: 500px; margin: 0 auto;">
+					</div>	
+				</div>
+				</td>
 			</tr>		
 		</table>
 	</fieldset>
+	<br/>
+	
 	<br/>
 	<input type="submit" class="btn btn-primary" value="Guardar" style="margin-left: 1cm;">
 	<a class="btn" href="@routes.ControllerSitiosDeAlquiler.listarSitiosDeAlquiler()">Cancelar</a>

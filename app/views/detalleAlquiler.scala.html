@@ -2,7 +2,7 @@
 	nuevoSitio: Boolean)
 @import helper._
 
-@main("Formulario sitio de alquiler") {
+@main("Formulario sitio de alquiler") {	
 	<h1></h1>
 	@helper.form(action = routes.ControllerSitiosDeAlquiler.save(nuevoSitio)) {
 	<fieldset style="padding-left: 1cm;">
@@ -21,22 +21,22 @@
 			<tr>
 				<td width="20%">Indicativo telefono fijo:</td>
 				<td width="20%"><input placeholder="Inserte un numero de indicativo" class="form-control" name="indicativoTelefonoFijo" id="indicativoTelefonoFijo" value="@sitioForm.indicativoTelefonoFijo"/></td>
-				<td width="60%"><em>Inserte el indicativo del telefono fijo donde sus clientes lo podrán encontrar.</td>
+				<td width="60%"><em>Inserte el indicativo del telefono fijo donde sus clientes lo podrÃ¡n encontrar.</td>
 			</tr>
 			<tr>
 				<td width="20%">Telefono fijo:</td>
 				<td width="20%"><input placeholder="Inserte un numero de telefono" class="form-control" name="telefonoFijo" id="telefonoFijo" value="@sitioForm.telefonoFijo"/></td>
-				<td width="60%"><em>Inserte el telefono fijo donde sus clientes lo podrán encontrar.</td>
+				<td width="60%"><em>Inserte el telefono fijo donde sus clientes lo podrÃ¡n encontrar.</td>
 			</tr>
 			<tr>
 				<td width="20%">Celular:</td>
 				<td width="20%"><input placeholder="Inserte un numero de celular" class="form-control" name="celular" id="celular" value="@sitioForm.celular"/></td>
-				<td width="60%"><em>Inserte el numero de celular donde sus clientes lo podrán encontrar.</td>
+				<td width="60%"><em>Inserte el numero de celular donde sus clientes lo podrÃ¡n encontrar.</td>
 			</tr>
 			<tr>
 				<td width="20%">Email:</td>
 				<td width="20%"><input placeholder="Inserte un email" class="form-control" name="email" id="email" value="@sitioForm.email"/></td>
-				<td width="60%"><em>Inserte un email para comunicación con sus clientes.</td>
+				<td width="60%"><em>Inserte un email para comunicaciÃ³n con sus clientes.</td>
 			</tr>
 			<tr>
 				<td width="20%">Tarifa por hora:</td>
