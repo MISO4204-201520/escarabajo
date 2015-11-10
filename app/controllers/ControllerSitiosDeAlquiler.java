@@ -23,6 +23,7 @@ import views.html.*;
 @Restrict({@Group(Application.USER_ROLE), @Group(Application.ADMIN_ROLE)})
 public class ControllerSitiosDeAlquiler extends Controller{
 	
+	@Restrict(@Group(Application.ADMIN_ROLE))
 	public static Result listarSitiosDeAlquiler(){
 		
 		SitioDeAlquilerDAO sitioDAO = new SitioDeAlquilerDAO();
@@ -39,7 +40,8 @@ public class ControllerSitiosDeAlquiler extends Controller{
 		return ok(views.html.misSitiosAlquiler.render( sitios,estaciones));
 		
 	}	
-		
+    
+	@Restrict(@Group(Application.ADMIN_ROLE))
 	public static Result save(boolean sitioNuevo) {
 		Form<FormularioSitioDeAlquiler> boundForm = Form.form(FormularioSitioDeAlquiler.class).bindFromRequest();
 		SitioDeAlquilerDAO sitioDAO = new SitioDeAlquilerDAO();
@@ -76,6 +78,7 @@ public class ControllerSitiosDeAlquiler extends Controller{
 		return redirect(routes.ControllerSitiosDeAlquiler.listarSitiosDeAlquiler());
 	}
 	
+	@Restrict(@Group(Application.ADMIN_ROLE))
 	public static Result guardarEstacion(boolean nuevaEstacion){
 		Form<FormularioEstacion> boundForm = Form.form(FormularioEstacion.class).bindFromRequest();
 		
@@ -118,6 +121,7 @@ public class ControllerSitiosDeAlquiler extends Controller{
 		return redirect(routes.ControllerSitiosDeAlquiler.listarSitiosDeAlquiler());
 	}
 	
+	@Restrict(@Group(Application.ADMIN_ROLE))
 	public static Result detailsEstacion(Long idEstacion) {
 		EstacionDAO estacionDAO = new EstacionDAO();
 		final Estacion sitio = estacionDAO.consultarEstacionPorId(idEstacion);
@@ -139,6 +143,7 @@ public class ControllerSitiosDeAlquiler extends Controller{
 		return ok(detalleEstacion.render(form,false));
 	}
 	
+	@Restrict(@Group(Application.ADMIN_ROLE))
 	public static Result detailsSitioAlquiler(Long idSitio) {
 		SitioDeAlquilerDAO sitioDAO = new SitioDeAlquilerDAO();
 		final SitioDeAlquiler sitio = sitioDAO.consultarSitioDeAlquilerPorId(idSitio);
@@ -161,14 +166,17 @@ public class ControllerSitiosDeAlquiler extends Controller{
 		return ok(detalleAlquiler.render(form,false));
 	}
 	
+	@Restrict(@Group(Application.ADMIN_ROLE))
 	public static Result newSitio() {
 		return ok(detalleAlquiler.render(new FormularioSitioDeAlquiler(),true));
 	}
 	
+	@Restrict(@Group(Application.ADMIN_ROLE))
 	public static Result newEstacion() {
 		return ok(detalleEstacion.render(new FormularioEstacion(),true));
 	}
 	
+	@Restrict(@Group(Application.ADMIN_ROLE))
 	public static Result eliminarEstacion(Long idEstacion){
 		EstacionDAO estacionDAO = new EstacionDAO();
 		

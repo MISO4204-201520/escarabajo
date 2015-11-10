@@ -20,6 +20,7 @@ import views.html.*;
 @Restrict({@Group(Application.USER_ROLE), @Group(Application.ADMIN_ROLE)})
 public class ControllerRecompensas extends Controller{
 	
+	@Restrict(@Group(Application.USER_ROLE))
 	public static Result listarRecompensasDisponiblesUsuario(){
 		
 		RecompensaDAO recompensaDAO = new RecompensaDAO();
@@ -59,6 +60,7 @@ public class ControllerRecompensas extends Controller{
 		
 	}
 	
+	@Restrict(@Group(Application.ADMIN_ROLE))
 	public static Result listarRecompensas(){
 		
 		RecompensaDAO recompensaDAO = new RecompensaDAO();
@@ -69,6 +71,7 @@ public class ControllerRecompensas extends Controller{
 		
 	}	
 	
+	@Restrict(@Group(Application.ADMIN_ROLE))
 	public static Result eliminarRecompensa(Long idRecompensa){
 		RecompensaDAO recompensaDAO = new RecompensaDAO();
 		
@@ -80,6 +83,7 @@ public class ControllerRecompensas extends Controller{
 		return redirect(routes.ControllerRecompensas.listarRecompensas());
 	}
 	
+	@Restrict(@Group(Application.ADMIN_ROLE))
 	public static Result details(Long idRecompensa) {
 		RecompensaDAO recompensaDAO = new RecompensaDAO();		
 		final Recompensa recompensa = recompensaDAO.consultarRecompensaPorId(idRecompensa);
@@ -99,6 +103,7 @@ public class ControllerRecompensas extends Controller{
 		return ok(detalleRecompensa.render(form,false));
 	}
 	
+	@Restrict(@Group(Application.ADMIN_ROLE))
 	public static Result guardar(boolean nuevaRecompensa){
 		Form<FormularioRecompensa> boundForm = Form.form(FormularioRecompensa.class).bindFromRequest();		
 
@@ -135,11 +140,13 @@ public class ControllerRecompensas extends Controller{
 		return redirect(routes.ControllerRecompensas.listarRecompensas());
 	}
 	
+	@Restrict(@Group(Application.ADMIN_ROLE))
 	public static Result agregarRecompensa(){
 		FormularioRecompensa form = new FormularioRecompensa();
 		return ok(detalleRecompensa.render(form,true));
 	}
 	
+	@Restrict(@Group(Application.USER_ROLE))
 	public static Result listarRecompensasUsuario(){
 		
 		RecompensaUsuarioDAO recomUsuarioDAO = new RecompensaUsuarioDAO();
