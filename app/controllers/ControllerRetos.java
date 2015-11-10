@@ -170,7 +170,7 @@ public class ControllerRetos extends Controller{
 				
 				userDAO.actualizarUsuario(usuario);
 				
-				//TODO NOTIFICAR CUMPLIMENTO DE RETO
+				//Notificacion cumplimiento de nuevo reto
 				notificarAlcanceDeReto(usuario, reto);
 				
 			}			

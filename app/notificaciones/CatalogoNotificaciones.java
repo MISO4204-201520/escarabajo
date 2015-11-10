@@ -197,6 +197,33 @@ public class CatalogoNotificaciones implements ICatalogoNotificaciones
 
 
 
+	@Override
+	public void notificacionRecompensaReclamada(String emailUsuario, String nombreUsuario, String nombreRecompensa,
+			String telContacto, String celContacto, String puntajeRecompensa, String puntajeTotal) {
+		
+		List<String> destinatarios = new ArrayList<String>();
+		destinatarios.add (emailUsuario);
+
+		//Notificacion de reto alcanzado
+		Map<String, String> contenidos = new HashMap<String, String>(10);
+		contenidos.put("NOMBRE_USUARIO" , nombreUsuario);
+		contenidos.put("NOMBRE_RECOMPENSA", nombreRecompensa);
+		contenidos.put("TELEFONO_CONTACTO" , telContacto);
+		contenidos.put("CELULAR_CONTACTO", celContacto);
+		contenidos.put("PUNTOS_RECOMPENSA", puntajeRecompensa);
+		contenidos.put("PUNTOS_TOTALES", puntajeTotal);
+		
+		Mailer.Mail notificacion = Notificador.crearEmailHtml("Recompensa reclamada, revisa como reclamarla y estado de puntos", 
+				TipoNotificacion.RECLAMO_DE_RECOMPENSA, 
+				contenidos, 
+				destinatarios);
+
+		Notificador.enviarEmail(notificacion);
+		
+	}
+
+
+
 
 
 
