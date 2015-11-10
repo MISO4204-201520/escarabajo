@@ -49,6 +49,9 @@ public class ControllerRecompensas extends Controller{
 		}
 		
 		if(guardo){
+			
+			//TODO NOTIFICAR ALCANCE DE RECOMPENSA.		
+			//https://www.iconfinder.com/icons/532803/box_gift_gift_box_holiday_package_present_icon#size=128
 			return redirect(routes.ControllerRecompensas.listarRecompensasUsuario());
 		}else{
 			flash("error", "La recompensa ya fue reclamada.");

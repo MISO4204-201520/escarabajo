@@ -157,12 +157,17 @@ public class ControllerRetos extends Controller{
 				UserDAO userDAO = new UserDAO();
 				usuario.puntajeRetos = usuario.puntajeRetos+reto.puntaje;
 				userDAO.actualizarUsuario(usuario);
+				
+				//TODO NOTIFICAR CUMPLIMENTO DE RETO
+				//https://www.iconfinder.com/icons/314374/medal_icon#size=128
+				notificarAlcanceDeReto(usuario, reto);
+				
 			}			
 		}
 		
 	}
 	
-	
+
 	public static Result agregarReto(){
 		FormularioReto form = new FormularioReto();
 		List<Metrica> metricas = Metrica.find.all();
@@ -198,7 +203,16 @@ public class ControllerRetos extends Controller{
 		@Required public String estado;
     }
 	
-	
+	private static void notificarAlcanceDeReto(User usuarioSession, Reto reto) {
+		
+		String emailUsuario = usuarioSession.email;	
+		String nombreUsuario= usuarioSession.name;
+		String puntajeTotal = String.valueOf(usuarioSession.puntajeRetos);
+		
+		String nombreReto = reto.nombre;
+		
+	 	
+	}
 	
 }
 
