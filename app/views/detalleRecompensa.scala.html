@@ -34,14 +34,28 @@
 				<td><input placeholder="3102563265"  class="form-control"  name="celularContacto" id="idCelularContacto" value="@recomForm.celularContacto"/></td>
 				<td><em>Agregue un celular para que el usuario se contacte y reclame su recompensa. <br> Por ejemplo: 3102563265</em></td>
 			</tr>
+			@if(nuevaRecompensa){
 			<tr>
 				<td>Fecha límite para obtener:</td>
 				<td><input placeholder="2015-10-24" class="form-control"  name="fechaLimite" id="idFechaLimite" type="date" value="@recomForm.fechaLimite"/></td>
 				<td><em>Agregue una fecha limite para reclamar la recompensa, despues de esta fecha no se podra reclamar la recompensa, Por ejemplo: 2015-10-24</em></td>
+			</tr>	
+			}else{
+			<tr>
+				<td>Fecha límite para obtener:</td>
+				<td><input placeholder="2015-10-24" class="form-control"  name="fechaLimite" id="idFechaLimite" type="date" value="@recomForm.fechaLimite.format("yyyy-MM-dd")"/></td>
+				<td><em>Agregue una fecha limite para reclamar la recompensa, despues de esta fecha no se podra reclamar la recompensa, Por ejemplo: 2015-10-24</em></td>
 			</tr>
+			}		
 			<tr>
 				<td>Estado:</td>
-				<td><input placeholder="activo" class="form-control"  name="estado" id="idEstado" value="@recomForm.estado"/></td>
+				<td>
+				<select class="form-control"  name="estado">
+				@for(estadoRecompensa <- models.EstadoRecompensa.values()){
+			        <option value="@estadoRecompensa.getEstado()" @if(!nuevaRecompensa && recomForm.estado.equals(estadoRecompensa.getEstado())){selected} >@estadoRecompensa.getEstado()</option>
+			     }
+			     </select>
+			     </td>
 				<td><em>Agregue el estado de disponibilidad para esta recompensa, los valores posibles son "activo" o "inactivo"</em></td>
 			</tr>		
 		</table>

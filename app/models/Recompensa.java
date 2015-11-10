@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -15,6 +16,7 @@ public class Recompensa extends AppModel {
 
 	@Id	
 	@Column(name="id", nullable=false)
+	@GeneratedValue
 	public Long id;
 	
 	@Column(name="puntaje_requerido", nullable=false)

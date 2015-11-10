@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -21,16 +22,17 @@ public class Reto extends AppModel{
 
 	@Id
 	@Column(name="id")
+	@GeneratedValue
 	public Long id;
 
 	@Column(name="nombre", nullable=false)
 	public String nombre;
 	
-	@Formats.DateTime(pattern = "dd-MM-yyyy")
+	@Formats.DateTime(pattern = "yyyy-MM-dd")
 	@Column(name="fecha_inicio")
 	public Date fechaIni;
 	
-	@Formats.DateTime(pattern = "dd-MM-yyyy")
+	@Formats.DateTime(pattern = "yyyy-MM-dd")
 	@Column(name="fecha_fin")
 	public Date fechaFin;
 	
@@ -74,4 +76,13 @@ public class Reto extends AppModel{
 		this.puntaje = puntaje;
 		this.estado = estado;
 	} 
+	
+	public FuncionReto getFuncion(){
+		for(FuncionReto funcion: FuncionReto.values()){
+			if(funcion.name().equals(this.funcion)){
+				return funcion;
+			}
+		}
+		return null;
+	}
 }

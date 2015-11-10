@@ -7,15 +7,22 @@ import be.objectify.deadbolt.java.actions.Group;
 import be.objectify.deadbolt.java.actions.Restrict;
 import database.MetricaDAO;
 import database.RetoDAO;
+import database.RetoUsuarioDAO;
+import database.UserDAO;
+import models.EstadoRetoUsuario;
 import models.Metrica;
 import models.Reto;
+import models.RetoUsuario;
+import models.User;
 import play.data.Form;
+import play.data.format.Formats;
 import play.data.validation.Constraints.Required;
 import play.mvc.Controller;
 import play.mvc.Result;
+//import views.html.*;
 import views.html.*;
 
-@Restrict(@Group(Application.ADMIN_ROLE))
+@Restrict({@Group(Application.USER_ROLE), @Group(Application.ADMIN_ROLE)})
 public class ControllerRetos extends Controller{
 	
 	@Restrict(@Group(Application.USER_ROLE))
@@ -29,7 +36,7 @@ public class ControllerRetos extends Controller{
 		
 	}	
 	
-
+	@Restrict(@Group(Application.ADMIN_ROLE))
 	public static Result listarRetos(){
 		
 		RetoDAO retoDAO = new RetoDAO();
@@ -40,6 +47,7 @@ public class ControllerRetos extends Controller{
 		
 	}	
 	
+	@Restrict(@Group(Application.ADMIN_ROLE))
 	public static Result eliminarReto(Long idReto){
 		RetoDAO retoDAO = new RetoDAO();
 		
@@ -51,6 +59,7 @@ public class ControllerRetos extends Controller{
 		return redirect(routes.ControllerRetos.listarRetos());
 	}
 	
+	@Restrict(@Group(Application.ADMIN_ROLE))
 	public static Result details(Long idReto) {
 		RetoDAO retoDAO = new RetoDAO();
 		final Reto reto = retoDAO.consultarRetoPorId(idReto);
@@ -70,9 +79,12 @@ public class ControllerRetos extends Controller{
 		form.puntaje = reto.puntaje;
 		form.valorCondicion = reto.valorCondicion;		
 		
-		return ok(detalleReto.render(form,false));
+		List<Metrica> metricas = Metrica.find.all();
+		
+		return ok(detalleReto.render(form,false,metricas));
 	}
 	
+	@Restrict(@Group(Application.ADMIN_ROLE))
 	public static Result guardar(boolean nuevoReto){
 		Form<FormularioReto> boundForm = Form.form(FormularioReto.class).bindFromRequest();
 		
@@ -115,24 +127,86 @@ public class ControllerRetos extends Controller{
 		
 		if(retoBD!=null){
 			retoDAO.actualizarReto(retoA);
+			flash("success",
+					String.format("El reto '%s' ha sido actualizado.", retoA.nombre));
 		}else{
 			retoDAO.agregarReto(retoA);
+			flash("success",
+					String.format("El reto '%s' ha sido añadido.", retoA.nombre));
 		}		
-		flash("success",
-		String.format("El reto %s ha sido añadido.", retoA.nombre));
+		
 		return redirect(routes.ControllerRetos.listarRetos());
 	}
 	
+	public static void actualizarRetosUsuario(){
+		
+		RetoDAO retoDAO = new RetoDAO();
+		User usuario = Application.getLocalUser(session());
+		List<Reto> retos = retoDAO.consultarRetosDisponiblesUsuario(usuario);
+		System.out.println(" ");
+		System.out.println("---------------------- RETOS DISPONIBLES ---------------------");
+		for(Reto reto:retos){
+			System.out.println("Reto: "+reto.nombre);
+			if(retoDAO.cumpleReto(reto,usuario)){
+				RetoUsuarioDAO retoUsuarioDAO = new RetoUsuarioDAO();
+				
+				RetoUsuario retoUsuario = new RetoUsuario();
+				retoUsuario.estado = EstadoRetoUsuario.VALIDO.getEstado();
+				retoUsuario.fecha = new Date();
+				retoUsuario.reto = reto;
+				retoUsuario.usuario = usuario;
+				
+				retoUsuarioDAO.agregarRetoUsuario(retoUsuario);
+				
+				//Actualización del puntaje
+				UserDAO userDAO = new UserDAO();
+				if(usuario.puntajeRetos==null){
+					usuario.puntajeRetos = reto.puntaje;
+				}else{
+					usuario.puntajeRetos = usuario.puntajeRetos+reto.puntaje;	
+				}
+				
+				userDAO.actualizarUsuario(usuario);
+				
+				//TODO NOTIFICAR CUMPLIMENTO DE RETO
+				//https://www.iconfinder.com/icons/314374/medal_icon#size=128
+				notificarAlcanceDeReto(usuario, reto);
+				
+			}			
+		}
+		
+	}
+	
+
+	@Restrict(@Group(Application.ADMIN_ROLE))
 	public static Result agregarReto(){
 		FormularioReto form = new FormularioReto();
-		return ok(detalleReto.render(form,true));
+		List<Metrica> metricas = Metrica.find.all();
+		return ok(detalleReto.render(form,true,metricas));
 	}
+	
+	@Restrict(@Group(Application.USER_ROLE))
+	public static Result listarRetosUsuario(){
+		
+		actualizarRetosUsuario();
+		
+		RetoUsuarioDAO retoUsuarioDAO = new RetoUsuarioDAO();
+		
+		List<RetoUsuario> retos = retoUsuarioDAO.consultarRetosUsuario(Application.getLocalUser(session()));
+		
+		return ok(views.html.retosUsuario.render(retos));
+		
+	}	
 	
 	public static class FormularioReto {		
 		public Long id;
 		@Required public String nombre;		
-		@Required public Date fechaIni;		
-		@Required public Date fechaFin;
+		@Required
+		@Formats.DateTime(pattern = "yyyy-MM-dd") 
+		public Date fechaIni;		
+		@Required 
+		@Formats.DateTime(pattern = "yyyy-MM-dd") 
+		public Date fechaFin;
 		@Required public Long idMetrica;
 		@Required public String funcion;
 		@Required public String operador;
@@ -141,7 +215,16 @@ public class ControllerRetos extends Controller{
 		@Required public String estado;
     }
 	
-	
+	private static void notificarAlcanceDeReto(User usuarioSession, Reto reto) {
+		
+		String emailUsuario = usuarioSession.email;	
+		String nombreUsuario= usuarioSession.name;
+		String puntajeTotal = String.valueOf(usuarioSession.puntajeRetos);
+		
+		String nombreReto = reto.nombre;
+		
+	 	
+	}
 	
 }
 

@@ -6,6 +6,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,8 +25,10 @@ public class RetoUsuario extends AppModel{
 	
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	public RetoUsuarioPK retoUsuarioPK;
+	@Id
+	@Column(name="id_reto_usuario", nullable=false)
+	@GeneratedValue
+	public Long id;
 
 	@Formats.DateTime(pattern = "dd-MM-yyyy")
 	@Column(name="fecha")
@@ -42,11 +45,11 @@ public class RetoUsuario extends AppModel{
 	@JoinColumn(name = "id_reto", referencedColumnName = "id")
 	public Reto reto;
 
-	public static AppModel.Finder<RetoUsuarioPK, RetoUsuario> find;
+	public static AppModel.Finder<Long, RetoUsuario> find;
 	
 	public  RetoUsuario() {
 		super();
-		find = new AppModel.Finder<RetoUsuarioPK, RetoUsuario> (RetoUsuario.class);
+		find = new AppModel.Finder<Long, RetoUsuario> (RetoUsuario.class);
 	}
 
 }

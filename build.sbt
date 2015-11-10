@@ -44,7 +44,8 @@ val appDependencies = Seq(
   "be.objectify"  %% "deadbolt-java"     % "2.4.0",
   // Comment the next line for local development of the Play Authentication core:
   "com.feth"      %% "play-authenticate" % "0.7.0",
-  "org.postgresql" % "postgresql" % "9.4-1204-jdbc42"
+  "org.postgresql" % "postgresql" % "9.4-1204-jdbc42",
+  "com.typesafe.play" %% "play-json" % "2.4.3"
 )
 
 // Play provides two styles of routers, one expects its actions to be injected, the
@@ -91,6 +92,8 @@ products in Compile <<= products in Aspectj
 
 products in Runtime <<= products in Compile
 
+
+fork in run := true
 
 fork in run := true
 

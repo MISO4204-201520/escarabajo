@@ -29,6 +29,7 @@
 						<th>Operador</th>
 						<th>Valor condición</th>
 						<th>Puntaje</th>
+						<th>Estado</th>
 						<th></th>			            
 			        </tr>
 			    </thead>
@@ -40,10 +41,11 @@
 			            <td>@reto.fechaFin.format("yyyy-MM-dd")</td>
 			            <td>@reto.metrica.getNombreMetrica()</td>
 			            <td>@reto.metrica.getUnidadMedida()</td>
-			            <td>@reto.funcion</td>			            
+			            <td>@reto.getFuncion().getNombre()</td>			            
 			            <td>@reto.operador</td>
 			            <td>@reto.valorCondicion</td>
 			            <td>@reto.puntaje</td>
+			            <td>@reto.estado</td>
 			            <td>
 							<a onclick="del('@routes.ControllerRetos.eliminarReto(reto.id)')">Eliminar</a>
 							<a href="@routes.ControllerRetos.details(reto.id)">Editar</a>
