@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-11-07T14:48:37 -->
+<!-- 2015-11-09T11:57:38 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TestReport" pageWidth="840" pageHeight="600" orientation="Landscape" whenNoDataType="NoDataSection" columnWidth="800" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="70993bc2-be6b-4847-a4ed-30184a9dbaad">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Escarabajo Adapter"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
@@ -12,14 +12,18 @@
 	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
-	<parameter name="p_usuario" class="java.lang.Integer"/>
+	<parameter name="p_usuario" class="java.lang.Long"/>
 	<parameter name="p_fecha" class="java.util.Date"/>
 	<queryString>
 		<![CDATA[select ru.lugar_inicio, 
        ru.lugar_fin,
        me.distancia_real,
+       me.distancia_estimada,
        me.tiempo_real,
+       me.tiempo_estimado,
        me.velocidad_media,
+       me.clima_temperatura_origen,
+       me.clima_temperatura_destino,
        u.name,
        re.nombre
 from ruta ru, 
@@ -35,7 +39,8 @@ from ruta ru,
      metrica me
 where ru.recorrido_id_recorrido = re.id_recorrido
       and re.id_recorrido = mr.recorrido_id_recorrido
-      and mr.metrica_id_metrica = me.id_metrica 
+      and mr.metrica_id_metrica = me.id_metrica
+      and mr.usuario_id = ' || $P{p_usuario} || '
       order by mr.fecha')
  AS ct("recorrido_id_recorrido" bigint, "distancia_real" double precision, "tiempo_real" double precision, "velocidad_media" double precision, "distancia_estimada" double precision, "tiempo_estimado" double precision, "clima_temperatura_origen" double precision, "clima_temperatura_destino" double precision, "clima_humedad_origen" double precision, "clima_humedad_destino" double precision, "clima_nubosidad_origen" double precision, "clima_nubosidad_destino" double precision, "clima_viento_origen" double precision, "clima_viento_destino" double precision)) AS me
 where ru.recorrido_id_recorrido = re.id_recorrido
@@ -47,8 +52,12 @@ where ru.recorrido_id_recorrido = re.id_recorrido
 	<field name="lugar_inicio" class="java.lang.String"/>
 	<field name="lugar_fin" class="java.lang.String"/>
 	<field name="distancia_real" class="java.lang.Double"/>
+	<field name="distancia_estimada" class="java.lang.Double"/>
 	<field name="tiempo_real" class="java.lang.Double"/>
+	<field name="tiempo_estimado" class="java.lang.Double"/>
 	<field name="velocidad_media" class="java.lang.Double"/>
+	<field name="clima_temperatura_origen" class="java.lang.Double"/>
+	<field name="clima_temperatura_destino" class="java.lang.Double"/>
 	<field name="name" class="java.lang.String"/>
 	<field name="nombre" class="java.lang.String"/>
 	<variable name="v_distancia_total" class="java.lang.Double" calculation="Sum">
@@ -90,10 +99,6 @@ where ru.recorrido_id_recorrido = re.id_recorrido
 				</textElement>
 				<text><![CDATA[REPORTE DE MÉTRICAS]]></text>
 			</staticText>
-			<image>
-				<reportElement x="0" y="0" width="80" height="79" uuid="3992a211-6225-4cee-b1ec-c9f187cd5400"/>
-				<imageExpression><![CDATA["http://i754.photobucket.com/albums/xx188/hank8617/143979460775544.gif"]]></imageExpression>
-			</image>
 			<staticText>
 				<reportElement x="620" y="3" width="80" height="15" uuid="9923a3ef-3e9c-4297-9467-ffeac637c9ed"/>
 				<textElement>
@@ -160,7 +165,7 @@ where ru.recorrido_id_recorrido = re.id_recorrido
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[DISTANCIA (Km)]]></text>
+				<text><![CDATA[DISTANCIA ESTIMADA (Km)]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="30" width="80" height="30" forecolor="#000000" backcolor="#6C7196" uuid="5991c863-e881-4f01-84a3-f8c622717f01"/>
@@ -173,7 +178,7 @@ where ru.recorrido_id_recorrido = re.id_recorrido
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[TIEMPO (min)]]></text>
+				<text><![CDATA[DISTANCIA (Km)]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="390" y="30" width="80" height="30" forecolor="#000000" backcolor="#6C7196" uuid="5991c863-e881-4f01-84a3-f8c622717f01"/>
@@ -186,7 +191,59 @@ where ru.recorrido_id_recorrido = re.id_recorrido
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
+				<text><![CDATA[TIEMPO ESTIMADO (min)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="470" y="30" width="80" height="30" forecolor="#000000" backcolor="#6C7196" uuid="5991c863-e881-4f01-84a3-f8c622717f01"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TIEMPO (min)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="550" y="30" width="80" height="30" forecolor="#000000" backcolor="#6C7196" uuid="5991c863-e881-4f01-84a3-f8c622717f01"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[VELOCIDAD MEDIA (Km/h)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="630" y="30" width="80" height="30" forecolor="#000000" backcolor="#6C7196" uuid="5991c863-e881-4f01-84a3-f8c622717f01"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TEMPERATURA ORIGEN (°C)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="710" y="30" width="80" height="30" forecolor="#000000" backcolor="#6C7196" uuid="5991c863-e881-4f01-84a3-f8c622717f01"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TEMPERATURA DESTINO (°C)]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -200,17 +257,37 @@ where ru.recorrido_id_recorrido = re.id_recorrido
 			<textField>
 				<reportElement x="230" y="10" width="80" height="30" uuid="441327d6-a7c8-40c4-ae12-7be9430f9009"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{distancia_real}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{distancia_estimada}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="310" y="10" width="80" height="30" uuid="441327d6-a7c8-40c4-ae12-7be9430f9009"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{tiempo_real}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{distancia_real}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="390" y="10" width="80" height="30" uuid="441327d6-a7c8-40c4-ae12-7be9430f9009"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{tiempo_estimado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="470" y="10" width="80" height="30" uuid="441327d6-a7c8-40c4-ae12-7be9430f9009"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{tiempo_real}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="550" y="10" width="80" height="30" uuid="441327d6-a7c8-40c4-ae12-7be9430f9009"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{velocidad_media}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="630" y="10" width="80" height="30" uuid="441327d6-a7c8-40c4-ae12-7be9430f9009"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{clima_temperatura_origen}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="710" y="10" width="80" height="30" uuid="441327d6-a7c8-40c4-ae12-7be9430f9009"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{clima_temperatura_destino}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

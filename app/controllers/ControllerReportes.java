@@ -22,7 +22,7 @@ public class ControllerReportes extends Controller{
 	
 	public static Result generarReportePDF(){
 		
-		String fileName="./app/reports/TestReport";
+		String fileName="./app/reports/ReporteMetricas";
 
 		try {
 			Map<String, Object> parameters = new HashMap<String, Object>();
