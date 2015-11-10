@@ -14,21 +14,23 @@ import play.data.Form;
 import play.data.validation.Constraints.Required;
 import play.mvc.Controller;
 import play.mvc.Result;
+//import views.html.*;
 import views.html.*;
 
-@Restrict(@Group(Application.ADMIN_ROLE))
+@Restrict({@Group(Application.USER_ROLE), @Group(Application.ADMIN_ROLE)})
 public class ControllerRecompensas extends Controller{
 	
 	@Restrict(@Group(Application.USER_ROLE))
-	public static Result listarRecompensasActivas(){
+	public static Result listarRecompensasDisponiblesUsuario(){
 		
 		RecompensaDAO recompensaDAO = new RecompensaDAO();
 		User usuario = Application.getLocalUser(session());
-		List<Recompensa> recompensas = recompensaDAO.consultarRecompensasActivas();
+		List<Recompensa> recompensas = recompensaDAO.consultarRecompensasDisponiblesUsuario(usuario);
 		
 		return ok(views.html.recompensasDisponibles.render(recompensas,usuario.puntajeRetos));
 		
 	}	
+	
 	@Restrict(@Group(Application.USER_ROLE))
 	public static Result guardarRecompensaUsuario(Long idRecompensa){
 		RecompensaDAO recompensaDAO = new RecompensaDAO();
@@ -38,7 +40,7 @@ public class ControllerRecompensas extends Controller{
 		Date date = new Date();
 		
 		boolean guardo = false;
-		if(recom!=null && usuario.puntajeRetos>=recom.puntajeRequerido){
+		if(recom!=null && usuario.puntajeRetos!=null && usuario.puntajeRetos>=recom.puntajeRequerido){
 			RecompensaUsuario ru = new RecompensaUsuario();
 			ru.recompensa = recom;
 			usuario.puntajeRetos = usuario.puntajeRetos-recom.puntajeRequerido;
@@ -49,15 +51,16 @@ public class ControllerRecompensas extends Controller{
 		}
 		
 		if(guardo){
-			return redirect(routes.ControllerRecompensasUsuario.listarRecompensasUsuario());
+			return redirect(routes.ControllerRecompensas.listarRecompensasUsuario());
 		}else{
-			flash("error", "La recompensa ya fue reclamada.");
-			return redirect(routes.ControllerRecompensas.listarRecompensasActivas());
+			flash("error", "La recompensa ya fue reclamada o no tiene los puntos suficientes para reclamar la recompensa.");
+			return redirect(routes.ControllerRecompensas.listarRecompensasDisponiblesUsuario());
 		}
 		
 		
 	}
 	
+	@Restrict(@Group(Application.ADMIN_ROLE))
 	public static Result listarRecompensas(){
 		
 		RecompensaDAO recompensaDAO = new RecompensaDAO();
@@ -68,6 +71,7 @@ public class ControllerRecompensas extends Controller{
 		
 	}	
 	
+	@Restrict(@Group(Application.ADMIN_ROLE))
 	public static Result eliminarRecompensa(Long idRecompensa){
 		RecompensaDAO recompensaDAO = new RecompensaDAO();
 		
@@ -79,6 +83,7 @@ public class ControllerRecompensas extends Controller{
 		return redirect(routes.ControllerRecompensas.listarRecompensas());
 	}
 	
+	@Restrict(@Group(Application.ADMIN_ROLE))
 	public static Result details(Long idRecompensa) {
 		RecompensaDAO recompensaDAO = new RecompensaDAO();		
 		final Recompensa recompensa = recompensaDAO.consultarRecompensaPorId(idRecompensa);
@@ -98,6 +103,7 @@ public class ControllerRecompensas extends Controller{
 		return ok(detalleRecompensa.render(form,false));
 	}
 	
+	@Restrict(@Group(Application.ADMIN_ROLE))
 	public static Result guardar(boolean nuevaRecompensa){
 		Form<FormularioRecompensa> boundForm = Form.form(FormularioRecompensa.class).bindFromRequest();		
 
@@ -134,10 +140,23 @@ public class ControllerRecompensas extends Controller{
 		return redirect(routes.ControllerRecompensas.listarRecompensas());
 	}
 	
+	@Restrict(@Group(Application.ADMIN_ROLE))
 	public static Result agregarRecompensa(){
 		FormularioRecompensa form = new FormularioRecompensa();
 		return ok(detalleRecompensa.render(form,true));
 	}
+	
+	@Restrict(@Group(Application.USER_ROLE))
+	public static Result listarRecompensasUsuario(){
+		
+		RecompensaUsuarioDAO recomUsuarioDAO = new RecompensaUsuarioDAO();
+		
+		User usuario = Application.getLocalUser(session());
+		List<RecompensaUsuario> recom = recomUsuarioDAO.consultarRecompensasUsuario(usuario);
+		
+		return ok(views.html.recompensasUsuario.render(recom));
+		
+	}	
 	
 	public static class FormularioRecompensa {		
 		public Long id;

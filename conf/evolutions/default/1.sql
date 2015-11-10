@@ -59,10 +59,11 @@ create table recompensa (
 ;
 
 create table recompensa_usuario (
+  id_recompensa_usuario     bigserial not null,
   id_recompensa             bigint,
   id_usuario                bigint,
   fecha                     timestamp not null,
-  constraint pk_recompensa_usuario primary key (id_recompensa, id_usuario))
+  constraint pk_recompensa_usuario primary key (id_recompensa_usuario))
 ;
 
 create table recorrido (
@@ -90,11 +91,12 @@ create table retos (
 ;
 
 create table retos_usuario (
-  id_usuario                bigint,
-  id_reto                   bigint,
+  id_reto_usuario           bigserial not null,
   fecha                     timestamp,
   estado                    varchar(255) not null,
-  constraint pk_retos_usuario primary key (id_usuario, id_reto))
+  id_usuario                bigint,
+  id_reto                   bigint,
+  constraint pk_retos_usuario primary key (id_reto_usuario))
 ;
 
 create table ruta (

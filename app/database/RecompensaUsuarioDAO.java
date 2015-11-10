@@ -4,7 +4,6 @@ import java.util.List;
 
 import models.Recompensa;
 import models.RecompensaUsuario;
-import models.RecompensaUsuarioPK;
 import models.User;
 
 public class RecompensaUsuarioDAO {
@@ -14,7 +13,7 @@ public class RecompensaUsuarioDAO {
 	}	
 	
 	public boolean guardarRecompensaUsuario(RecompensaUsuario recompensaUsuario){
-		RecompensaUsuario recompensaUsuarioActual = consultarRecompensaUsuarioPorId(recompensaUsuario.recompensaUsuarioPK);
+		RecompensaUsuario recompensaUsuarioActual = consultarRecompensaUsuarioPorUsuarioRecompensa(recompensaUsuario);
 		boolean retorno = false;
 		if(recompensaUsuarioActual==null){
 			recompensaUsuario.save();
@@ -26,7 +25,7 @@ public class RecompensaUsuarioDAO {
 	}
 	
 	public void actualizarRecompensaUsuario(RecompensaUsuario recompensaUsuario){
-		RecompensaUsuario recompensaUsuarioActual = consultarRecompensaUsuarioPorId(recompensaUsuario.recompensaUsuarioPK);
+		RecompensaUsuario recompensaUsuarioActual = consultarRecompensaUsuarioPorId(recompensaUsuario.id);
 		
 		if(recompensaUsuarioActual!=null){
 			recompensaUsuarioActual = recompensaUsuario;		
@@ -35,12 +34,16 @@ public class RecompensaUsuarioDAO {
 	}
 	
 	public void eliminarRecompensaUsuario(RecompensaUsuario recompensaUsuario){
-		RecompensaUsuario recompensaUsuarioBorrar = consultarRecompensaUsuarioPorId(recompensaUsuario.recompensaUsuarioPK);
+		RecompensaUsuario recompensaUsuarioBorrar = consultarRecompensaUsuarioPorId(recompensaUsuario.id);
 		recompensaUsuarioBorrar.delete();
 	}
 	
-	public RecompensaUsuario consultarRecompensaUsuarioPorId(RecompensaUsuarioPK id){
+	public RecompensaUsuario consultarRecompensaUsuarioPorId(Long id){
 		return RecompensaUsuario.find.byId(id);
 	}	
 
+	public RecompensaUsuario consultarRecompensaUsuarioPorUsuarioRecompensa(RecompensaUsuario recompensaUsuario){
+		return RecompensaUsuario.find.where().eq("recompensa", recompensaUsuario.recompensa)
+				.eq("usuario", recompensaUsuario.usuario).findUnique();
+	}
 }
