@@ -10,11 +10,11 @@ import com.feth.play.module.mail.Mailer;
 public class CatalogoNotificaciones implements ICatalogoNotificaciones
 {
 	private static final String URL_IMAGEN_PARTICIPACION ="https://cdn4.iconfinder.com/data/icons/simplicio/128x128/user_manage.png";
-	
+
 	private static final String URL_IMAGEN_UNION = "https://cdn4.iconfinder.com/data/icons/simplicio/128x128/file_add.png";
-	
+
 	private static final String URL_IMAGEN_RETIRO = "https://cdn4.iconfinder.com/data/icons/simplicio/128x128/file_delete.png";
-	
+
 	/**
 	 * Crea un catalogo de notificaciones disponibles para ser consumidas por los coantroladores.
 	 * Se dejo privado para oblicar a los controladores a utilizar el metodo getInstance.
@@ -22,9 +22,9 @@ public class CatalogoNotificaciones implements ICatalogoNotificaciones
 	private CatalogoNotificaciones() {
 		super();
 	}
-	
 
-	
+
+
 	/**
 	 * Implementa el catalogo de notificaciones utilizando notificaicones por correo. 	
 	 * 
@@ -35,7 +35,7 @@ public class CatalogoNotificaciones implements ICatalogoNotificaciones
 		ICatalogoNotificaciones cn = new CatalogoNotificaciones();
 		return cn;
 	}
-	
+
 	//----------------------------------------------------------------------------------------------
 	//METODOS QUE ORGANIZAN LOS DATOS Y CONTRUYEN LAS NOTIFICACIONES DE LA INTERFAZ IMLEMENTADA
 	//----------------------------------------------------------------------------------------------
@@ -50,19 +50,19 @@ public class CatalogoNotificaciones implements ICatalogoNotificaciones
 	//	  VALOR = Informacion que se quiere dar al usuario. (un texto, el string de un entero, 
 	//	  puede incluir incluso cosas con HTML)
 	//---------------------------------------------------------------------------------------------- 
-	
-	
+
+
 	@Override
 	public void notificacionCambioParticipacionRecorridoFrecuente(EstadoParticipacion estadoParticipacion,
 			String emailUsuario, String nombreUsuario, String nombreRecorrido, String lugarInicio, String lugarFin,
 			String descripcion, String horaFrecuente, String diaFrecuente) {
-		
+
 		List<String> destinatarios = new ArrayList<String>();
 		destinatarios.add (emailUsuario);
 
 		String nuevoEstado = " te has " + (estadoParticipacion==EstadoParticipacion.UNIDO_A_RECORRIDO?"unido al":"retirado del") + " recorrido frecuente";
 		String urlImagen = estadoParticipacion==EstadoParticipacion.UNIDO_A_RECORRIDO?URL_IMAGEN_UNION:URL_IMAGEN_RETIRO;
-		
+
 		//Notificacion de cambio en participacion de un recorrido FRECUENTE
 		Map<String, String> contenidos = new HashMap<String, String>(10);
 		contenidos.put("NOMBRE_USUARIO" , nombreUsuario);
@@ -74,14 +74,14 @@ public class CatalogoNotificaciones implements ICatalogoNotificaciones
 		contenidos.put("HORA_FRECUENTE", horaFrecuente);
 		contenidos.put("DIA_FRECUENTE", diaFrecuente);
 		contenidos.put("DESCRIPCION_RECORRIDO", descripcion);
-		
+
 		Mailer.Mail notificacion = Notificador.crearEmailHtml("Cambio en participacion de un recorrido frecuente", 
 				TipoNotificacion.CAMBIO_PARTICIPACION_RECORRIDO_FRECUENTE, 
 				contenidos, 
 				destinatarios);
 
 		Notificador.enviarEmail(notificacion);	
-		
+
 	}
 
 
@@ -89,15 +89,15 @@ public class CatalogoNotificaciones implements ICatalogoNotificaciones
 	public void notificacionCambioParticipacionRecorridoRecreacion(EstadoParticipacion estadoParticipacion,
 			String emailUsuario, String nombreUsuario, String nombreRecorrido, String lugarInicio, String lugarFin,
 			String descripcion, String horaRecreacion, String fechaInicio, String fechaFin) {
-		
+
 		List<String> destinatarios = new ArrayList<String>();
 		destinatarios.add (emailUsuario);
 
 		String nuevoEstado = " te has " + (estadoParticipacion==EstadoParticipacion.UNIDO_A_RECORRIDO?"unido al":"retirado del") + " recorrido recreativo";
 		String urlImagen = estadoParticipacion==EstadoParticipacion.UNIDO_A_RECORRIDO?URL_IMAGEN_UNION:URL_IMAGEN_RETIRO;
-	
+
 		//Notificacion de cambio en participacion de un recorrido RECREACION
-		
+
 		Map<String, String> contenidos =  new HashMap<String, String>();
 		contenidos.put("NOMBRE_USUARIO" , nombreUsuario);
 		contenidos.put("NUEVO_ESTADO", nuevoEstado);
@@ -109,17 +109,17 @@ public class CatalogoNotificaciones implements ICatalogoNotificaciones
 		contenidos.put("FECHA_INICIO", fechaInicio);
 		contenidos.put("FECHA_FIN", fechaFin);
 		contenidos.put("DESCRIPCION_RECORRIDO", descripcion);
-		
+
 		Mailer.Mail notificacion = Notificador.crearEmailHtml("Cambio en participación de un recorrido recreativo", 
 				TipoNotificacion.CAMBIO_PARTICIPACION_RECORRIDO_RECREACION, 
 				contenidos, 
 				destinatarios);
 
 		Notificador.enviarEmail(notificacion);	
-		
+
 	}
-	
-	
+
+
 	@Override
 	public void notificacionInvitacionRecorridoFrecuente(String usuarioInvita, String nombreRecorrido,
 			String lugarInicio, String lugarFin, String descripcion, String horaFrecuente, String diaFrecuente,
@@ -141,14 +141,14 @@ public class CatalogoNotificaciones implements ICatalogoNotificaciones
 				emailsInvitados);
 
 		Notificador.enviarEmail(notificacion);
-		
+
 	}
 
 	@Override
 	public void notificacionInvitacionRecorridoRecreacion(String usuarioInvita, String nombreRecorrido,
 			String lugarInicio, String lugarFin, String descripcion, String horaRecreacion, String fechaInicio,
 			String fechaFin, List<String> emailsInvitados) {
-		
+
 		//Notificación de invitacion a un nuevo recorrido RECREACION
 		Map<String, String> contenidos =  new HashMap<String, String>();
 		contenidos.put("NOMBRE_INVITA", usuarioInvita);
@@ -166,11 +166,37 @@ public class CatalogoNotificaciones implements ICatalogoNotificaciones
 				emailsInvitados);
 
 		Notificador.enviarEmail(notificacion);
-		
+
 	}
 
 
-	
+
+	@Override
+	public void notificacionRetoAlcanzado(String emailUsuario, String nombreUsuario, String nombreReto,
+			String puntajeReto, String puntajeTotal) {
+
+		List<String> destinatarios = new ArrayList<String>();
+		destinatarios.add (emailUsuario);
+
+		//Notificacion de reto alcanzado
+		Map<String, String> contenidos = new HashMap<String, String>(10);
+		contenidos.put("NOMBRE_USUARIO" , nombreUsuario);
+		contenidos.put("NOMBRE_RETO", nombreReto);
+		contenidos.put("PUNTOS_RETO", puntajeReto);
+		contenidos.put("PUNTOS_TOTALES", puntajeTotal);
+		
+		Mailer.Mail notificacion = Notificador.crearEmailHtml("Felicitaciones! Haz alcanzado un nuevo reto", 
+				TipoNotificacion.ALCANCE_DE_UN_NUEVO_RETO, 
+				contenidos, 
+				destinatarios);
+
+		Notificador.enviarEmail(notificacion);
+
+
+	}
+
+
+
 
 
 
