@@ -10,6 +10,8 @@ import database.RecompensaUsuarioDAO;
 import models.Recompensa;
 import models.RecompensaUsuario;
 import models.User;
+import notificaciones.CatalogoNotificaciones;
+import notificaciones.ICatalogoNotificaciones;
 import play.data.Form;
 import play.data.validation.Constraints.Required;
 import play.mvc.Controller;
@@ -52,8 +54,9 @@ public class ControllerRecompensas extends Controller{
 		
 		if(guardo){
 			
-			//TODO NOTIFICAR ALCANCE DE RECOMPENSA.		
-			//https://www.iconfinder.com/icons/532803/box_gift_gift_box_holiday_package_present_icon#size=128
+			//Notificar reclamo de recompensa
+			notificarReclamoDeRecompensa(usuario, recom);
+			
 			return redirect(routes.ControllerRecompensas.listarRecompensasUsuario());
 		}else{
 			flash("error", "La recompensa ya fue reclamada o no tiene los puntos suficientes para reclamar la recompensa.");
@@ -63,6 +66,7 @@ public class ControllerRecompensas extends Controller{
 		
 	}
 	
+
 	@Restrict(@Group(Application.ADMIN_ROLE))
 	public static Result listarRecompensas(){
 		
@@ -171,6 +175,33 @@ public class ControllerRecompensas extends Controller{
 		@Required public String estado;	
     }
 	
+	
+	/**
+	 * 
+	 * @param usuarioSession
+	 * @param recom
+	 */
+	private static void notificarReclamoDeRecompensa(User usuarioSession, Recompensa recom) {
+		
+		String emailUsuario = usuarioSession.email;	
+		String nombreUsuario= usuarioSession.name;
+		
+		String nombreRecompensa = recom.recompensa;
+		
+		String telContacto = recom.telefonoContacto;
+		String celContacto = recom.celularContacto;
+		
+		String puntajeRecompensa = String.valueOf(recom.puntajeRequerido);
+		String puntajeTotal = String.valueOf(usuarioSession.puntajeRetos);
+		
+		if (emailUsuario!=null && !emailUsuario.isEmpty())
+		{
+			ICatalogoNotificaciones icn = CatalogoNotificaciones.getICatalogoInstance();
+			icn.notificacionRecompensaReclamada(emailUsuario, nombreUsuario,nombreRecompensa,telContacto,celContacto, puntajeRecompensa,puntajeTotal);
+
+		}
+		
+	}
 	
 	
 }

@@ -14,6 +14,8 @@ import models.Metrica;
 import models.Reto;
 import models.RetoUsuario;
 import models.User;
+import notificaciones.CatalogoNotificaciones;
+import notificaciones.ICatalogoNotificaciones;
 import play.data.Form;
 import play.data.format.Formats;
 import play.data.validation.Constraints.Required;
@@ -168,8 +170,7 @@ public class ControllerRetos extends Controller{
 				
 				userDAO.actualizarUsuario(usuario);
 				
-				//TODO NOTIFICAR CUMPLIMENTO DE RETO
-				//https://www.iconfinder.com/icons/314374/medal_icon#size=128
+				//Notificacion cumplimiento de nuevo reto
 				notificarAlcanceDeReto(usuario, reto);
 				
 			}			
@@ -215,14 +216,28 @@ public class ControllerRetos extends Controller{
 		@Required public String estado;
     }
 	
+	/**
+	 * 
+	 * @param usuarioSession
+	 * @param reto
+	 */
 	private static void notificarAlcanceDeReto(User usuarioSession, Reto reto) {
 		
 		String emailUsuario = usuarioSession.email;	
-		String nombreUsuario= usuarioSession.name;
-		String puntajeTotal = String.valueOf(usuarioSession.puntajeRetos);
 		
+		String nombreUsuario= usuarioSession.name;
 		String nombreReto = reto.nombre;
 		
+		String puntajeReto = String.valueOf(reto.puntaje);
+		String puntajeTotal = String.valueOf(usuarioSession.puntajeRetos);
+		
+		
+		if (emailUsuario!=null && !emailUsuario.isEmpty())
+		{
+			ICatalogoNotificaciones icn = CatalogoNotificaciones.getICatalogoInstance();
+			icn.notificacionRetoAlcanzado(emailUsuario, nombreUsuario,nombreReto,puntajeReto,puntajeTotal);
+
+		}
 	 	
 	}
 	
