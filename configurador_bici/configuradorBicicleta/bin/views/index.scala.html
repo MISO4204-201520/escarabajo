@@ -1,4 +1,5 @@
-@(carac:Application.Caracteristica,
+@(	resultadoConfiguracion: Form[Application.ResultadosSeleccion],
+	carac:Application.Caracteristica,
 	restric: String)
 
 @import helper._;
@@ -18,12 +19,14 @@
 		//console.log(restricciones);
 	});
 	
-	function detalleCaracteristica(nombreCaracteristica, nivel)
+	function detalleCaracteristica(nombreCaracteristica, nivel, tituloCaracteristica)
 	{
 		if($('#div_'+nombreCaracteristica+' div').length==0){
 			var ruta=$('#'+nombreCaracteristica).attr('ruta')+'/'+nombreCaracteristica;
+			var rutaTitulo=$('#'+nombreCaracteristica).attr('rutaTitulo')+'/'+tituloCaracteristica;
 			var niveles=ruta.split('/');
-			$('#seleccion_'+niveles[0]).val(ruta);
+			$('#seleccion_'+niveles[0]).val(rutaTitulo);
+			$('#sel_'+niveles[0]).val(rutaTitulo);
 			var parent=$('#'+nombreCaracteristica).parent();
 			if(nivel == 2){
 				var nivel2 = $('#'+parent.attr('id')+' .nivel2');
@@ -111,26 +114,26 @@
 		  </div>
 		  <div class="panel-body" id="@nivel1.getNombre()">
 		      @for(nivel2 <- nivel1.getCaracteristicas()) {
-			  	<div id="@nivel2.getNombre()" class="nivel2" ruta="@nivel1.getNombre()"> 
+			  	<div id="@nivel2.getNombre()" class="nivel2" ruta="@nivel1.getNombre()" rutaTitulo="@nivel1.getTitulo()"> 
 					@for(img <- nivel2.getImagenes()){
 						<div style="padding:10px">
-							<input type="image" src="@img" onclick="detalleCaracteristica('@nivel2.getNombre()',2);return false;">
+							<input type="image" src="@img" onclick="detalleCaracteristica('@nivel2.getNombre()',2,'@nivel2.getTitulo()');return false;">
 						</div>	
 					}
 					<div id="div_@nivel2.getNombre()">
 				  		@for(nivel3 <- nivel2.getCaracteristicas()) {
-					  		<div id="@nivel3.getNombre()" style="float:left" ruta="@nivel1.getNombre()/@nivel2.getNombre()"  class="nivel3"> 
+					  		<div id="@nivel3.getNombre()" style="float:left" ruta="@nivel1.getNombre()/@nivel2.getNombre()" rutaTitulo="@nivel1.getTitulo()/@nivel2.getTitulo()"  class="nivel3"> 
 								@for(img <- nivel3.getImagenes()){
 									<div style="padding:10px">
-										<input type="image" src="@img" onclick="detalleCaracteristica('@nivel3.getNombre()',3);return false;">
+										<input type="image" src="@img" onclick="detalleCaracteristica('@nivel3.getNombre()',3,'@nivel3.getTitulo()');return false;">
 									</div>	
 								}		
 								<div id="div_@nivel3.getNombre()">
 							  		@for(nivel4 <- nivel3.getCaracteristicas()) {
-							  			<div id="@nivel4.getNombre()" style="float:left" ruta="@nivel1.getNombre()/@nivel2.getNombre()/@nivel3.getNombre()"  class="nivel4"> 
+							  			<div id="@nivel4.getNombre()" style="float:left" ruta="@nivel1.getNombre()/@nivel2.getNombre()/@nivel3.getNombre()" rutaTitulo="@nivel1.getTitulo()/@nivel2.getTitulo()/@nivel3.getTitulo()" class="nivel4"> 
 											@for(img <- nivel4.getImagenes()){
 												<div style="padding:10px">
-													<input type="image" src="@img" width="200px" height="200px" onclick="detalleCaracteristica('@nivel4.getNombre()',4);return false;">
+													<input type="image" src="@img" width="200px" height="200px" onclick="detalleCaracteristica('@nivel4.getNombre()',4,'@nivel4.getTitulo()');return false;">
 												</div>	
 											}		
 										</div>
@@ -139,24 +142,27 @@
 					  		</div>
 					  	}
 				  	</div>		
-				
-				
-				
-				
 				</div>
 			  }
+			  
 			  <div class="row">
-				<input type="text" class="seleccion form-control" id="seleccion_@nivel1.getNombre()" readonly="readonly"/>			  
+				<input type="text" class="seleccion form-control" id="seleccion_@nivel1.getNombre()" name="seleccion_@nivel1.getNombre()" readonly="readonly"/>			  
 			  </div>
+			  
 
 		  </div>
 		</div>
 	}
-	
-	<div class="btn-group btn-group-lg" role="group">
-		<button type="button" class="btn btn-primary">Enviar Selecci&oacute;n</button>
-	</div>
-	
+	@form(routes.Application.verResultados()) {
+		<div class="btn-group btn-group-lg" role="group">
+			<button type="submit" value="Submit" class="btn btn-primary">Enviar Selecci&oacute;n</button>
+			<input name="sel_tipo_bicicleta" id="sel_tipo_bicicleta" type="hidden" value=0/>
+			<input name="sel_rueda" id="sel_rueda" type="hidden" value=0/>
+			<input name="sel_material" id="sel_material" type="hidden" value=0/>
+			<input name="sel_color" id="sel_color" type="hidden" value=0/>
+			<input name="sel_accesorios_bicicleta" id="sel_accesorios_bicicleta" type="hidden" value=0/>
+		</div>
+	}
 }
 
 

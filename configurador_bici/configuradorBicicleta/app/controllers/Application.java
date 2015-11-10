@@ -2,6 +2,7 @@ package controllers;
 
 import play.*;
 import play.api.libs.json.Json;
+import play.data.Form;
 import play.mvc.*;
 import views.html.*;
 
@@ -36,6 +37,42 @@ public class Application extends Controller {
 	public static Integer pantallaActual;
     public static List<Caracteristica> listCaracteristicas;
     public static List<Restriccion> listRestricciones;
+    public static Caracteristica caracteristica;
+    
+    public Result verResultados() {
+    	
+    	//return ok("ok");
+    	Form<ResultadosSeleccion> form = Form.form(ResultadosSeleccion.class).bindFromRequest();
+
+		if(form.hasErrors()) {
+			flash("error", "Se encontraron errores al consultar el recorrido.");
+			return badRequest(index.render(Form.form(ResultadosSeleccion.class), null, null));
+
+		} else {
+				
+			ResultadosSeleccion resumenSeleccion = new ResultadosSeleccion();
+			
+			ResultadosSeleccion resultadosSeleccion = form.get();
+			String[] arrTipoBici = resultadosSeleccion.sel_tipo_bicicleta.split("/");
+			String selTipoBicicleta = arrTipoBici[0] + ":";
+			for (int i = 1; i < arrTipoBici.length; i++) {
+	        	selTipoBicicleta +=  " - " + arrTipoBici[i];
+	        }	
+			resumenSeleccion.sel_tipo_bicicleta = selTipoBicicleta;
+			resumenSeleccion.sel_rueda = "Tamaño rueda: " + resultadosSeleccion.sel_rueda.split("/")[1] + " pulgadas";
+			resumenSeleccion.sel_material = "Material: " + resultadosSeleccion.sel_material.split("/")[1];
+			resumenSeleccion.sel_color = "Color: " + resultadosSeleccion.sel_color.split("/")[1];
+	        
+			String[] arrAccesorios = resultadosSeleccion.sel_accesorios_bicicleta.split("/");
+			String selAccesorios = arrAccesorios[0] + ":";
+			for (int i = 1; i < arrAccesorios.length; i++) {
+				selAccesorios +=  " - " + arrAccesorios[i];
+	        }
+			resumenSeleccion.sel_accesorios_bicicleta = selAccesorios;
+			
+			return ok(views.html.resumenConfigurador.render(resumenSeleccion));
+		}
+    }
     
     public Result index(){
         
@@ -49,23 +86,21 @@ public class Application extends Controller {
     	    Struct struct = featureModel.getStruct();
     	    And and = struct.getAnd();
     	        
-    	    Caracteristica caracteristica=new Caracteristica();
+    	    caracteristica=new Caracteristica();
     	    caracteristica.setNombre(and.getName());
     	    listCaracteristicas = new ArrayList<Caracteristica>();
     	    listRestricciones = new ArrayList<Restriccion>();
     	    
     	    agregarListaCaracteristicas(and.getAndOrAltOrOr(), caracteristica);
     	    String cadRestricciones = agregarListaRestricciones(featureModel.getConstraints());
-    	    
-    	    return ok(index.render(caracteristica, cadRestricciones));
+        	    
+    	    return ok(index.render(Form.form(ResultadosSeleccion.class), caracteristica, cadRestricciones));
     	    
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ok("error carger XML");
 		}
     	
-    	//Json.toJson(listRestricciones);
-	    
     }
 
     public static void agregarImagenes(Caracteristica caracteristica, String descripcion)
@@ -277,5 +312,12 @@ public class Application extends Controller {
 		}
 	}
 
-	
+	public static class ResultadosSeleccion
+	{
+		public String sel_tipo_bicicleta;
+		public String sel_rueda;
+		public String sel_material;
+		public String sel_color;
+		public String sel_accesorios_bicicleta;
+	}
 }
