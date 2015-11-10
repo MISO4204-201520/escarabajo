@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-11-10T13:21:51 -->
+<!-- 2015-11-10T14:05:03 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReporteRecorrido" pageWidth="840" pageHeight="600" orientation="Landscape" columnWidth="800" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f97bd324-632d-401c-9f0f-61a793306790">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Escarabajo Adapter"/>
 	<parameter name="p_usuario" class="java.lang.Long"/>
@@ -141,6 +141,12 @@ where re.id_recorrido = ru.recorrido_id_recorrido
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="96" width="130" height="30" uuid="8c16e317-9668-456d-9eb3-29a20dd86eff"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
 				<textElement verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 					<paragraph leftIndent="5"/>
@@ -149,6 +155,12 @@ where re.id_recorrido = ru.recorrido_id_recorrido
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="126" width="130" height="30" uuid="8c16e317-9668-456d-9eb3-29a20dd86eff"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
 				<textElement verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 					<paragraph leftIndent="5"/>
@@ -199,6 +211,12 @@ where re.id_recorrido = ru.recorrido_id_recorrido
 			</textField>
 			<textField>
 				<reportElement x="130" y="96" width="280" height="30" uuid="70bb336d-946f-4e29-b348-910d2f8421f4"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
 				<textElement verticalAlignment="Middle">
 					<font size="12"/>
 					<paragraph leftIndent="5"/>
@@ -207,6 +225,12 @@ where re.id_recorrido = ru.recorrido_id_recorrido
 			</textField>
 			<textField>
 				<reportElement x="130" y="126" width="280" height="30" uuid="ad8ee844-6cec-497a-b691-78f799c26976"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
 				<textElement verticalAlignment="Middle">
 					<font size="12"/>
 					<paragraph leftIndent="5"/>
@@ -257,6 +281,14 @@ where re.id_recorrido = ru.recorrido_id_recorrido
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA["SureporteRecorrido_Metricas.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="240" y="170" width="200" height="200" uuid="f58ba9a1-324a-4300-b382-dcf4a92c5c77"/>
+				<subreportParameter name="p_recorrido">
+					<subreportParameterExpression><![CDATA[$P{p_recorrido}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["SubreporteRecorrido_Participantes.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</summary>
