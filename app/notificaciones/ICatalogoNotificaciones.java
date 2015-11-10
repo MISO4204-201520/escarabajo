@@ -17,8 +17,8 @@ public interface ICatalogoNotificaciones {
 		CAMBIO_PARTICIPACION_RECORRIDO_RECREACION ("views.html.notifications.templates.cambio_participacion_recreacion"), 
 		INVITACION_A_UN_RECORRIDO_FRECUENTE ("views.html.notifications.templates.invitacion_recorrido_frecuente"), 
 		INVITACION_A_UN_RECORRIDO_RECREATIVO ("views.html.notifications.templates.invitacion_recorrido_recreacion"), 
-		ALCANCE_DE_UN_NUEVO_RETO ("views.html.notifications.nuevo_reto_alcanzado"), 
-		RECLAMO_DE_RECOMPENSA ("views.html.notifications.templates.nueva_recompensa_reclamada");
+		ALCANCE_DE_UN_NUEVO_RETO ("views.html.notifications.templates.nuevo_reto_alcanzado"), 
+		RECLAMO_DE_RECOMPENSA ("views.html.notifications.templates.recompensa_reclamada");
 
 		private final String templateNotificacion;
 
@@ -95,4 +95,28 @@ public interface ICatalogoNotificaciones {
 	public void notificacionCambioParticipacionRecorridoRecreacion(EstadoParticipacion estadoParticipacion, String emailUsuario, String nombreUsuario,
 			String nombreRecorrido, String lugarInicio, String lugarFin, String descripcion, String horaRecreacion,
 			String fechaInicio, String fechaFin);
+
+	/**
+	 * 
+	 * @param emailUsuario
+	 * @param nombreUsuario
+	 * @param nombreReto
+	 * @param puntajeReto
+	 * @param puntajeTotal
+	 */
+	public void notificacionRetoAlcanzado(String emailUsuario, String nombreUsuario, String nombreReto,
+			String puntajeReto, String puntajeTotal);
+
+	/**
+	 * 
+	 * @param emailUsuario
+	 * @param nombreUsuario
+	 * @param nombreRecompensa
+	 * @param telContacto
+	 * @param celContacto
+	 * @param puntajeRecompensa
+	 * @param puntajeTotal
+	 */
+	public void notificacionRecompensaReclamada(String emailUsuario, String nombreUsuario, String nombreRecompensa,
+			String telContacto, String celContacto, String puntajeRecompensa, String puntajeTotal);
 }

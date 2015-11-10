@@ -3,7 +3,9 @@
 	tipoRecorrido:List[String],  
 	diaFrecuente:Map[String,Boolean], 
 	horaFrecuente:Map[String,Boolean],
-	lstAmigos:Map[String,Boolean])
+	lstAmigos:Map[String,Boolean],
+	content: Html,
+	content1: Html)
 	
 @import helper._
 
@@ -134,7 +136,6 @@
       margin-top:15px;
   }
 </style>
-
 <div class="wrapper row3">
   <main class="container clear"> 
 	<div class="content"> 
@@ -150,4 +151,6 @@
         </div>
   </main>
 </div>
+@content
+@content1
 }

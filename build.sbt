@@ -8,6 +8,9 @@ scalaVersion := "2.11.6"
 
 version := "1.0-SNAPSHOT"
 
+import com.typesafe.sbt.SbtAspectj.{ Aspectj, aspectjSettings, compiledClasses }
+import com.typesafe.sbt.SbtAspectj.AspectjKeys.{ binaries, inputs, lintProperties }
+
 
 // add resolver for deadbolt and easymail snapshots
 
@@ -65,6 +68,9 @@ libraryDependencies ++= Seq(
   "signalJ" %% "signalj" % "0.5.0",
   "org.webjars" %% "webjars-play" % "2.3.0-2",
   "org.webjars" % "bootstrap" % "3.3.1",
+   "org.springframework" % "spring-context" % "3.2.2.RELEASE",
+  "org.springframework" % "spring-aspects" % "3.2.2.RELEASE",
+  "org.springframework.data" % "spring-data-jpa" % "1.3.2.RELEASE",
   "org.webjars" % "jquery" % "2.1.1"
 )
 
@@ -72,11 +78,27 @@ WebKeys.directWebModules in Assets += "signalj"
 
 
 lazy val root = project.in(file("."))
-  .enablePlugins(PlayJava, PlayEbean)
+ .enablePlugins(PlayJava, PlayEbean)
   .settings(
     libraryDependencies ++= appDependencies
   )
+  
+aspectjSettings
 
+inputs in Aspectj <+= compiledClasses
+
+binaries in Aspectj <++= update map { report =>
+    report.matching(
+        moduleFilter(organization = "org.springframework", name = "spring-aspects")
+    )
+}
+
+products in Compile <<= products in Aspectj
+
+products in Runtime <<= products in Compile
+
+
+fork in run := true
 
 fork in run := true
 

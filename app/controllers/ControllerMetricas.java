@@ -8,6 +8,7 @@ import controllers.ControllerRecorrido.FormularioConsultaRecorrido;
 import models.Metrica;
 import models.MetricasXRecorrido;
 import models.Recorrido;
+import models.User;
 import database.MetricaDAO;
 import database.MetricasXRecorridoDAO;
 import database.RecorridoDAO;
@@ -22,9 +23,10 @@ public class ControllerMetricas extends Controller{
 		System.out.println(idRecorridoSeleccionado.longValue());
 		RecorridoDAO recorridoDAO = new RecorridoDAO();
 		Recorrido recorrido = recorridoDAO.consultarRecorridoPorId(idRecorridoSeleccionado);
-		
-		return ok(views.html.ejecucionRecorrido.render(recorrido));
-	}
+		return ok(views.html.ejecucionRecorrido.render(recorrido,null, null));
+				
+	}	
+	
 	
 	public static Result guardarMetricas(){
 		
@@ -327,7 +329,34 @@ public class ControllerMetricas extends Controller{
 		List<Recorrido> lstRecorridos = recorridoDAO.listarRecorridos();
 		response().setContentType("text/html; charset=utf-8");
 		flash("success", "Se ha almacenado las métricas correctamente.");
-		return ok(views.html.recorridosConsulta.render(Form.form(FormularioConsultaRecorrido.class), lstRecorridos));
+		String mensaje ="Acabo de recorrer  22 km  ";
+		System.out.println(mensaje);
+		String url = "http://i844.photobucket.com/albums/ab7/MARTIN3280/af0821f4-f925-4b64-87e8-3a0f6454b19d_zpsbgsh2pue.jpg";
+		return templateRecorridoWeb(Form.form(FormularioConsultaRecorrido.class), lstRecorridos, mensaje, url);
 	}
 
-}
+
+	private static Result templateRecorridoWeb(Form<FormularioConsultaRecorrido> form, List<Recorrido> lstRecorridos,
+			String mensaje, String url) {
+
+		//return ok(views.html.recorridosConsulta.render(form, lstRecorridos, null , null));
+		//return ok(views.html.recorridosConsulta.render(form, lstRecorridos, null , views.html.publicadorfacebook.render("publicador", mensaje, url)));
+		return ok(views.html.recorridosConsulta.render(form, lstRecorridos, views.html.publicadortwitter.render("publicador", mensaje) , views.html.publicadorfacebook.render("publicador", mensaje, url)));
+	}
+	
+	
+
+	
+	
+		
+	//return templateRecorridoWeb(recorrido, mensaje, url);
+	/*
+	private static Result templateRecorridoWeb(Recorrido recorrido, String mensaje, String url) {
+		
+		System.out.println(mensaje);
+		//return ok(views.html.ejecucionRecorrido.render(recorrido,null, null));
+		//return ok(views.html.ejecucionRecorrido.render(recorrido,views.html.publicadorfacebook.render("publicador"), null));
+		return ok(views.html.ejecucionRecorrido.render(recorrido,null , views.html.publicadorfacebook.render("publicador", mensaje, url)));
+*/		 
+		
+	}
