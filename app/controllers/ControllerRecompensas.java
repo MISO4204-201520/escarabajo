@@ -52,7 +52,7 @@ public class ControllerRecompensas extends Controller{
 		if(guardo){
 			return redirect(routes.ControllerRecompensas.listarRecompensasUsuario());
 		}else{
-			flash("error", "La recompensa ya fue reclamada.");
+			flash("error", "La recompensa ya fue reclamada o no tiene los puntos suficientes para reclamar la recompensa.");
 			return redirect(routes.ControllerRecompensas.listarRecompensasDisponiblesUsuario());
 		}
 		
