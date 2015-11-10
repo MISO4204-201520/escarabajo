@@ -33,11 +33,13 @@ public class ControllerRecorrido extends Controller{
 	public static Map<String, Boolean> lstAmigos = new TreeMap<String, Boolean>();
 
 	public static Result postFormRecorridos() {
+		
+		FormularioRecorrido formRecorrido1 = new FormularioRecorrido();
 
 		Form<FormularioRecorrido> form = Form.form(FormularioRecorrido.class).bindFromRequest();
 		if(form.hasErrors()) {
 			flash("error", "Se encontraron errores al crear el recorrido.");
-			return badRequest(views.html.recorridos.render(Form.form(FormularioRecorrido.class), tipoRecorrido, diaFrecuente, horaSalida, lstAmigos));
+			return badRequest(views.html.recorridos.render(Form.form(FormularioRecorrido.class), tipoRecorrido, diaFrecuente, horaSalida, lstAmigos, null, null));
 
 		} else {
 			FormularioRecorrido formRecorrido = form.get();
@@ -112,16 +114,25 @@ public class ControllerRecorrido extends Controller{
 			insertarRecorrido(recorrido, ruta, listUsuarioRecorrido);
 
 			flash("success", "Se ha creado correctamente el recorrido.");
-			return ok(views.html.recorridos.render(Form.form(FormularioRecorrido.class), tipoRecorrido, diaFrecuente, horaSalida, lstAmigos));
-		}
+			return templateCrear( Form.form(FormularioRecorrido.class), tipoRecorrido, diaFrecuente, horaSalida, lstAmigos);
+			}
+	}
+	
+	
+private static Result templateCrear(Form<FormularioRecorrido> form, List<String> tipoRecorrido,
+			Map<String, Boolean> diaFrecuente, Map<String, Boolean> horaSalida, Map<String, Boolean> lstAmigos) {
+	String mensaje = "Acabo de crear un recorrido quieres unirte";
+	String url = "http://i844.photobucket.com/albums/ab7/MARTIN3280/recreacion_zpsjiekvk3i.jpg";
+	//return ok(views.html.recorridos.render(form, tipoRecorrido, diaFrecuente, horaSalida, lstAmigos, null, null));
+		return ok(views.html.recorridos.render(form, tipoRecorrido, diaFrecuente, horaSalida, lstAmigos, null,views.html.publicadorfacebook.render("publicador", mensaje, url)));
 	}
 
-	public static Result getFormRecorridos()
-	{
-		cargarListas();
-		response().setContentType("text/html; charset=utf-8");
-		return ok(views.html.recorridos.render(Form.form(FormularioRecorrido.class), tipoRecorrido, diaFrecuente, horaSalida, lstAmigos));
-	}
+public static Result getFormRecorridos()
+{
+	cargarListas();
+	response().setContentType("text/html; charset=utf-8");
+	return ok(views.html.recorridos.render(Form.form(FormularioRecorrido.class), tipoRecorrido, diaFrecuente, horaSalida, lstAmigos, null, null));
+}
 
 	private static void cargarListas()
 	{

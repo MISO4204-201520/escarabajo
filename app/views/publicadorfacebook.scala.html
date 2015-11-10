@@ -1,12 +1,10 @@
-@(message: String, mensaje :String)
+@(message: String, mensaje :String , url: String)
 
 
 @main("publicadorfacebook") {
 <div class = "postredesf">
-
-				<input type=image src="/assets/icons/compartirfacebook.png" onclick="publicarfacebook()">
-</div>
 <script >
+
 (function(d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0];
     if (d.getElementById(id)) return;
@@ -24,41 +22,29 @@ window.fbAsyncInit = function() {
 		});
 }
 
-
-var publicarfacebook = function (){
+var publicarfb = function (){
     FB.ui(
       {
-        method: 'stream.publish',
-        message: @mensaje,
-        attachment: {
-          name: 'Escarabajo',
-          caption: 'Caption here.',
-          description: (
-            'description here'
-          ),
-          href: 'www.google.com.co'
-        },
-        action_links: [
-          { text: 'Code', href: 'www.github.com' }
-        ],
-        user_prompt_message: 'Personal message here'
-      },
-      function(response) {
-        if (response && response.post_id) {
-          alert('Post was published.');
-        } else {
-          alert('Post was not published.');
-        }
-      }
-    );  
- }
-
-
-
+    	  method: 'feed',
+    	     name: '@mensaje ',
+    	     link: 'https://github.com/MISO4204-201520/escarabajo/wiki',
+    	     picture: '@url',
+    	     caption: 'Reference Documentation',
+    	     description: 'Escarabajo es una aplicacion para el uso de bicicletas',
+    	     message: 'Facebook Dialogs are easy!'
+    	   },
+    	   function(response) {
+    	     if (response && response.post_id) {
+    	           	     } else {
+    	           	     }
+    	   }
+    	   );
+}
 
 </script>
 
-
+				<input type=image src="/assets/icons/compartirfacebook.png" onclick="publicarfb()">
+</div>
 
 
 }
