@@ -155,7 +155,12 @@ public class ControllerRetos extends Controller{
 				
 				//Actualización del puntaje
 				UserDAO userDAO = new UserDAO();
-				usuario.puntajeRetos = usuario.puntajeRetos+reto.puntaje;
+				if(usuario.puntajeRetos==null){
+					usuario.puntajeRetos = reto.puntaje;
+				}else{
+					usuario.puntajeRetos = usuario.puntajeRetos+reto.puntaje;	
+				}
+				
 				userDAO.actualizarUsuario(usuario);
 			}			
 		}

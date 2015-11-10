@@ -29,6 +29,7 @@ public class ControllerRecompensas extends Controller{
 		return ok(views.html.recompensasDisponibles.render(recompensas,usuario.puntajeRetos));
 		
 	}	
+	
 	@Restrict(@Group(Application.USER_ROLE))
 	public static Result guardarRecompensaUsuario(Long idRecompensa){
 		RecompensaDAO recompensaDAO = new RecompensaDAO();
@@ -38,7 +39,7 @@ public class ControllerRecompensas extends Controller{
 		Date date = new Date();
 		
 		boolean guardo = false;
-		if(recom!=null && usuario.puntajeRetos>=recom.puntajeRequerido){
+		if(recom!=null && usuario.puntajeRetos!=null && usuario.puntajeRetos>=recom.puntajeRequerido){
 			RecompensaUsuario ru = new RecompensaUsuario();
 			ru.recompensa = recom;
 			usuario.puntajeRetos = usuario.puntajeRetos-recom.puntajeRequerido;
