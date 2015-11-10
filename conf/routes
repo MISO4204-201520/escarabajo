@@ -91,9 +91,6 @@ GET         /chatFeed/:room        controllers.ChatApplication.chatFeed(room: St
 POST        /chat                  controllers.ChatApplication.postMessage
 
 
-GET         /publicador                  controllers.Controllerpublicador.index
-
-
 # Map static resources from the /public folder to the /assets URL path
 
 GET         /assets/*file          controllers.Assets.at(path="/public", file)

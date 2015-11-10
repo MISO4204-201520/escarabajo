@@ -1,5 +1,7 @@
 @(	formConsultaRecorrido: Form[ControllerRecorrido.FormularioConsultaRecorrido],
-	lstRecorrido:List[models.Recorrido]) 
+	lstRecorrido:List[models.Recorrido],
+	content: Html, 
+	content1: Html)
 	
 @import helper._
 
@@ -68,5 +70,6 @@
 	<br>
   </main>
 </div>
-
+@content
+@content1
 }

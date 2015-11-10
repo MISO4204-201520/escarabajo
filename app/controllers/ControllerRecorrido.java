@@ -188,7 +188,7 @@ public static Result getFormRecorridos()
 		RecorridoDAO recorridoDAO = new RecorridoDAO();
 		List<Recorrido> lstRecorridos = recorridoDAO.listarRecorridos();
 		response().setContentType("text/html; charset=utf-8");
-		return ok(views.html.recorridosConsulta.render(Form.form(FormularioConsultaRecorrido.class), lstRecorridos));
+		return ok(views.html.recorridosConsulta.render(Form.form(FormularioConsultaRecorrido.class), lstRecorridos, null, null));
 	}
 
 	public static Result detallesRecorridos(){
@@ -201,7 +201,7 @@ public static Result getFormRecorridos()
 
 		if(form.hasErrors()) {
 			flash("error", "Se encontraron errores al consultar el recorrido.");
-			return badRequest(views.html.recorridosConsulta.render(Form.form(FormularioConsultaRecorrido.class), lstRecorridos));
+			return badRequest(views.html.recorridosConsulta.render(Form.form(FormularioConsultaRecorrido.class), lstRecorridos, null, null));
 
 		} else {
 			FormularioConsultaRecorrido formularioConsultaRecorrido = form.get();
