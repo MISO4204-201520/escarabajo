@@ -72,5 +72,5 @@ lazy val root = project.in(file("."))
     libraryDependencies ++= appDependencies
   )
 
-
+  
 fork in run := true
