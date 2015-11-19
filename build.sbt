@@ -71,12 +71,3 @@ lazy val root = project.in(file("."))
   .settings(
     libraryDependencies ++= appDependencies
   )
-
-
-fork in run := true
-
-fork in run := true
-
-fork in run := true
-
-fork in run := true
