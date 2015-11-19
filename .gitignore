@@ -9,4 +9,4 @@ target
 /bin/
 .sbtserver/
 project/play-fork-run.sbt
-project/
+project/sbt-ui.sbt
