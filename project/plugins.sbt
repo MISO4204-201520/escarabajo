@@ -33,4 +33,3 @@ resolvers += "Typesafe snapshots" at "http://repo.typesafe.com/typesafe/snapshot
 resolvers += Resolver.url("heroku-sbt-plugin-releases", url("https://dl.bintray.com/heroku/sbt-plugins/"))(Resolver.ivyStylePatterns)
 
 // Use the Play sbt plugin for Play projects
-addSbtPlugin("com.typesafe.play" % "sbt-fork-run-plugin" % "2.4.0")
