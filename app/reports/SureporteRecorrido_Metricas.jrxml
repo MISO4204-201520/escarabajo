@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-11-10T13:09:53 -->
+<!-- 2015-11-10T19:15:53 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SureporteRecorrido_Metricas" pageWidth="170" pageHeight="171" columnWidth="160" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="96b28573-a05a-4ca2-a9c0-479425c57737">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Escarabajo Adapter"/>
 	<parameter name="p_recorrido" class="java.lang.Long"/>
@@ -16,6 +16,7 @@ where ru.recorrido_id_recorrido = re.id_recorrido
       and re.id_recorrido = mr.recorrido_id_recorrido
       and mr.metrica_id_metrica = me.id_metrica
       and re.id_recorrido = ' || $P{p_recorrido} || '
+      and mr.usuario_id = 2
       order by mr.fecha')
  AS ct("recorrido_id_recorrido" bigint, "distancia_real" double precision, "tiempo_real" double precision, "velocidad_media" double precision, "distancia_estimada" double precision, "tiempo_estimado" double precision, "clima_temperatura_origen" double precision, "clima_temperatura_destino" double precision, "clima_humedad_origen" double precision, "clima_humedad_destino" double precision, "clima_nubosidad_origen" double precision, "clima_nubosidad_destino" double precision, "clima_viento_origen" double precision, "clima_viento_destino" double precision)]]>
 	</queryString>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-11-10T14:04:55 -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4" pageWidth="171" pageHeight="71" columnWidth="170" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="9317fc93-1ec0-4cb7-8d1a-ac26e6ce3a12">
+<!-- 2015-11-10T19:25:18 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4" pageWidth="171" pageHeight="91" columnWidth="170" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="9317fc93-1ec0-4cb7-8d1a-ac26e6ce3a12">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Escarabajo Adapter"/>
 	<parameter name="p_recorrido" class="java.lang.Long"/>
 	<queryString>
@@ -10,9 +10,8 @@
 from recorrido re,
      usuario_x_recorrido ur,
      users u
-where re.id_recorrido = ur.id_usuario_recorrido 
+where re.id_recorrido = ur.recorrido_id_recorrido 
       and ur.usuario_id = u.id
-      and ur.ind_confirmado = true
       and re.id_recorrido = $P{p_recorrido}]]>
 	</queryString>
 	<field name="ind_confirmado" class="java.lang.Boolean"/>

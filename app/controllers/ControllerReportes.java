@@ -49,7 +49,7 @@ public class ControllerReportes extends Controller{
 		}
 	}
 	
-	public static Result generarReporteRecorridoPDF(){
+	public static Result generarReporteRecorridoPDF(Long idRecorrido){
 		
 		String fileName="./app/reports/ReporteRecorrido";
 
@@ -60,6 +60,7 @@ public class ControllerReportes extends Controller{
 			
 			parameters.put("p_usuario", usuario.id);
 			parameters.put("p_fecha", new Date());
+			parameters.put("p_recorrido", idRecorrido);
 	
 			JasperCompileManager.compileReportToFile(fileName + ".jrxml");
 			
