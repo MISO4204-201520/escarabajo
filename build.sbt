@@ -97,13 +97,5 @@ products in Compile <<= products in Aspectj
 
 products in Runtime <<= products in Compile
 
-
 fork in run := true
 
-fork in run := true
-
-fork in run := true
-
-fork in run := true
-
-fork in run := true
