@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-11-09T20:35:18 -->
+<!-- 2015-11-21T12:42:16 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TestReport" pageWidth="840" pageHeight="600" orientation="Landscape" whenNoDataType="NoDataSection" columnWidth="800" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="70993bc2-be6b-4847-a4ed-30184a9dbaad">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Escarabajo Adapter"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
@@ -44,7 +44,7 @@ where ru.recorrido_id_recorrido = re.id_recorrido
       and re.id_recorrido = mr.recorrido_id_recorrido
       and mr.metrica_id_metrica = me.id_metrica
       and mr.usuario_id = ' || $P{p_usuario} || '
-      order by mr.fecha')
+      order by mr.recorrido_id_recorrido, me.id_metrica')
  AS ct("recorrido_id_recorrido" bigint, "distancia_real" double precision, "tiempo_real" double precision, "velocidad_media" double precision, "distancia_estimada" double precision, "tiempo_estimado" double precision, "clima_temperatura_origen" double precision, "clima_temperatura_destino" double precision, "clima_humedad_origen" double precision, "clima_humedad_destino" double precision, "clima_nubosidad_origen" double precision, "clima_nubosidad_destino" double precision, "clima_viento_origen" double precision, "clima_viento_destino" double precision)) AS me
 where ru.recorrido_id_recorrido = re.id_recorrido
       and re.id_recorrido = me.recorrido_id_recorrido
@@ -109,7 +109,7 @@ group by re.id_recorrido,
 		<band splitType="Stretch"/>
 	</background>
 	<pageHeader>
-		<band height="115" splitType="Stretch">
+		<band height="90" splitType="Stretch">
 			<staticText>
 				<reportElement x="150" y="0" width="500" height="40" uuid="0563f6ef-aec5-4f8a-92f3-0cb54ed6bfc9"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -144,14 +144,14 @@ group by re.id_recorrido,
 				<textFieldExpression><![CDATA[$P{p_fecha}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="0" y="112" width="800" height="1" uuid="4ec2b812-f8b8-4503-b4f6-833340520b1c"/>
+				<reportElement x="0" y="80" width="800" height="1" uuid="4ec2b812-f8b8-4503-b4f6-833340520b1c"/>
 			</line>
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="61" splitType="Stretch">
+		<band height="34" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="30" width="80" height="30" forecolor="#000000" backcolor="#6C7196" uuid="5991c863-e881-4f01-84a3-f8c622717f01"/>
+				<reportElement x="0" y="4" width="80" height="30" forecolor="#000000" backcolor="#6C7196" uuid="5991c863-e881-4f01-84a3-f8c622717f01"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -164,7 +164,7 @@ group by re.id_recorrido,
 				<text><![CDATA[FECHA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="80" y="30" width="150" height="30" forecolor="#000000" backcolor="#6C7196" uuid="5991c863-e881-4f01-84a3-f8c622717f01"/>
+				<reportElement x="80" y="4" width="150" height="30" forecolor="#000000" backcolor="#6C7196" uuid="5991c863-e881-4f01-84a3-f8c622717f01"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -177,7 +177,7 @@ group by re.id_recorrido,
 				<text><![CDATA[NOMBRE RECORRIDO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="230" y="30" width="80" height="30" forecolor="#000000" backcolor="#6C7196" uuid="5991c863-e881-4f01-84a3-f8c622717f01"/>
+				<reportElement x="230" y="4" width="80" height="30" forecolor="#000000" backcolor="#6C7196" uuid="5991c863-e881-4f01-84a3-f8c622717f01"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -190,7 +190,7 @@ group by re.id_recorrido,
 				<text><![CDATA[DISTANCIA ESTIMADA (Km)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="310" y="30" width="80" height="30" forecolor="#000000" backcolor="#6C7196" uuid="5991c863-e881-4f01-84a3-f8c622717f01"/>
+				<reportElement x="310" y="4" width="80" height="30" forecolor="#000000" backcolor="#6C7196" uuid="5991c863-e881-4f01-84a3-f8c622717f01"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -203,7 +203,7 @@ group by re.id_recorrido,
 				<text><![CDATA[DISTANCIA (Km)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="390" y="30" width="80" height="30" forecolor="#000000" backcolor="#6C7196" uuid="5991c863-e881-4f01-84a3-f8c622717f01"/>
+				<reportElement x="390" y="4" width="80" height="30" forecolor="#000000" backcolor="#6C7196" uuid="5991c863-e881-4f01-84a3-f8c622717f01"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -216,7 +216,7 @@ group by re.id_recorrido,
 				<text><![CDATA[TIEMPO ESTIMADO (min)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="470" y="30" width="80" height="30" forecolor="#000000" backcolor="#6C7196" uuid="5991c863-e881-4f01-84a3-f8c622717f01"/>
+				<reportElement x="470" y="4" width="80" height="30" forecolor="#000000" backcolor="#6C7196" uuid="5991c863-e881-4f01-84a3-f8c622717f01"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -229,7 +229,7 @@ group by re.id_recorrido,
 				<text><![CDATA[TIEMPO (min)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="550" y="30" width="80" height="30" forecolor="#000000" backcolor="#6C7196" uuid="5991c863-e881-4f01-84a3-f8c622717f01"/>
+				<reportElement x="550" y="4" width="80" height="30" forecolor="#000000" backcolor="#6C7196" uuid="5991c863-e881-4f01-84a3-f8c622717f01"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -242,7 +242,7 @@ group by re.id_recorrido,
 				<text><![CDATA[VELOCIDAD MEDIA (Km/h)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="630" y="30" width="80" height="30" forecolor="#000000" backcolor="#6C7196" uuid="5991c863-e881-4f01-84a3-f8c622717f01"/>
+				<reportElement x="630" y="4" width="80" height="30" forecolor="#000000" backcolor="#6C7196" uuid="5991c863-e881-4f01-84a3-f8c622717f01"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -255,7 +255,7 @@ group by re.id_recorrido,
 				<text><![CDATA[TEMPERATURA ORIGEN (°C)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="710" y="30" width="80" height="30" forecolor="#000000" backcolor="#6C7196" uuid="5991c863-e881-4f01-84a3-f8c622717f01"/>
+				<reportElement x="710" y="4" width="80" height="30" forecolor="#000000" backcolor="#6C7196" uuid="5991c863-e881-4f01-84a3-f8c622717f01"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>

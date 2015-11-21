@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-11-10T16:03:44 -->
+<!-- 2015-11-21T00:31:09 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SubreporteDistanciaAcumulada" pageWidth="401" pageHeight="231" orientation="Landscape" columnWidth="400" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="bd78906b-eba6-4cba-b7bd-e4ff9c331819">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Escarabajo Adapter"/>
 	<parameter name="p_usuario" class="java.lang.Long"/>
@@ -34,7 +34,7 @@ where ru.recorrido_id_recorrido = re.id_recorrido
       and re.id_recorrido = mr.recorrido_id_recorrido
       and mr.metrica_id_metrica = me.id_metrica 
       and mr.usuario_id = ' || $P{p_usuario} || '
-      order by mr.fecha')
+      order by mr.recorrido_id_recorrido, me.id_metrica')
  AS ct("recorrido_id_recorrido" bigint, "distancia_real" double precision, "tiempo_real" double precision, "velocidad_media" double precision, "distancia_estimada" double precision, "tiempo_estimado" double precision, "clima_temperatura_origen" double precision, "clima_temperatura_destino" double precision, "clima_humedad_origen" double precision, "clima_humedad_destino" double precision, "clima_nubosidad_origen" double precision, "clima_nubosidad_destino" double precision, "clima_viento_origen" double precision, "clima_viento_destino" double precision)) AS me
 where ru.recorrido_id_recorrido = re.id_recorrido
       and re.id_recorrido = me.recorrido_id_recorrido
@@ -83,6 +83,15 @@ group by mr.fecha,
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
 		<band height="200" splitType="Stretch">
 			<lineChart>
 				<chart evaluationTime="Report">
@@ -94,7 +103,7 @@ group by mr.fecha,
 				<categoryDataset>
 					<categorySeries>
 						<seriesExpression><![CDATA["Tiempo"]]></seriesExpression>
-						<categoryExpression><![CDATA[$F{tiempo_real}]]></categoryExpression>
+						<categoryExpression><![CDATA[$F{fecha}]]></categoryExpression>
 						<valueExpression><![CDATA[$F{tiempo_real}]]></valueExpression>
 						<labelExpression><![CDATA[" "]]></labelExpression>
 					</categorySeries>
@@ -110,14 +119,5 @@ group by mr.fecha,
 				</linePlot>
 			</lineChart>
 		</band>
-	</detail>
-	<columnFooter>
-		<band splitType="Stretch"/>
-	</columnFooter>
-	<pageFooter>
-		<band splitType="Stretch"/>
-	</pageFooter>
-	<summary>
-		<band splitType="Stretch"/>
 	</summary>
 </jasperReport>

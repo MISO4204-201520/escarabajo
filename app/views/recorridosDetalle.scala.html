@@ -169,12 +169,12 @@
 		</div>
 		<div style="padding: 10px 20px 10px 20px; text-align: right;">
 			@if(existeUsuario) {
-				<button id="btnInscribir" class="btn" onclick="asignaInscripcion('@formRecorrido.idRecorrido'); return false;">Retirarme del recorrido</button>
+				<button id="btnInscribir" class="btn btn-primary" onclick="asignaInscripcion('@formRecorrido.idRecorrido'); return false;">Retirarme del recorrido</button>
 			}else{
-				<button id="btnRetirar" class="btn" onclick="asignaInscripcion('@formRecorrido.idRecorrido'); return false;">Unirme al recorrido</button>
+				<button id="btnRetirar" class="btn btn-primary" onclick="asignaInscripcion('@formRecorrido.idRecorrido'); return false;">Unirme al recorrido</button>
 			}
-			<a class="btn" href="@routes.ControllerReportes.generarReporteRecorridoPDF(formRecorrido.idRecorrido)" role="button">Reporte Recorrido</a>
-			<a class="btn" href="@routes.ControllerMetricas.iniciarRecorridoWeb(formRecorrido.idRecorrido)" role="button">Iniciar Recorrido</a>
+			<a class="btn btn-primary" href="@routes.ControllerReportes.generarReporteRecorridoPDF(formRecorrido.idRecorrido)" role="button">Reporte Recorrido</a>
+			<a class="btn btn-primary" href="@routes.ControllerMetricas.iniciarRecorridoWeb(formRecorrido.idRecorrido)" role="button">Iniciar Recorrido</a>
 		</div>
 		<input name="hddAddressLat" id="hddAddressLat" type="hidden" value=@formRecorrido.latitudInicio/>
 		<input name="hddAddressLong" id="hddAddressLong" type="hidden" value=@formRecorrido.longitudInicio/>

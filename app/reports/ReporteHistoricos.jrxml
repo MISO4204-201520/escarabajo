@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-11-10T16:20:51 -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReporteRecorrido" pageWidth="840" pageHeight="600" orientation="Landscape" columnWidth="800" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f97bd324-632d-401c-9f0f-61a793306790">
+<!-- 2015-11-21T12:19:09 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReporteRecorrido" pageWidth="840" pageHeight="940" orientation="Landscape" columnWidth="800" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f97bd324-632d-401c-9f0f-61a793306790">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Escarabajo Adapter"/>
 	<parameter name="p_usuario" class="java.lang.Long"/>
 	<parameter name="p_fecha" class="java.util.Date"/>
 	<queryString>
-		<![CDATA[]]>
+		<![CDATA[select current_time]]>
 	</queryString>
 	<background>
 		<band splitType="Stretch"/>
@@ -20,6 +20,10 @@
 				</textElement>
 				<text><![CDATA[REPORTE DE VIAJES HISTÓRICO]]></text>
 			</staticText>
+			<image>
+				<reportElement x="0" y="0" width="80" height="79" uuid="3992a211-6225-4cee-b1ec-c9f187cd5400"/>
+				<imageExpression><![CDATA["http://i754.photobucket.com/albums/xx188/hank8617/143979460775544.gif"]]></imageExpression>
+			</image>
 			<staticText>
 				<reportElement x="620" y="3" width="80" height="15" uuid="9923a3ef-3e9c-4297-9467-ffeac637c9ed"/>
 				<textElement>
@@ -60,23 +64,20 @@
 		<band splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="410" splitType="Stretch">
+		<band height="769" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<subreport>
-				<reportElement x="5" y="5" width="200" height="200" uuid="12b5cda7-3c0c-4eb9-901a-62262cd9bf17"/>
+				<reportElement x="10" y="250" width="200" height="200" uuid="da687424-7196-47fe-b139-b22dd03195d3"/>
 				<subreportParameter name="p_usuario">
 					<subreportParameterExpression><![CDATA[$P{p_usuario}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportExpression><![CDATA["SubreporteRecorridosTiempo.jasper"]]></subreportExpression>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["SubreporteDistanciaAcumulada.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement x="405" y="5" width="200" height="200" uuid="12b5cda7-3c0c-4eb9-901a-62262cd9bf17"/>
-				<subreportParameter name="p_usuario">
-					<subreportParameterExpression><![CDATA[$P{p_usuario}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportExpression><![CDATA["SubreporteVelocidadTiempo.jasper"]]></subreportExpression>
-			</subreport>
-			<subreport>
-				<reportElement x="5" y="205" width="200" height="200" uuid="12b5cda7-3c0c-4eb9-901a-62262cd9bf17"/>
+				<reportElement x="400" y="250" width="200" height="200" uuid="82480916-df83-468b-8abe-eced54b0f34d">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
 				<subreportParameter name="p_usuario">
 					<subreportParameterExpression><![CDATA[$P{p_usuario}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -84,12 +85,43 @@
 				<subreportExpression><![CDATA["SubreporteDistanciaTiempo.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement x="405" y="205" width="200" height="200" uuid="12b5cda7-3c0c-4eb9-901a-62262cd9bf17"/>
+				<reportElement x="10" y="10" width="200" height="200" uuid="17cf4991-88bf-4247-b7bc-7324ca2894e5"/>
 				<subreportParameter name="p_usuario">
 					<subreportParameterExpression><![CDATA[$P{p_usuario}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA["SubreporteDistanciaAcumulada.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["SubreporteRecorridosTiempo.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="400" y="10" width="200" height="200" uuid="f8cf4481-b7b5-4c05-bef5-46c5f6717597">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<subreportParameter name="p_usuario">
+					<subreportParameterExpression><![CDATA[$P{p_usuario}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["SubreporteVelocidadTiempo.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="10" y="500" width="200" height="200" uuid="b6fec827-c53f-4e17-baa1-6fa75aeccb14">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<subreportParameter name="p_usuario">
+					<subreportParameterExpression><![CDATA[$P{p_usuario}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["SubreporteTiempoAcumulado.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="400" y="500" width="200" height="200" uuid="60a534d0-fc8a-4589-a801-78f0b8308231">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<subreportParameter name="p_usuario">
+					<subreportParameterExpression><![CDATA[$P{p_usuario}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["SubreporteTiempoTiempo.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</summary>
