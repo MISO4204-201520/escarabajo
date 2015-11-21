@@ -71,7 +71,6 @@ libraryDependencies ++= Seq(
 
 WebKeys.directWebModules in Assets += "signalj"
 
-
 lazy val root = project.in(file("."))
  .enablePlugins(PlayJava, PlayEbean)
   .settings(
@@ -87,11 +86,14 @@ binaries in Aspectj <++= update map { report =>
         moduleFilter(organization = "org.springframework", name = "spring-aspects")
     )
 }
+ 
 
 products in Compile <<= products in Aspectj
 
 products in Runtime <<= products in Compile
 
+
+fork in run := true
 
 fork in run := true
 
