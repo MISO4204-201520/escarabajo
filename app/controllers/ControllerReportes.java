@@ -41,91 +41,24 @@ public class ControllerReportes extends Controller{
 		}
 	}
 	
-	public static Result generarReporteMetricasPDF(){
+	public static Result generarReporteParamPDF(int criteriaReporte, Long idRecorrido){
 		
-		String fileName="./app/reports/ReporteMetricas";
-
+		Reporte reporte = ReportFactory.getReportWithParams(criteriaReporte, idRecorrido);
 		try {
-			Map<String, Object> parameters = new HashMap<String, Object>();
-			
-			User usuario = Application.getLocalUser(session());
-			
-			parameters.put("p_usuario", usuario.id);
-			parameters.put("p_fecha", new Date());
-	
-			JasperCompileManager.compileReportToFile(fileName + ".jrxml");
-			
-			String printFileName = JasperFillManager.fillReportToFile(fileName + ".jasper" , parameters, DB.getConnection());
+			String printFileName = reporte.generarReporteCompilado();
 			
 			if (printFileName != null) {
-				JasperExportManager.exportReportToPdfFile(printFileName, fileName + ".pdf");
+				JasperExportManager.exportReportToPdfFile(printFileName, reporte.getFileName() + ".pdf");
+				
+				return ok(new File(reporte.getFileName() + ".pdf"));
 			}
-		
-			return ok(new File(fileName + ".pdf"));
-
-		}
-		catch(Exception e){
+			
+			return null;
+		} 
+		catch (JRException e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
 	
-	public static Result generarReporteHistoricoPDF(){
-		
-		String fileName="./app/reports/ReporteHistoricos";
-
-		try {
-			Map<String, Object> parameters = new HashMap<String, Object>();
-			
-			User usuario = Application.getLocalUser(session());
-			
-			parameters.put("p_usuario", usuario.id);
-			parameters.put("p_fecha", new Date());
-	
-			JasperCompileManager.compileReportToFile(fileName + ".jrxml");
-			
-			String printFileName = JasperFillManager.fillReportToFile(fileName + ".jasper" , parameters, DB.getConnection());
-			
-			if (printFileName != null) {
-				JasperExportManager.exportReportToPdfFile(printFileName, fileName + ".pdf");
-			}
-		
-			return ok(new File(fileName + ".pdf"));
-
-		}
-		catch(Exception e){
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
-	public static Result generarReporteRecorridoPDF(Long idRecorrido){
-		
-		String fileName="./app/reports/ReporteRecorrido";
-
-		try {
-			Map<String, Object> parameters = new HashMap<String, Object>();
-			
-			User usuario = Application.getLocalUser(session());
-			
-			parameters.put("p_usuario", usuario.id);
-			parameters.put("p_fecha", new Date());
-			parameters.put("p_recorrido", idRecorrido);
-	
-			JasperCompileManager.compileReportToFile(fileName + ".jrxml");
-			
-			String printFileName = JasperFillManager.fillReportToFile(fileName + ".jasper" , parameters, DB.getConnection());
-			
-			if (printFileName != null) {
-				JasperExportManager.exportReportToPdfFile(printFileName, fileName + ".pdf");
-			}
-		
-			return ok(new File(fileName + ".pdf"));
-
-		}
-		catch(Exception e){
-			e.printStackTrace();
-			return null;
-		}
-	}
 }

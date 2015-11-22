@@ -173,7 +173,7 @@
 			}else{
 				<button id="btnRetirar" class="btn btn-primary" onclick="asignaInscripcion('@formRecorrido.idRecorrido'); return false;">Unirme al recorrido</button>
 			}
-			<a class="btn btn-primary" href="@routes.ControllerReportes.generarReporteRecorridoPDF(formRecorrido.idRecorrido)" role="button">Reporte Recorrido</a>
+			<a class="btn btn-primary" href="@routes.ControllerReportes.generarReporteParamPDF(3, formRecorrido.idRecorrido)" role="button">Reporte Recorrido</a>
 			<a class="btn btn-primary" href="@routes.ControllerMetricas.iniciarRecorridoWeb(formRecorrido.idRecorrido)" role="button">Iniciar Recorrido</a>
 		</div>
 		<input name="hddAddressLat" id="hddAddressLat" type="hidden" value=@formRecorrido.latitudInicio/>

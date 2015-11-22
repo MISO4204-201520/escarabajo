@@ -7,11 +7,19 @@ public class ReportFactory {
 		if(criteria == Reporte.METRICAS){
 			return new ReporteMetricas();
 		}
-		else if(criteria == Reporte.HISTORICO){
-			
+		if(criteria == Reporte.HISTORICO){
+			return new ReporteHistorico();
 		}
-		else if(criteria == Reporte.REPORTE){
-			
+		if(criteria == Reporte.RECORRIDO){
+			return new ReporteRecorrido(null);
+		}
+		
+		return null;
+	}
+	
+	public static Reporte getReportWithParams(int criteria, Long param){
+		if(criteria == Reporte.RECORRIDO){
+			return new ReporteRecorrido(param);
 		}
 		
 		return null;
