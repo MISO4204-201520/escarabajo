@@ -16,6 +16,7 @@ GET     /retosUsuario	 			controllers.ControllerRetos.listarRetosUsuario()
 
 #Reportes
 GET		/reporteMetricas			controllers.ControllerReportes.generarReporteMetricasPDF()
+GET		/reporteMetricas2			controllers.ControllerReportes.generarReportePDF(criteriaReporte: Integer)
 GET		/reporteHistorico			controllers.ControllerReportes.generarReporteHistoricoPDF()
 GET		/reporteRecorrido			controllers.ControllerReportes.generarReporteRecorridoPDF(idRecorrido: Long)
 
