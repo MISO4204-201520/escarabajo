@@ -117,7 +117,7 @@
 		      @for(nivel2 <- nivel1.getCaracteristicas()) {
 			  	<div id="@nivel2.getNombre()" class="nivel2" ruta="@nivel1.getNombre()" rutaTitulo="@nivel1.getTitulo()"> 
 					@for(img <- nivel2.getImagenes()){
-						<div style="padding:10px">
+						<div style="padding:10px; float:left">
 							<input type="image" src="@img" onclick="detalleCaracteristica('@nivel2.getNombre()',2,'@nivel2.getTitulo()');return false;">
 						</div>	
 					}
@@ -127,7 +127,7 @@
 								@for(img <- nivel3.getImagenes()){
 									<div style="padding:10px">
 										<input type="image" src="@img" onclick="detalleCaracteristica('@nivel3.getNombre()',3,'@nivel3.getTitulo()');return false;">
-									</div>	
+									</div>
 								}		
 								<div id="div_@nivel3.getNombre()">
 							  		@for(nivel4 <- nivel3.getCaracteristicas()) {
