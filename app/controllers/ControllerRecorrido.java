@@ -273,7 +273,7 @@ public static Result getFormRecorridos()
 			usuarioRecorridoDao.eliminarUsuarioXRecorrido(lstUsuarioRecorrido.get(0));
 			mensaje = "<div style='padding: 5px 5px 5px 5px; background-color:#c4ead0'>Se ha retirado del recorrido satisfactoriamente</div>";
 		
-			//Notificacion union
+			//Notificacion retiro
 			notificarCambioParticipacionRecorrido (recorrido, false);
 		}
 		else
@@ -286,7 +286,7 @@ public static Result getFormRecorridos()
 			usuarioRecorridoDao.agregarUsuarioXRecorrido(usuarioRecorrido);
 			mensaje="<div style='padding: 5px 5px 5px 5px; background-color:#c4ead0'>Se ha unido al recorrido satisfactoriamente</div>";
 			
-			//Notificacion retiro
+			//Notificacion union
 			notificarCambioParticipacionRecorrido(recorrido, true);
 		}
 
