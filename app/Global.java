@@ -1,3 +1,5 @@
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -26,6 +28,7 @@ import controllers.routes;
 import database.MetricaDAO;
 import play.Application;
 import play.GlobalSettings;
+import play.db.DB;
 import play.mvc.Call;
 import providers.MyUsernamePasswordAuthProvider.MySignup;
 import providers.MyUsernamePasswordAuthUser;
@@ -105,6 +108,8 @@ public class Global extends GlobalSettings {
 		{
 			crearAdmin();
 		}
+		
+		preReports();
 		
 		MetricaDAO metricaDAO = new MetricaDAO();
 		
@@ -306,6 +311,25 @@ public class Global extends GlobalSettings {
 		
 		
 		return cont;
+	}
+	
+	public static void preReports(){
+		
+		try{			
+			Connection conn = DB.getConnection();
+			PreparedStatement stmt = null;
+			
+			stmt = conn.prepareStatement("create extension tablefunc");
+			stmt.executeUpdate();
+			System.out.println("Ejecuta tablefunc");
+			
+			conn.close();
+		}
+		catch(Exception e){
+			System.out.println("tablefunc ya existe!!");
+		}
+		
+		
 	}
 	
 }
