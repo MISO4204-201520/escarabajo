@@ -34,6 +34,10 @@ resolvers += Resolver.url("Typesafe Ivy", url("http://repo.typesafe.com/typesafe
 
 resolvers += "Typesafe" at "http://repo.typesafe.com/typesafe/releases/"
 
+resolvers += "Jasper" at "http://jasperreports.sourceforge.net/maven2/"
+
+resolvers += "Jaspersoft" at "http://jaspersoft.artifactoryonline.com/jaspersoft/jaspersoft-repo/"
+
 
 val appDependencies = Seq(  
   cache,
@@ -45,7 +49,8 @@ val appDependencies = Seq(
   // Comment the next line for local development of the Play Authentication core:
   "com.feth"      %% "play-authenticate" % "0.7.0",
   "org.postgresql" % "postgresql" % "9.4-1204-jdbc42",
-  "com.typesafe.play" %% "play-json" % "2.4.3"
+  "com.typesafe.play" %% "play-json" % "2.4.3",
+  "net.sf.jasperreports" % "jasperreports"  % "6.1.0"
 )
 
 // Play provides two styles of routers, one expects its actions to be injected, the
@@ -71,6 +76,7 @@ libraryDependencies ++= Seq(
 
 WebKeys.directWebModules in Assets += "signalj"
 
+
 lazy val root = project.in(file("."))
  .enablePlugins(PlayJava, PlayEbean)
   .settings(
@@ -86,23 +92,10 @@ binaries in Aspectj <++= update map { report =>
         moduleFilter(organization = "org.springframework", name = "spring-aspects")
     )
 }
- 
 
 products in Compile <<= products in Aspectj
 
 products in Runtime <<= products in Compile
 
-
 fork in run := true
 
-fork in run := true
-
-fork in run := true
-
-fork in run := true
-
-fork in run := true
-
-fork in run := true
-
-fork in run := true
